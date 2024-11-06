@@ -23,6 +23,10 @@ class LocationHelper:
         '''Get the 3 letter country code from the country name'''
         return [self.pycountry_obj_dict[c].alpha_3 if not self.pycountry_obj_dict[c] is None else None for c in self.region_list]
     
+    def get_country_codes2(self):
+        '''Get the 3 letter country code from the country name'''
+        return [self.pycountry_obj_dict[c].alpha_2 if not self.pycountry_obj_dict[c] is None else None for c in self.region_list]
+    
     def get_continent_names(self):
         '''Get the continent names from the country names'''
         return [self.country_to_continent(self.pycountry_obj_dict[c].alpha_2) if not self.pycountry_obj_dict[c] is None else None for c in self.region_list]
