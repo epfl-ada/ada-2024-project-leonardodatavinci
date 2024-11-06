@@ -57,13 +57,13 @@ class PreProcessRatings():
         self.raw_df = self.specify_dtypes(df)
 
     
-    def get_dataframe(self, dataset = "ratings", additinal_cols = []) -> pd.DataFrame:
+    def get_dataframe(self, dataset = "reviews", additinal_cols = []) -> pd.DataFrame:
         """
         Get pandas dataframe depending on the parameters 
 
         Parameters
         ----------
-        dataset : one of ["ratings", "reviews"]
+        dataset : one of ["ratings", "reviews"], only for BeerAdvocate as there are only reviews for RateBeer (reviews.txt and ratings.txt are the same)
             reviews are a subset of the ratings. ratings contain specific metrics where as the reviews only contain the column "rating"
             the default columns for "reviews" are
                 "appearance",
@@ -99,15 +99,26 @@ class PreProcessRatings():
         self.dataset = dataset
         self.additional_cols = additinal_cols
 
-        df = self.reviews_or_ratings(self.raw_df.copy())
+        # load the current raw data of the object
+        df = self.raw_df.copy()
+        if self.platform == "BeerAdvocate":
+            # only reviews or all the columns depending on the dataset choice
+            df = self.reviews_or_ratings(df)
+        else:
+            # every column in RateBeer is a review
+            self.dataset = "reviews"
+
         df = self.fill_datetime(df)
         df = self.fill_location(df)
 
+        # depending on the dataset chosen we have different important columns
         all_cols = []
         if dataset == "reviews":
             all_cols = ["rating", "appearance", "aroma", "palate", "taste", "overall"] + self.additional_cols
         elif dataset == "ratings":
             all_cols = ["rating"] + self.additional_cols
+        
+        # return the final dataframe
         return df[all_cols]
 
     def read_df_init(self):
@@ -116,7 +127,7 @@ class PreProcessRatings():
         drop_text = not "text" in self.additional_cols
 
         with open(self.URL + 'ratings.txt', 'r') as file:
-            print("start parsing the beer reviews")
+            print(f"start parsing the beer reviews for {self.platform}")
             content = file.read()
 
             # Split the content by blank lines into separate reviews
@@ -125,7 +136,7 @@ class PreProcessRatings():
             # Parse each review and store in a list of dictionaries
             
             parsed_reviews = [self.parse_beer_rating(review, drop_text=drop_text) for review in review_blocks]
-            print("finished parsing the beer reviews")
+            print(f"finished parsing the beer reviews for {self.platform}")
         return pd.DataFrame(parsed_reviews)
 
 
@@ -143,8 +154,13 @@ class PreProcessRatings():
     
     
     def specify_dtypes(self, df: pd.DataFrame):
-        # convert "review" column to boolean
-        df["review"] = df["review"].map(self.booleanConverter)
+
+        if self.platform == "BeerAdvocate":
+            # map review column from string to boolean
+            df["review"] = df["review"].map(self.booleanConverter)
+        elif self.platform == "RateBeer":
+            # there is no review column for RateBeer
+            self.dtypes.pop("review")
         return df.astype(self.dtypes)
     
 
