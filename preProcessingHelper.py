@@ -55,6 +55,7 @@ class PreProcessRatings():
         # read the raw data
         df = self.read_df_init()
         self.raw_df = self.specify_dtypes(df)
+        print("now you can get dataframes with the \"get_dataframe\" handle")
 
     
     def get_dataframe(self, dataset = "reviews", additinal_cols = []) -> pd.DataFrame:
@@ -85,13 +86,12 @@ class PreProcessRatings():
             "pycountry_object" (pycountry object),
             "date_object" (datetime object),
             "month",
-            "day",
             "beer_name",
             "beer_id",
             "brewery_id",
             "style", 
             "abv", 
-            "date" (timestamp),
+            "date" (timestamp, int),
             "user_name",
             "user_id"]  
             where the location related objects depend on the users-profile location
@@ -155,12 +155,14 @@ class PreProcessRatings():
     
     def specify_dtypes(self, df: pd.DataFrame):
 
+        print("start converting datatypes")
         if self.platform == "BeerAdvocate":
             # map review column from string to boolean
             df["review"] = df["review"].map(self.booleanConverter)
         elif self.platform == "RateBeer":
             # there is no review column for RateBeer
             self.dtypes.pop("review")
+        print("end converting datatypes")
         return df.astype(self.dtypes)
     
 
@@ -206,8 +208,7 @@ class PreProcessRatings():
         if "continent" in self.additional_cols:
             reviews_users_merged["continent"] = lh.get_continent_names()
         if "state" in self.additional_cols:
-            print( "TODO: State not yet implemented")
-            self.additional_cols.remove("state")
+            reviews_users_merged["state"] = lh.get_state_names()
 
         #stats 
         nr_reviews = reviews_users_merged.shape[0]
