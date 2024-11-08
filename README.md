@@ -119,4 +119,7 @@ The pipeline is defined in `run.py` and follows roughly the steps outlined below
 
     Blabla
 
+## Libraries Used
+- [Plotly](https://plotly.com/)
+
 ## 👤 Authors and acknowledgment
