@@ -1,0 +1,17 @@
+name: ada-project
+channels:
+  - conda-forge
+dependencies:
+  - pandas
+  - plotly
+  - tqdm
+  - numpy
+  - folium
+  - jupyter
+  - ipykernel
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - pip
+  - pip:
+      - pycountry-convert
