@@ -105,10 +105,11 @@ def value_from_date_and_state(df: pd.DataFrame, year: int, month: int, state: st
     else:
         return float('nan')  # Return NaN if no match found
 
+
 def apply_value_from_date_and_state(df_beer: pd.DataFrame, df_weather: pd.DataFrame, column_name: str) -> pd.DataFrame:
     """
-    Add weather data to the beer data.
-    
+    Add weather data to the beer data by merging DataFrames.
+
     Parameters:
     df_beer (pd.DataFrame): DataFrame with columns 'State', 'Year', 'Month'
     df_weather (pd.DataFrame): DataFrame with columns 'state', 'year', 'month', and 'value'
@@ -116,5 +117,15 @@ def apply_value_from_date_and_state(df_beer: pd.DataFrame, df_weather: pd.DataFr
     Returns:
     pd.DataFrame: A DataFrame with the weather data added to the beer data
     """
-    df_beer[column_name] = df_beer.apply(lambda row: value_from_date_and_state(df_weather, row['year'], row['month'], row['state']), axis=1)
-    return df_beer
+    # Rename columns in df_beer to match df_weather for merging
+    df_beer_renamed = df_beer.rename(columns={'State': 'state', 'Year': 'year', 'Month': 'month'})
+    
+    # Perform a left merge to add the 'value' column from df_weather to df_beer
+    df_merged = df_beer_renamed.merge(df_weather[['state', 'year', 'month', 'value']], 
+                                      on=['state', 'year', 'month'], 
+                                      how='left')
+    
+    # Rename the 'value' column in the merged DataFrame to the specified column_name
+    df_merged = df_merged.rename(columns={'value': column_name})
+    
+    return df_merged
