@@ -2,7 +2,7 @@ import pandas as pd
 from tqdm import tqdm
 import numpy as np
 from datetime import datetime
-from locationHelper import LocationHelper
+from src.utils.locationHelper import LocationHelper
 
 class PreProcessRatings():
     """
