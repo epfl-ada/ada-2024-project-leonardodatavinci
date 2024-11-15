@@ -34,7 +34,7 @@ We focus our work on the reviews on the forum “BeerAdvocate” from 2002 until
 - We specify only the US because there is enough data and only the northern hemisphere! And state-specific, so nice granularity!
 - BeerAdvocate, because more data and focus on US
 
-### 0. Intro: show that there is something going on!
+### 0. Intro: Show That There Is Something Going On!
 
 **Question:**  
 Why is it worth investigating  seasonal fluctuations in beer ratings?
