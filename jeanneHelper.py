@@ -42,7 +42,7 @@ class JeanneHelper:
 
     def top_k_beer_styles(self, df, k=10, group_by='Month', season_months=None, specific_month=None):
         """
-        Returns the top k most popular beer styles based on a specified grouping criterion.
+        Returns the top k most popular beer styles based on a specified grouping criteria.
 
         Parameters:
         - df: DataFrame with beer reviews.
@@ -54,15 +54,17 @@ class JeanneHelper:
         Returns:
         - DataFrame with top k beer styles for each grouping.
         """
-        # Assign periods using the helper function
-        df = self.assign_period(df, group_by, season_months, specific_month)
+        temp_df = df.copy()
 
-        # Group by Period and Style to get total reviews
-        grouped = df.groupby(['Period', 'Style']).agg(
+        # Assign periods using the previous function
+        temp_df = self.assign_period(temp_df, group_by, season_months, specific_month)
+
+        # Group by Period and Style to get the number of ratings
+        grouped = temp_df.groupby(['Period', 'Style']).agg(
             rating_count=('Rating', 'count')
         ).reset_index()
 
-        # For each period, find the top k beer styles by total reviews
+        # For each period, find the top k beer styles by total ratings
         top_styles_per_period = (
             grouped.groupby('Period')
             .apply(lambda x: x.nlargest(k, 'rating_count'))
@@ -86,17 +88,17 @@ class JeanneHelper:
         Returns:
         - DataFrame containing the top k beer styles per period, with percentage values for each style.
         """
+        temp_df = df.copy()
+
+        # Assign period with previous methos
+        temp_df = self.assign_period(temp_df, group_by, season_months, specific_month)
         
-        # Assign periods (Month, Season, Day_in_Month, Year) to the dataframe
-        df = self.assign_period(df, group_by, season_months, specific_month)
+        # Group by desired period and style, and calculate the number of ratings per style
+        grouped = temp_df.groupby([group_by, 'Style']).size().reset_index(name='rating_count')
         
-        # Group the data by the desired period and style, and calculate the number of ratings per style
-        grouped = df.groupby([group_by, 'Style']).size().reset_index(name='rating_count')
-        
-        # Calculate the total number of ratings for each period
+        # Calculate the number of ratings per period
         total_ratings_per_period = grouped.groupby(group_by)['rating_count'].sum().reset_index(name='total_ratings')
         
-        # Merge the total ratings with the grouped data
         grouped = pd.merge(grouped, total_ratings_per_period, on=group_by)
         
         # Calculate the percentage of total ratings for each style within the period
@@ -106,3 +108,45 @@ class JeanneHelper:
         top_k_styles = grouped.groupby(group_by).apply(lambda x: x.nlargest(k, 'rating_count')).reset_index(drop=True)
         
         return top_k_styles
+    
+    def calculate_seasonality_score_by_style(self, df, group_by='Style', min_reviews=100):
+        """Calculate the seasonality score for the given dataset. 
+        Seasonality score is the difference of rating between mean summer rating (6-8, june, july, august) 
+        and mean winter rating (12-2; december, january, february) per beer style.
+
+        Parameters:
+        - df: pandas DataFrame containing beer review data with columns ['Year', 'Month', 'Style', 'Rating', 'Location'].
+        - group_by: Column name to group by when calculating seasonality score (e.g., 'Style', 'State').
+        - min_reviews: Minimum number of reviews required in summer and winter combined for a group to be included.
+
+        Returns:
+        - pandas DataFrame with seasonality scores for each group (e.g., style, state) and year.
+        """
+        temp_df = df.copy()
+        summer_months = [6, 7, 8]
+        winter_months = [12, 1, 2]
+
+        # Assign seasons
+        temp_df['Season'] = temp_df['Month'].apply(
+            lambda x: 'Summer' if x in summer_months else ('Winter' if x in winter_months else None)
+        )
+        season_df = temp_df.dropna(subset=['Season'])
+
+        # Keep only groups with at least `min_reviews` in summer and winter combined
+        seasonal_review_counts = season_df.groupby(['Year', group_by]).size().reset_index(name='Season_Review_Count')
+        filtered_groups = seasonal_review_counts[seasonal_review_counts['Season_Review_Count'] >= min_reviews]
+
+        season_df = season_df.merge(filtered_groups[['Year', group_by]], on=['Year', group_by], how='inner')
+
+        # Calculate average ratings by season
+        seasonal_stats = season_df.groupby(['Year', group_by, 'Season']).agg(
+            avg_rating=('Rating', 'mean'),
+        ).unstack(fill_value=0)
+
+        # Compute seasonality score
+        seasonal_stats['Seasonality_Score'] = (
+            seasonal_stats['avg_rating']['Summer'] - seasonal_stats['avg_rating']['Winter']
+        )
+
+        return seasonal_stats[['Seasonality_Score']].reset_index()
+    
