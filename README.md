@@ -30,6 +30,17 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
 │   │   ├── ratings.txt
 │   │   ├── reviews.txt
 │   │   └── users.csv
+│   ├── climatezones/
+│   │   ├── Map_KG-Global/
+│   │   │   ├── KG_1986-2010.grd
+│   │   │   ├── KG_1986-2010.txt
+│   │   ├── ne_10m_admin_0_countries/
+│   │   │   ├── ne_10m_admin_0_countries.shp
+│   │   ├── climate_zones.csv
+│   │   ├── countyPopulation.xlsx
+│   │   ├── Koeppen-Geiger-ASCII.txt
+│   │   ├── stateAbbreviations.csv
+│   │   └── weather_stations_world.txt
 │   ├── matched_beer_data/
 │   │   ├── beers.csv
 │   │   ├── breweries.csv
@@ -41,11 +52,38 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
 │   │   ├── users.csv
 │   │   └── users_approx.csv
 │   └── RateBeer/
-│       ├── beers.csv
-│       ├── breweries.csv
-│       ├── ratings.txt
-│       ├── reviews.txt
-│       └── users.csv
+│   │   ├── beers.csv
+│   │   ├── breweries.csv
+│   │   ├── ratings.txt
+│   │   ├── reviews.txt
+│   │   └── users.csv
+│   └── weather-data/
+│       ├── cru-x0.5_timeseries_tas_timeseries_monthly_1901-2022_mean_historical_cru_ts4.07_mean.xlsx
+│       ├── cru-x0.5_timeseries_pr_timeseries_monthly_1901-2022_mean_historical_cru_ts4.07_mean.xlsx
+│       ├── us-precipitations.csv
+│       └── us-temperatures.csv
+├── illustrations/
+│   └── Nicolas/
+│       ├── avg_temp_state.html
+│       ├── climate_map.html
+│       ├── heatmap.html
+│       ├── number_of_rows_per_month_year.html
+│       ├── temperature.html
+│       ├── timelapse_temperature.html
+│       ├── timeline.html
+│       └── weather_stations.html
+├── papers/
+│   ├── icdm2012.pdf
+|   └── Lederrey-West_WWW-18.pdf
+├── src/
+│   └── utils/
+│       ├── locationHelper.py
+│       ├── preProcessingHelper.py
+│       ├── USClimateAndWeatherHelper.py
+│       ├── fourierAnalysis.py
+│       └── fourierHelper.py
+├── tests/
+│   └── PreProcessing.ipynb
 ├── docs/
 ├── notebooks/
 ├── results/
@@ -120,6 +158,21 @@ The pipeline is defined in `run.py` and follows roughly the steps outlined below
     Blabla
 
 ## Libraries Used
-- [Plotly](https://plotly.com/)
+- Data Manipulation:
+    - [Pandas](https://pandas.pydata.org/)
+    - [Numpy](https://numpy.org/)
+- Data Visualization:
+    - [Matplotlib](https://matplotlib.org/)
+    - [Plotly](https://plotly.com/)
+    - [Seaborn](https://seaborn.pydata.org/)
+    - [Folium](https://python-visualization.github.io/folium/)
+- Machine Learning:
+    - [Scikit-learn](https://scikit-learn.org/stable/)
+- Productivity:
+    - [IPython](https://ipython.org/)
+    - [Jupyter](https://jupyter.org/)
+    - [Tqdm](https://tqdm.github.io/)
+- Utilities:
+    - [Pycountry](https://pypi.org/project/pycountry/)
 
 ## 👤 Authors and acknowledgment
