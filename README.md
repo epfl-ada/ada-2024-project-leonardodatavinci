@@ -51,7 +51,7 @@ We also plan to experiment with different time spans, as averaging over three mo
 
 To validate seasonality, we’ll use statistical tests (e.g., Kruskal-Wallis and t-test) on the main seasonality plot, comparing seasonal fluctuations across months and years for different beer types.
 	
-### 1. Year-to-Year Seasonal Patterns (Jakob)
+### 1. Year-to-Year Seasonal Patterns
 
 **Question:**  
 Does the observed seasonal pattern in beer ratings reflect a true year-to-year recurrence, or is it an artifact of averaging ratings across many years?
@@ -63,7 +63,7 @@ To get even clearer knowledge, STL (Seasonal and Trend decomposition) can be use
 
 
 
-### 2. Seasonal vs. Year-Round Beers (Jeanne)
+### 2. Seasonal vs. Year-Round Beers
 
 **Question:**   How do seasonal and year-round beers influence global beer rating trends, and to what extent do seasonal beers account for the observed seasonal differences in beer ratings compared to year-round beers?  
 
@@ -77,7 +77,7 @@ For both seasonal and unseasonal beer styles, check how their ratings fluctuate 
 - **Identify and Analyze Impactful Beers**  
 Define a subset of beers as "impactful," i.e., beers with high popularity during certain periods and high deviation from the average rating. Remove these impactful beers from the data and plot the average ratings to see if there is significantly less seasonal fluctuation after their removal.
 
-### 3.  Weather Influence by State (Nicolas & Casimir)
+### 3.  Weather Influence By State
 
 **Question:**  
 Does state weather impact beer ratings and its seasonality?
