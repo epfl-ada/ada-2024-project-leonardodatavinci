@@ -71,8 +71,7 @@ def generate_climate_map(raster_file, downsample_factor=10):
         projection_type='natural earth'
     )
 
-    fig.show()
-    print("Map displayed.")
+    fig.write_html("illustrations/Nicolas/climate_map.html")
 
 
 def get_climate_class(lon, lat, raster_file):
@@ -158,11 +157,8 @@ def generate_station_map(df):
         showcoastlines=True,
         projection_type="natural earth"
     )
-    
-    # Show map
-    fig.show()
 
     # Save map as HTML
-    fig.write_html("weather_stations.html")
+    fig.write_html("illustrations/Nicolas/weather_stations.html")
 
 
