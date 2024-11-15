@@ -1,6 +1,19 @@
 # 🧬 LeonardoDataVinci 🧬 
 
-## 🔴 Description
+## 🔴 Abstract
+
+
+## ❓ Research Questions
+
+
+
+## 🎯 Timeline
+
+
+## 🗂️ Organization
+
+
+
 
 P2 deliverable (done as a team): GitHub repository with the following:
 
@@ -84,9 +97,6 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
 │       └── fourierHelper.py
 ├── tests/
 │   └── PreProcessing.ipynb
-├── docs/
-├── notebooks/
-├── results/
 ├── .gitignore 
 ├── README.md
 └── environment.yaml
@@ -108,7 +118,7 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
 1. Create personal access token (PAT) on Gitlab.
 2. Clone repository with HTTPS using git. You will have to enter your PAT for authentification. 
     ```bash
-    git clone XXXXXXXXXXXXXXXXXXXXXXX
+    git clone https://github.com/epfl-ada/ada-2024-project-leonardodatavinci.git
     ```
  
 ### Environment setup
@@ -146,18 +156,9 @@ The pipeline is defined in `run.py` and follows roughly the steps outlined below
     ```bash
     python run.py
     ```
-    
-## 🎯 Roadmap
 
-1. [x] Blabla
 
-    Blabla.
-
-2. [ ] Blabla
-
-    Blabla
-
-## Libraries Used
+## 📚 Libraries Used
 - Data Manipulation:
     - [Pandas](https://pandas.pydata.org/)
     - [Numpy](https://numpy.org/)
