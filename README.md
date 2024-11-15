@@ -28,7 +28,7 @@ To enrich our analysis and provide deeper insights, we have incorporated supplem
 - **US Census Population Data**: County-level population data used to weight climate zone analysis for accurate state-level metrics. Data obtained from the [U.S. Census Bureau](https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html).
 - **Formatted Climate Zones Table**: A processed version of county climate zone data, sourced from [this GitHub Gist](https://gist.github.com/philngo/d3e251040569dba67942#file-climate_zones-csv).
 
-## Methods
+## ⚙️ Methods
 We focus our work on the reviews on the forum “BeerAdvocate” from 2002 until 2017, in the US.
 
 - We specify only the US because there is enough data and only the northern hemisphere! And state-specific, so nice granularity!
@@ -113,7 +113,7 @@ The team will create the data story and visualizations in a collaborative manner
 
 We are working with a beer review data set [[1](https://drive.google.com/drive/folders/1Wz6D2FM25ydFw_-41I9uTwG9uNsN4TCF)].
 
-## 📁 Project structure
+## 🏗️ Project Structure
 ```
 ├── data/
 │   ├── BeerAdvocate/
