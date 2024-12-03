@@ -128,6 +128,13 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
 
 ## 🏗️ Project Structure
 ```
+├── assets/
+│   ├── css/
+│   │   ├── styles.css
+│   ├── img/
+│   │   ├── favicon.png
+│   ├── js/
+│   │   ├── scale.fix.js
 ├── data/
 │   ├── BeerAdvocate/
 │   │   ├── beers.csv
@@ -191,6 +198,10 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
 │   └── PreProcessing.ipynb
 ├── .gitignore 
 ├── README.md
+├── _config.yml
+├── LICENSE
+├── index.html
+├── Gemfile
 └── environment.yaml
 ```
 
