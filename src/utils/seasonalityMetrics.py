@@ -76,7 +76,7 @@ def STL_data_preprocessing(df):
     
 
 
-# FOURRIER AND STL FUNCTIONS  ---------------------------------------------------------------------------------------------
+# STL FUNCTIONS  ---------------------------------------------------------------------------------------------
 
 def plot_STL(data):
     """
@@ -124,6 +124,51 @@ def plot_STL(data):
     # Show the plot
     fig.show()
 
+
+def calculate_avg_yearly_amplitude(df):
+    """
+    Calculates amplitude of every year in an oscillating signal then takes the average. 
+
+    Parameters:
+        df (pd.DataFrame): DataFrame containing 'seasonal' and 'date' columns.
+
+    Returns:
+        float: The average of yearly mean amplitudes.
+    """
+    # Ensure 'date' is datetime
+    #df["date"] = pd.to_datetime(df["date"])
+    
+    # Extract the year from the date column
+    df["year"] = df["date"].dt.year
+    
+    # Group by year and calculate the amplitude for each year
+    yearly_amplitudes = (
+        df.groupby("year")["seasonal"]
+        .apply(lambda x: (x.max() - x.min()) / 2)  # Compute amplitude per year
+    )
+    
+    # Calculate the average of the yearly amplitudes
+    average_amplitude = yearly_amplitudes.mean()
+    
+    return average_amplitude
+
+def report_STL_amplitude_seasonality_score(seasonal, print_report = True):
+    """
+    takes the STL.seasonal output and reports a seasonality intensity metric. 
+    if print_report is true then a report will be printed
+    """
+    # Convert Series to DataFrame
+    df = seasonal.reset_index()
+    df.columns = ["date", "seasonal"]
+    avg_yearly_amplitude = calculate_avg_yearly_amplitude(df)
+
+    if print_report:
+        print(f"Average Yearly Mean Amplitude of STL seasonality: {np.round(avg_yearly_amplitude, 4)}")
+    
+    return np.round(avg_yearly_amplitude, 4)
+
+
+# Fourier Transform functions based on STL data -----------------------------------------------------------------------------------
 
 
 def fourier_analysis(ratings, cutoff_freq=0.15):
@@ -194,12 +239,13 @@ def report_fourier_analysis(ratings, cutoff_freq=0.15):
     closest_magnitude = closest_freq_row['Magnitude']
 
     # Output results
+
     print(f"The frequency with the maximum magnitude is {max_freq:.6f} cycles per month "
           f"with a magnitude of {max_magnitude:.6f}.")
     print(f"The magnitude of the frequency closest to a 12-month period (0.083) is: {closest_magnitude:.6f}.")
     print()
     max_period = 1/max_freq
-    print(f"This means the most significant period is: {max_period:.6f}.")
+    print(f"This means the most significant period is: {max_period:.6f} months.")
     return max_freq, max_magnitude, closest_magnitude
 
 
@@ -229,3 +275,35 @@ def plot_frequency_spectrum(ratings, cutoff_freq=0.15):
     
     # Show the plot
     fig.show()
+
+
+# FULL PIPELINE ---------------------------------------------------------------------------------------------------------------
+
+  
+def full_seasonality_report(df):
+      """
+      combines all STL and Fourier Transform functions to one analysis pipeline.
+      1) preps the raw ratings data
+      2) splitting timeseries into seasonal and non-seasonal components
+      3) gives a seasonality amplitude score based on only the seasonal component
+      4) returns frequency specrum of the seasonal signal, to verify 12-month periodicity
+
+      input: 
+      -  df containing 'rating', 'month', and 'year' columns.
+      output:
+      -  none
+
+      """
+   
+      stl_data = STL_data_preprocessing(df)
+      
+      # Perform STL decomposition
+      stl = STL(stl_data)
+      result = stl.fit()
+      seasonal = result.seasonal
+
+      plot_STL(stl_data)
+      report_STL_amplitude_seasonality_score(seasonal, print_report = True)
+      
+      plot_frequency_spectrum(seasonal, cutoff_freq=0.5)
+      report_fourier_analysis(seasonal, cutoff_freq=0.15)
