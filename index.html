@@ -1,73 +1,144 @@
 <!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link rel="icon" type="image/png" href="{{ '/assets/img/favicon.png' | relative_url }}">
-    <title>{{ site.title | default: site.github.repository_name }} by {{ site.github.owner_name }}</title>
+<html lang="en">
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="{{ '/assets/css/styles.css?v=' | append: site.github.build_revision | relative_url }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <div class="wrapper">
-      <!-- Header Section -->
-      <header>
-        <h1>{{ site.title | default: site.github.repository_name }}</h1>
-        <p>{{ site.description | default: site.github.project_tagline }}</p>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <title>ADA 2024 Project - LeonardoDataVinci</title>
 
-        <!-- Navigation Links -->
-        <nav>
-          <ul>
-            {% for nav in site.navigation %}
-              <li>
-                {% if nav.url contains "://" %}
-                  <a href="{{ nav.url }}">{{ nav.title }}</a>
-                {% else %}
-                  <a href="{{ nav.url | relative_url }}">{{ nav.title }}</a>
-                {% endif %}
-              </li>
-            {% endfor %}
-          </ul>
-        </nav>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
 
-        <!-- Download Links -->
-        {% if site.show_downloads %}
-          <ul>
-            <li><a href="{{ site.github.zip_url }}">Download <strong>ZIP File</strong></a></li>
-            <li><a href="{{ site.github.tar_url }}">Download <strong>TAR Ball</strong></a></li>
-            <li><a href="{{ site.github.repository_url }}">View On <strong>GitHub</strong></a></li>
-          </ul>
-        {% endif %}
-      </header>
+<body>
+  <div class="wrapper">
 
-      <!-- Main Content Section -->
-      <main>
-        {{ content }}
-      </main>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#hero">Hero</a></li>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#wheather">Wheather</a></li>
+          <li><a href="#team">Team</a></li>
+        </ul>
+      </nav>
+    </header>
 
-      <!-- Footer Section -->
-      <footer>
-        {% if site.github.is_project_page %}
-          <p>This project is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</p>
-        {% endif %}
-      </footer>
-    </div>
+    <main>
+      <section id="hero">
+        <h1>ADA 2024 Project</h1>
+        <p>Hello World!</p>
+      </section>
 
-    <!-- JavaScript -->
-    <script src="{{ '/assets/js/scale.fix.js' | relative_url }}"></script>
+      <section id="intro">
+        <h1>Introduction</h1>
+        <p>
+          Welcome to <strong>LeonardoDataVinci</strong>, a project dedicated to exploring seasonal fluctuations in beer
+          ratings using data from the BeerAdvocate forum, spanning from 2002 to 2017. Our analysis focuses on
+          understanding how external factors, such as seasonal trends and weather variations, influence beer ratings,
+          aiming to uncover patterns that affect consumer perceptions beyond the intrinsic qualities of the beers
+          themselves.
+        </p>
+        <p>
+          Through comprehensive data analysis, we investigate whether observed seasonal patterns are consistent
+          year-to-year or merely artifacts of aggregated data. Additionally, we examine the impact of seasonal and
+          year-round beers on global rating trends and explore correlations between daily weather conditions and beer
+          ratings at the state level. By integrating supplementary datasets—including climate data, U.S. county climate
+          zones, and census population data—we strive to provide a nuanced understanding of the factors influencing beer
+          ratings across different regions and time periods.
+        </p>
+        <p>
+          Our findings aim to offer valuable insights for brewers, marketers, and beer enthusiasts, shedding light on
+          the complex interplay between seasonality, consumer behavior, and beer appreciation.
+        </p>
 
-    <!-- Google Analytics -->
-    {% if site.google_analytics %}
-      <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-        ga('create', '{{ site.google_analytics }}', 'auto');
-        ga('send', 'pageview');
-      </script>
-    {% endif %}
-  </body>
+        <h2>Timeline</h2>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Nicolas/timeline.html"></object>
+        </div>
+        <h2>Number of reviews per months</h2>
+        <div class="visualization-container">
+          <object type="text/html" data="illustrations/Nicolas/number_of_rows_per_month_year.html"></object>
+        </div>
+      </section>
+
+      <section id="wheather">
+        <h1>Wheather</h1>
+        <h2>Average temperature per state</h2>
+        <div class="visualization-container">
+          <object type="text/html" data="illustrations/Nicolas/avg_temp_state.html"></object>
+        </div>
+        <h2>Heatmap</h2>
+        <div class="visualization-container">
+          <object type="text/html" data="illustrations/Nicolas/heatmap.html"></object>
+        </div>
+
+        <h2>Timelapse of temperature</h2>
+        <div class="visualization-container">
+          <object type="text/html" data="illustrations/Nicolas/timelapse_temperature.html"></object>
+        </div>
+
+
+      </section>
+
+      <section id="team">
+        <h1>Our Team</h1>
+        <div class="team-container">
+          <div class="team-member">
+            <img src="assets/img/person.png" alt="Tim Kluser">
+            <h2>Tim Kluser</h2>
+            <p>Team Leader, Repo Organizer</p>
+            <a href="https://github.com/klusertim" target="_blank" class="github-link">
+              <img src="assets/img/github-icon.png" alt="GitHub">
+            </a>
+          </div>
+          <div class="team-member">
+            <img src="assets/img/person.png" alt="Jakob Sebastian Behler">
+            <h2>Jakob Sebastian Behler</h2>
+            <p>Part 1</p>
+            <a href="https://github.com/jakobbehler" target="_blank" class="github-link">
+              <img src="assets/img/github-icon.png" alt="GitHub">
+            </a>
+          </div>
+          <div class="team-member">
+            <img src="assets/img/person.png" alt="Jeanne Noëline Anémone Oeuvray">
+            <h2>Jeanne Noëline Anémone Oeuvray</h2>
+            <p>Part 2</p>
+            <a href="https://github.com/oeuvray" target="_blank" class="github-link">
+              <img src="assets/img/github-icon.png" alt="GitHub">
+            </a>
+          </div>
+          <div class="team-member">
+            <img src="assets/img/person.png" alt="Casimir Maximilian Nüsperling">
+            <h2>Casimir Maximilian Nüsperling</h2>
+            <p>Part 3</p>
+            <a href="https://github.com/cmaximilian" target="_blank" class="github-link">
+              <img src="assets/img/github-icon.png" alt="GitHub">
+            </a>
+          </div>
+          <div class="team-member">
+            <img src="assets/img/person.png" alt="Nicolas Filimonov">
+            <h2>Nicolas Filimonov</h2>
+            <p>Part 3</p>
+            <a href="https://github.com/Rayjine" target="_blank" class="github-link">
+              <img src="assets/img/github-icon.png" alt="GitHub">
+            </a>
+          </div>
+        </div>
+      </section>
+      
+      
+
+    </main>
+
+    <footer>
+      <p>&copy; 2024 LeonardoDataVinci. All rights reserved.</p>
+    </footer>
+  </div>
+
+
+</body>
+
 </html>
