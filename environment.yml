@@ -12,6 +12,7 @@ dependencies:
   - matplotlib
   - seaborn
   - scikit-learn
+  - openpyxl
   - pip
   - pip:
       - pycountry-convert
