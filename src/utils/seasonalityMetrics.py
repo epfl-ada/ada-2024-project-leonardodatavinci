@@ -124,6 +124,8 @@ def plot_STL(data):
     # Show the plot
     fig.show()
 
+    return fig
+
 
 def calculate_avg_yearly_amplitude(df):
     """
@@ -276,6 +278,8 @@ def plot_frequency_spectrum(ratings, cutoff_freq=0.15):
     # Show the plot
     fig.show()
 
+    return fig
+
 
 # FULL PIPELINE ---------------------------------------------------------------------------------------------------------------
 
@@ -302,8 +306,14 @@ def full_seasonality_report(df):
       result = stl.fit()
       seasonal = result.seasonal
 
-      plot_STL(stl_data)
+      fig_stl = plot_STL(stl_data)
       report_STL_amplitude_seasonality_score(seasonal, print_report = True)
       
-      plot_frequency_spectrum(seasonal, cutoff_freq=0.5)
+      fig_fft = plot_frequency_spectrum(seasonal, cutoff_freq=0.5)
       report_fourier_analysis(seasonal, cutoff_freq=0.15)
+
+      return fig_stl, fig_fft
+
+
+
+
