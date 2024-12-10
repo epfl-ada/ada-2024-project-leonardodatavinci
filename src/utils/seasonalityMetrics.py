@@ -378,14 +378,12 @@ def full_seasonality_report(df):
 
       """
    
-      stl_data = STL_data_preprocessing(df)
-      
       # Perform STL decomposition
-      stl = STL(stl_data)
+      stl = STL(df)
       result = stl.fit()
       seasonal = result.seasonal
 
-      fig_stl = plot_STL(stl_data)
+      fig_stl = plot_STL(df)
       report_STL_amplitude_seasonality_score(seasonal, print_report = True)
       
       fig_fft = plot_frequency_spectrum(seasonal, cutoff_freq=0.5)
