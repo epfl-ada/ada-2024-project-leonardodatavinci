@@ -106,7 +106,7 @@ def plot_STL(data):
                         subplot_titles=("Original Series", "Trend", "Seasonal", "Residual"))
 
     # Add the original series
-    fig.add_trace(go.Scatter(x=data.index, y=data['mean_rating'], name='Original'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=data.index, y=data[data.columns[0]], name='Original'), row=1, col=1)
 
     # Add the trend component
     fig.add_trace(go.Scatter(x=data.index, y=result.trend, name='Trend'), row=2, col=1)
@@ -119,7 +119,7 @@ def plot_STL(data):
 
     # Update layout
     fig.update_layout(height=800, title="STL Decomposition", showlegend=False)
-    fig.update_yaxes(title_text="Mean")
+    fig.update_yaxes(title_text=data.columns[0])
 
     # Show the plot
     fig.show()
@@ -172,32 +172,81 @@ def report_STL_amplitude_seasonality_score(seasonal, print_report = True):
 
 # Fourier Transform functions based on STL data -----------------------------------------------------------------------------------
 
+def FFT_dataframe(df, cutoff_freq=0.5):
 
-def fourier_analysis(ratings, cutoff_freq=0.15):
     """
-    Perform Fourier analysis on the input ratings time series
+    Perform Fourier analysis on the input ratings time series and return them as a dataframe.
     """
 
     # Apply Fourier Transform
-    fft_result = np.fft.fft(ratings)
+    fft_result = np.fft.fft(df)
 
     # Calculate Frequencies
-    freqs = np.fft.fftfreq(len(ratings), d=1)  # d=1 because we're using months as the time unit
+    freqs = np.fft.fftfreq(len(df), d=1)  # d=1 because we're using months as the time unit
 
     # Calculate the Magnitudes and Normalize
-    magnitudes = np.abs(fft_result) / len(ratings)  # Normalize by dividing by the length
+    magnitudes = np.abs(fft_result) / len(df)  # Normalize by dividing by the length
 
     # Create a DataFrame for frequency and magnitude data
     df_freq = pd.DataFrame({
         'Frequency (cycles per month)': freqs[:len(freqs) // 2],  # Only positive frequencies
         'Magnitude': magnitudes[:len(magnitudes) // 2]
     })
+    df_freq_filtered = df_freq[df_freq['Frequency (cycles per month)'] <= cutoff_freq]
+
+    return df_freq
+
+
+def fourier_analysis(ratings, cutoff_freq=0.5):
+    """
+    Perform Fourier analysis on the input ratings time series
+    """
+
+    df_freq = FFT_dataframe(ratings)
 
     # Filter the frequencies and magnitudes to only include values up to the cutoff frequency
     df_freq_filtered = df_freq[df_freq['Frequency (cycles per month)'] <= cutoff_freq]
     return df_freq_filtered
 
+def FFT_magnitude_of_closest_freq_to_target_freq(df_FFT, target_frequency):
+    """
+    finds the frequency closest to a 12-month cycle 
+    (i.e., 0.083 cycles per month, corresponding to an annual cycle). The function prints out the 
+    maximum frequency with its corresponding magnitude and the magnitude of the frequency closest 
+    to 0.083 cycles per month.
+    """
+    tolerance = 1e-1  # Define tolerance for closest frequency search
 
+    df_FFT_diff = df_FFT.copy()
+    # Calculate the absolute difference between each frequency and the target frequency
+    df_FFT_diff['Freq_diff'] = (df_FFT_diff['Frequency (cycles per month)'] - target_frequency).abs()
+
+    # Find the frequency closest to 12-month cycle (0.083)
+    closest_freq_row = df_FFT_diff.loc[df_FFT_diff['Freq_diff'].idxmin()]
+    closest_freq = closest_freq_row['Frequency (cycles per month)']
+    closest_magnitude = closest_freq_row['Magnitude']
+
+    return closest_magnitude, closest_freq
+
+    
+def find_second_FFT_peak(df_FFT, freq_to_exlude, window_size):
+    """
+    to find the biggest peak that is not a given peak (here not the peak of 12-month period). This is the freq_to_exclude.
+    the window_size defines the area around the freq_to_exclude that is also excluded.
+    """
+    # Step 1: Exclude the values around the freq_to_exclude.
+
+    # Create a mask to exclude the highest peak and its adjacent frequencies
+    df_freq_excluding_adjacent = df_FFT[
+    ~df_FFT['Frequency (cycles per month)'].between(freq_to_exlude - window_size, freq_to_exlude + window_size)
+    ]
+
+    # Identify the largest magnitude from the remaining data.
+    second_max_magnitude_row = df_freq_excluding_adjacent.loc[df_freq_excluding_adjacent['Magnitude'].idxmax()]
+    second_max_magnitude = second_max_magnitude_row['Magnitude']
+    second_max_freq = second_max_magnitude_row['Frequency (cycles per month)']
+
+    return second_max_magnitude, second_max_freq
 
 def report_fourier_analysis(ratings, cutoff_freq=0.15):
     """
@@ -228,17 +277,8 @@ def report_fourier_analysis(ratings, cutoff_freq=0.15):
     max_freq = max_magnitude_row['Frequency (cycles per month)']
     max_magnitude = max_magnitude_row['Magnitude']
 
-    # Define the target frequency for a 12-month period (0.083 cycles per month)
-    target_freq = 0.083
-    tolerance = 1e-1  # Define tolerance for closest frequency search
-
-    # Calculate the absolute difference between each frequency and the target frequency
-    df_freq['Freq_diff'] = (df_freq['Frequency (cycles per month)'] - target_freq).abs()
-
-    # Find the frequency closest to 12-month cycle (0.083)
-    closest_freq_row = df_freq.loc[df_freq['Freq_diff'].idxmin()]
-    closest_freq = closest_freq_row['Frequency (cycles per month)']
-    closest_magnitude = closest_freq_row['Magnitude']
+    target_freq = 1/12
+    closest_magnitude, closest_freq = FFT_magnitude_of_closest_freq_to_target_freq(df_freq, target_freq)
 
     # Output results
 
@@ -314,6 +354,52 @@ def full_seasonality_report(df):
 
       return fig_stl, fig_fft
 
+def timeseries_seasonality_metric(df):
+    """
+    Calculates two metrics that quantify the seasonality of a time series.
 
+    Parameters:
+    df (pd.DataFrame): A dataframe where the index is a datetime object representing months (e.g., '1-12-2013') 
+                       and the first column contains the values of interest (e.g., gene expression, temperature, etc.).
 
+    Returns:
+    tuple: 
+        - A float representing the ratio of the peak corresponding to the 12-month period (seasonal frequency) to the second-highest peak in the frequency spectrum. A value greater than 5 indicates strong seasonality.
+        - A float representing the mean amplitude of the seasonal component of the signal, calculated based on STL decomposition.
 
+    Notes:
+    - The function uses STL (Seasonal-Trend decomposition using Loess) to extract the seasonal component of the time series.
+    - Fourier Transform (FFT) is used to identify the primary and secondary peaks in the frequency spectrum.
+    - The seasonal metric is based on comparing the magnitude of the 12-month periodicity (or annual frequency) to the next largest frequency peak.
+    - The mean amplitude reflects the strength of the seasonal signal over the period.
+    """
+    
+    # extract seasonal part from signal using STL decomposition
+    stl = STL(df)
+    result = stl.fit()
+    seasonal = result.seasonal
+
+    # Calculate the mean amplitude of the seasonal component
+    seasonal_df = seasonal.reset_index()
+    seasonal_df.columns = ["date", "seasonal"]
+    avg_amplitude = calculate_avg_yearly_amplitude(seasonal_df)
+    avg_amplitude = np.round(avg_amplitude, 4)
+
+    # Compute the Fourier Transform of the seasonal component
+    df_Fourier = FFT_dataframe(seasonal, cutoff_freq=0.5)
+
+    df_Fourier
+
+    # Identify the magnitude and frequency of the primary peak (12-month period)
+    target_freq = 1/12
+    closest_magnitude, closest_freq = FFT_magnitude_of_closest_freq_to_target_freq(df_Fourier, target_freq)
+
+    # Find the second largest peak that does not correspond to the 12-month peak
+    window_size = 0.01
+    second_max_magnitude, second_max_freq = find_second_FFT_peak(df_Fourier, target_freq, window_size)
+    
+    # Compute the ratio of the 12-month peak to the second largest peak
+
+    peak_ratio = closest_magnitude / second_max_magnitude
+    peak_ratio = np.round(peak_ratio, 4)
+    return peak_ratio, avg_amplitude
