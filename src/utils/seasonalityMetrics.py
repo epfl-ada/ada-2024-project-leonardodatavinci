@@ -66,6 +66,22 @@ def time_formatting_for_stl(df):
 
     return stl_data
 
+def time_formatting_of_timeseries(df, data_column_name):
+    """
+    Adds a 'date' column to the DataFrame based on 'year' and 'month'.
+    The date is always set to the first day of the month.
+    
+    Args:
+        df (pd.DataFrame): DataFrame with 'year' and 'month' columns.
+    
+    Returns:
+        pd.DataFrame: Updated DataFrame with a 'date' column.
+    """
+    df['date'] = pd.to_datetime(df[['year', 'month']].assign(day=1))
+    stl_data = df.set_index('date')[[data_column_name]]
+
+    return stl_data
+
 def STL_data_preprocessing(df):
     # must contain 'rating', 'month', and 'year' columns.
     df_means = calculate_monthly_means(df)
