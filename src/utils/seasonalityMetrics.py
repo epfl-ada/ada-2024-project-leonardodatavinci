@@ -82,15 +82,38 @@ def time_formatting_of_timeseries(df, data_column_name):
 
     return stl_data
 
-def STL_data_preprocessing(df):
+def data_preprocessing_mean_rating_per_month(df, data_column_name):
     # must contain 'rating', 'month', and 'year' columns.
     df_means = calculate_monthly_means(df)
     df_means_timeseries = convert_to_timeseries(df_means)
-    stl_data = time_formatting_for_stl(df_means_timeseries)
+    stl_data = time_formatting_of_timeseries(df_means_timeseries, data_column_name)
 
     return stl_data
-    
 
+def process_to_timeseries_number_of_ratings(df):
+    """
+    Processes the given DataFrame to return a timeseries of the number of ratings per month.
+    The output DataFrame contains ['year', 'month', 'N_ratings'].
+
+    Input:
+    - df: A DataFrame containing 'year' and 'month' columns (one row per rating).
+
+    Output:
+    - A DataFrame with ['year', 'month', 'N_ratings'].
+    """
+    # Group by 'year' and 'month' and count the number of rows (ratings) for each month
+    monthly_ratings = df.groupby(['year', 'month']).size().reset_index(name='N_ratings')
+
+    return monthly_ratings
+
+def data_preprocessing_number_of_ratings_per_month(df):
+
+    # must contain 'rating', 'month', and 'year' columns.
+    df_number_ratings = process_to_timeseries_number_of_ratings(df)
+    df_number_ratings_timeseries = convert_to_timeseries(df_number_ratings)
+    stl_data = time_formatting_of_timeseries(df_number_ratings_timeseries, 'N_ratings')
+
+    return stl_data
 
 # STL FUNCTIONS  ---------------------------------------------------------------------------------------------
 
