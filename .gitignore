@@ -179,3 +179,5 @@ data/RateBeer/breweries.csv
 data/RateBeer/ratings.txt
 data/RateBeer/reviews.txt
 data/RateBeer/users.csv
+.vscode/settings.json
+data/beerAdvocateReviewsUSA.csv

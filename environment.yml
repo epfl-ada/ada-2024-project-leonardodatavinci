@@ -13,6 +13,7 @@ dependencies:
   - seaborn
   - scikit-learn
   - pyarrow
+  - openpyxl
   - pip
   - pip:
       - pycountry-convert
