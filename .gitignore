@@ -181,3 +181,4 @@ data/RateBeer/reviews.txt
 data/RateBeer/users.csv
 .vscode/settings.json
 data/beerAdvocateReviewsUSA.csv
+src/data/
