@@ -10,6 +10,12 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .tab {
+        display: inline-block;
+        margin-left: 40px;
+    }
+  </style>
 </head>
 
 <body>
@@ -53,6 +59,62 @@
           Our findings aim to offer valuable insights for brewers, marketers, and beer enthusiasts, shedding light on
           the complex interplay between seasonality, consumer behavior, and beer appreciation.
         </p>
+        <p>
+          Beer is a drink that people consume all over the year and isn't specifically associated with a season.
+          Therefore, especially for the amount of data we have, we wouldn't think that we can see a seasonal impact if we consider all the beers in our data.
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
+        </div>
+        <p>
+          The graph speaks for itself. If we average over a specific month, considering the beer ratings for all the beers in our data, we can clearly see a seasonal impact.
+          Doing a Kruskall-Wallis test, we see at least one of these monthly averages differs from each other.
+        </p>
+
+        <p>
+          In this work, we want to investigate more on where this difference comes from. There are two possibilities:
+          <ul>
+            <li><b>Avg Rating:</b> There are beers that get a different rating in some seasonal periods compared to others</li>
+            <li><b># Ratings:</b> There are beers that get more ratings in some seasonal periods than in others</li>
+          </ul>
+          
+          But first we introduce you to the data we use througout the invesigation.
+        </p>
+      </section>
+      <section id="data">
+        <h1>Data</h1>
+        <h2>Beer Rating Platform</h2>
+        <p>
+          Our analysis for seasonality in beer ratings is a task that requires very careful work as we deal with small deviations in data.
+          To be sure to not merge different rating systems, we focus on one rating platform with the most ratings: <b>BeerAdvocate</b>.
+        </p>
+        <p>
+          Here we have to make an assumption, which we will need for the Weather analysis. BeerAdvocate doesn't track the location for each rating, but we have a location for each user. Knowing that users don't always conduct their reviews at their home location, we tentatively assume:    
+        </p>
+        <p>
+          <span class="tab"></span><i><b>Assumption: </b>The users location is the same as the location of the rating.</i>
+        </p>
+        <p>
+          Below you can see the distribution of the ratings of BeerAdvocate spread over the entire world. 
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/nr_ratings_BeerAdvocate.html"></object>
+        </div>
+        <p>
+          As we have so much more ratings for the USA than for the other countries, we focus on the USA. This also helps for the Weather analysis in the last step of our work, the data is more fine-grained.
+
+        </p>
+
+        <h2>Ratings vs Reviews</h2>
+        <p>
+          There are two differnt ratings in BeerAdvocate, which evolved over time. Initially they were called Rating and Review. As we can see in the histogram below, ratings are a rather new invention, while reviews are already older. 
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/histNrReviewsVsRatings.html"></object>
+        </div>
+        <!-- <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/histReviewsAndRatingsPerYear.html"></object>
+        </div> -->
 
         <h2>Timeline</h2>
         <div class="visualization-container ratio-3-1">
@@ -63,6 +125,7 @@
           <object type="text/html" data="illustrations/Nicolas/number_of_rows_per_month_year.html"></object>
         </div>
       </section>
+      
 
       <section id="wheather">
         <h1>Wheather</h1>
