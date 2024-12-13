@@ -10,6 +10,12 @@
   <!-- Stylesheet -->
   <link rel="stylesheet" href="assets/css/styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .tab {
+        display: inline-block;
+        margin-left: 40px;
+    }
+  </style>
 </head>
 
 <body>
@@ -20,6 +26,8 @@
         <ul>
           <li><a href="#hero">Hero</a></li>
           <li><a href="#intro">Introduction</a></li>
+          <li><a href="#data">Data</a></li>
+          <li><a href="#Seasonality of Beers">Seasonality of Beers</a></li>
           <li><a href="#wheather">Wheather</a></li>
           <li><a href="#team">Team</a></li>
         </ul>
@@ -53,15 +61,162 @@
           Our findings aim to offer valuable insights for brewers, marketers, and beer enthusiasts, shedding light on
           the complex interplay between seasonality, consumer behavior, and beer appreciation.
         </p>
+        <p>
+          Beer is a drink that people consume all over the year and isn't specifically associated with a season.
+          Therefore, especially for the amount of data we have, we wouldn't think that we can see a seasonal impact if we consider all the beers in our data.
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
+          <p style="position: absolute; bottom: 0; left: 5%;"><i>Fig. 1</i></p>
+        </div>
+        <p>
+          The graph speaks for itself. If we average over a specific month, considering the beer ratings for all the beers in our data, we can clearly see a seasonal impact.
+          Doing a Kruskall-Wallis test, we see at least one of these monthly averages differs from each other.
+        </p>
 
+        <p>
+          In this work, we want to investigate more on where this difference comes from. There are two possibilities:
+          <ul>
+            <li><b>Avg Rating:</b> There are beers that get a different rating in some seasonal periods compared to others</li>
+            <li><b># Ratings:</b> There are beers that get more ratings in some seasonal periods than in others</li>
+          </ul>
+          
+          But first we introduce you to the data we use througout the invesigation.
+        </p>
+      </section>
+      <section id="data">
+        <h1>Data</h1>
+        <h2>Beer Rating Platform</h2>
+        <p>
+          Our analysis for seasonality in beer ratings is a task that requires very careful work as we deal with small deviations in data.
+          To be sure to not merge different rating systems, we focus on one rating platform with the most ratings: <b>BeerAdvocate</b>.
+        </p>
+        <p>
+          Here we have to make an assumption, which we will need for the Weather analysis. BeerAdvocate doesn't track the location for each rating, but we have a location for each user. Knowing that users don't always conduct their reviews at their home location, we tentatively assume:    
+        </p>
+        <p>
+          <span class="tab"></span><i><b>Assumption: </b>The users location is the same as the location of the rating.</i>
+        </p>
+        <p>
+          Below you can see the distribution of the ratings of BeerAdvocate spread over the entire world. 
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/nr_ratings_BeerAdvocate.html"></object>
+        </div>
+        <p>
+          As we have so much more ratings for the USA than for the other countries, we focus on the USA. This also helps for the Weather analysis in the last step of our work, the data is more fine-grained.
+
+        </p>
+
+        <h2>Ratings vs Reviews</h2>
+        <p>
+          There are two differnt ratings in BeerAdvocate, which evolved over time. Initially they were called Rating and Review. As we can see in the histogram below, ratings are a rather new invention, while reviews are already older. We conclude that these are two ways how people can record a beer review. Both rating methods have a rating attribute $r \in [1, 5]$, which reflects the quality of a beer.
+          - In the reviews dataset, $r$ is calculated as a weighted mean over different attributes.
+          - In the rating dataset, $r$ is a continuous number (from 2011-2014, $r$ was discrete with steps of 0.25).
+          
+          Until 2011, there were more reviews than ratings. From 2011 to 2017 there are a lot more ratings than reviews. We conclude to work with data from **the reviews dataset**. It's less data but, more importantly, it's more balanced over the years.
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/histNrReviewsVsRatings.html"></object>
+        </div>
+        <!-- <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/histReviewsAndRatingsPerYear.html"></object>
+        </div> -->
+
+        <p>
+          Furthermore, there is almost no data before 2002, therefore we focus on years after 2002.
+        </p>
         <h2>Timeline</h2>
+
         <div class="visualization-container ratio-3-1">
           <object type="text/html" data="illustrations/Nicolas/timeline.html"></object>
+        </div>
+
+        <p>
+          The following shows how our dataset is reduced throughout the process above. While we lose some data, we think it's necessary to get accurate results.
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/funnelSizeReductionDataset.html"></object>
         </div>
         <h2>Number of reviews per months</h2>
         <div class="visualization-container">
           <object type="text/html" data="illustrations/Nicolas/number_of_rows_per_month_year.html"></object>
         </div>
+      </section>
+      
+      <section id="Seasonality of Beers">
+        <h1>Seasonality of Beers!?</h1>
+        We analize seasonality in beers on the beer-style level. We want to identify beer styles that are more seasonal than others. 
+        <h2>Average Rating</h2>
+        <p>
+          One part where seasonality could occur is in the average rating of each month. More clearly, people could rate beers betters better in one month than they do in another month.
+        </p>
+        <h3>Beer Style Level</h3>
+        <p>
+          For the slightly more than 100 beer classes we computed the grouped mean of the monthly rating and conducted a Kruskall-Wills test to see if one of the means significantly deviates from the other means. With a p-value of 0.99, we couldn't reject the null hypothesis that the grouped mean takes similar values.
+        </p> 
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/groupedBeerStyleAvgRatingLinePlot.html"></object>
+        </div>
+        <p>
+          Therefore, instead of finding the seasonal beer-style in terms of the averge rating, we will search more fine grained. We'll try to find seasonality on the beer level.
+        </p>
+
+        <h3>Beer Level</h3>
+        <p>
+          Again, we computed the grouped mean of the monthly rating, now on beer level instead of beer-style level. This time we can reject the null hypothesis with a p-value of 8.5e-05
+        </p>
+        <div class="visualization-container ratio-3-1">
+          <object type="text/html" data="illustrations/Tim/groupedBeerIdAvgRatingLinePlot.html"></object>
+        </div>
+
+        <p>
+          We can compute the Peak Ratio Index on monthly average rating for every beer. Our winners are the following beers:
+        </p>
+
+        <div class="visualization-container ratio-1-10">
+          <object type="text/html" data="illustrations/Tim/highestPeakRatioRating.html"></object>
+        </div>
+
+        <p>And the least seasonal beers in terms of the Peak Ratio Index:</p>
+        <div class="visualization-container ratio-1-10">
+          <object type="text/html" data="illustrations/Tim/lowestPeakRatioRating.html"></object>
+        </div>
+
+        <p>
+          We set four thresholds t between 0 and 1 and define the top t*100 % beers with highest Peak Ratio as seasonal. We see that the top 10% beers have a seasonal mean rating.
+          <!-- TODO: Maybe conduct a test if the distribution is different. -->
+        </p>
+        <div class="visualization-container ratio-1-10">
+          <object type="text/html" data="illustrations/Tim/differentPeakRatioThresholds.html"></object>
+        </div>
+
+        <p>
+          We can see that the variance reduces, the more seasonal beers we remove from the data.
+        </p>
+        <div class="visualization-container ratio-1-10">
+          <object type="text/html" data="illustrations/Tim/boxGroupedMonthlyMeanNonSeasonal.html"></object>
+        </div>
+
+
+        <p>
+          How does the peak ratio compare to the variance in the data? Is a beer with seasonal rating just a beer with a lot of variance in the monthly means? 
+        </p>
+        <div class="visualization-container ratio-1-10">
+          <object type="text/html" data="illustrations/Tim/peakRatio_vs_monthlyVariance.html"></object>
+        </div>
+
+        <!-- todo: maybe show that they don't correlate -->
+
+
+        <p>
+          Therefore, we conclude that:
+          <ul>
+          <li>The variance over the monthly mean ratings doesn't only come from the seasonality of the beer-ratings but also from other factors as the variance and the Peak Ratio doesn't correlate.</li> 
+          <li>We conducted a set of beers that is differently rated throughout the year and not a set with a lot of variance in the monthly means</li>
+          </ul>
+        </p>
+        
       </section>
 
       <section id="wheather">
