@@ -151,12 +151,19 @@ class JeanneHelper:
 
         return seasonal_stats[['Seasonality_Score']].reset_index()
     
+    def get_rating_per_month(self, df: pd.DataFrame):
+        """
+        Get the list of ratings for each month.
 
+        Parameters:
+        - df: DataFrame with beer reviews.
 
-def get_rating_per_month(df: pd.DataFrame):
-    months = np.sort(df["month"].unique())
-    all_months_vals = []
-    for m in months:
-        month_list = [rating for rating in df[df["month"] == m]["rating"].values]
-        all_months_vals.append(month_list)
-    return all_months_vals
+        Returns:
+        - List of lists, where each sublist contains ratings for a specific month.
+        """
+        months = np.sort(df["month"].unique())
+        all_months_vals = []
+        for m in months:
+            month_list = [rating for rating in df[df["month"] == m]["rating"].values]
+            all_months_vals.append(month_list)
+        return all_months_vals
