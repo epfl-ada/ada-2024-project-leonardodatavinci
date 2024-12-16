@@ -39,7 +39,6 @@ canvas {
 }
 
 .round-div-left {
-  background-color: red;
   opacity: 0.5;
   position: absolute;
   border-radius: 50%;
@@ -52,7 +51,6 @@ canvas {
 }
 
 .round-div-right {
-  background-color: blue;
   opacity: 0.5;
   position: absolute;
   border-radius: 50%;
