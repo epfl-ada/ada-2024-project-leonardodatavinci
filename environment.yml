@@ -12,6 +12,7 @@ dependencies:
   - matplotlib
   - seaborn
   - scikit-learn
+  - pyarrow
   - openpyxl
   - pip
   - pip:
