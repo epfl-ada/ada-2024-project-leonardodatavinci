@@ -24,14 +24,19 @@ canvas {
   align-items: center;
 }
 
+@media (prefers-color-scheme: light) {
+  .hero {
+    background-color: #f5d54725;
+  }
+}
 .hero-title {
   text-align: center;
 }
 
 .hero-title > h1, .hero-title > .h1 {
-  font-family: "Garamond";
+  font-family: "EB Garamond", serif;
   font-size: calc(1.825rem + 4.5vw);
-  font-weight: 900 !important;
+  font-weight: 600 !important;
 }
 
 .hero-title > .lead {
