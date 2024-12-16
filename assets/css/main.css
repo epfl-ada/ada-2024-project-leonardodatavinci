@@ -26,7 +26,7 @@ canvas {
 
 @media (prefers-color-scheme: light) {
   .hero {
-    background-color: #f5d54730;
+    background-color: #f5d54730 !important;
   }
 }
 .hero-title {
