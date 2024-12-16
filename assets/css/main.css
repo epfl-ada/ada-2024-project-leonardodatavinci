@@ -29,6 +29,11 @@ canvas {
     background-color: #f5d54730 !important;
   }
 }
+@media (prefers-color-scheme: dark) {
+  .hero {
+    background-color: #1446A0;
+  }
+}
 .hero-title {
   text-align: center;
 }
