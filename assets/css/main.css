@@ -5,6 +5,14 @@ canvas {
   position: static;
 }
 
+#tsparticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 75vh;
+}
+
 .hero {
   height: 75vh;
   width: 100%;
@@ -16,26 +24,18 @@ canvas {
   align-items: center;
 }
 
+.hero-title {
+  text-align: center;
+}
+
 .hero-title > h1, .hero-title > .h1 {
-  font-family: "Garamond", cursive;
+  font-family: "Garamond";
   font-size: calc(1.825rem + 4.5vw);
   font-weight: 900 !important;
 }
 
 .hero-title > .lead {
   font-size: calc(1.3rem + 0.6vw);
-}
-
-#tsparticles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 75vh;
-}
-
-.hero-title {
-  text-align: center;
 }
 
 .round-div-left {
@@ -50,21 +50,30 @@ canvas {
   width: calc(12vw);
 }
 
+.bottom-bouncing {
+  position: absolute;
+  background-color: red;
+  width: 100%;
+  height: 20px;
+  left: 0px;
+  top: calc(75% - 20px);
+  opacity: 0.5;
+}
+
+.right-bouncing {
+  position: absolute;
+  background-color: #2000ff;
+  width: 50px;
+  height: 75%;
+  top: 0px;
+  opacity: 0.5;
+  right: 0px;
+}
+
 .round-div-right {
   opacity: 0.5;
   position: absolute;
   border-radius: 50%;
-}
-
-#bubble-circle-div {
-  position: absolute;
-  left: 10%;
-  top: 10%;
-  border-radius: 100px;
-  width: 200px;
-  height: 200px;
-  background: #00000022;
-  z-index: 200;
 }
 
 #myScrollspy {

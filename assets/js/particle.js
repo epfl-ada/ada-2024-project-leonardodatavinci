@@ -145,6 +145,18 @@ let particles_img_config = {
           selectors: ".corner",
           mode: "bounce",
           type: "rectangle"
+        },
+        {
+          enable: true,
+          selectors: ".bottom-bouncing",
+          mode: "bounce",
+          type: "rectangle"
+        },
+        {
+          enable: true,
+          selectors: ".right-bouncing",
+          mode: "bounce",
+          type: "rectangle"
         }
       ],
         onClick: {
@@ -167,8 +179,8 @@ let particles_img_config = {
       },
       links: {
         enable: true,
-        distance: 120,
-        width: 1.5,
+        distance: 115,
+        width: 1,
         color: {
           value: "#ff00ff"
         }
@@ -181,7 +193,7 @@ let particles_img_config = {
         }
       },
       size: {
-        value: 10
+        value: 18
       },
       shape: {
           type: "image",
@@ -189,14 +201,14 @@ let particles_img_config = {
             image: [
               {
                 // src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Pixel_art_Wizard_Portrait.svg/1920px-Pixel_art_Wizard_Portrait.svg.png",
-                src: "./assets/img/beer_test2.png",
+                src: "./assets/img/beer_test4.png",
                 width: 100,
-                height: 200
+                height: 100
               },
               {
-                src: "./assets/img/beer_test3.png",
+                src: "./assets/img/beer_test5.png",
                 width: 100,
-                height: 200
+                height: 100
               }
           ]
           },
@@ -248,20 +260,13 @@ let particles_img_config = {
   }
 };
 
-
-
 // particles_config.options.particles.links.color.value = "#0000ff";
-
-
 
 (async () => {
   await loadFull(tsParticles);
-  // await loadAll(tsParticles);
-  // await loadPoissonDiscPlugin(tsParticles);
   await tsParticles.load(particles_img_config).then((container) => {
     // container.loadTheme("dark");
   });  
   await tsParticles.refresh();
 })();
 
-// loadParticles(tsParticles);
