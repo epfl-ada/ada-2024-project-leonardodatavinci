@@ -3,297 +3,390 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <title>ADA 2024 Project - LeonardoDataVinci</title>
-
-  <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .tab {
-        display: inline-block;
-        margin-left: 40px;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LeonardoDataVinci - ADA 2024 Project</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon_io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon_io/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon_io/favicon-16x16.png">
+  <link rel="manifest" href="assets/img/favicon_io/site.webmanifest">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
 <body>
-  <div class="wrapper">
-
-    <header>
-      <nav>
-        <ul>
-          <li><a href="#hero">Hero</a></li>
-          <li><a href="#intro">Introduction</a></li>
-          <li><a href="#data">Data</a></li>
-          <li><a href="#Seasonality of Beers">Seasonality of Beers</a></li>
-          <li><a href="#wheather">Wheather</a></li>
-          <li><a href="#team">Team</a></li>
-        </ul>
-      </nav>
-    </header>
-
-    <main>
-      <section id="hero">
-        <h1>ADA 2024 Project</h1>
-        <p>Hello World!</p>
-      </section>
-
-      <section id="intro">
-        <h1>Introduction</h1>
-        <p>
-          Welcome to <strong>LeonardoDataVinci</strong>, a project dedicated to exploring seasonal fluctuations in beer
-          ratings using data from the BeerAdvocate forum, spanning from 2002 to 2017. Our analysis focuses on
-          understanding how external factors, such as seasonal trends and weather variations, influence beer ratings,
-          aiming to uncover patterns that affect consumer perceptions beyond the intrinsic qualities of the beers
-          themselves.
-        </p>
-        <p>
-          Through comprehensive data analysis, we investigate whether observed seasonal patterns are consistent
-          year-to-year or merely artifacts of aggregated data. Additionally, we examine the impact of seasonal and
-          year-round beers on global rating trends and explore correlations between daily weather conditions and beer
-          ratings at the state level. By integrating supplementary datasets—including climate data, U.S. county climate
-          zones, and census population data—we strive to provide a nuanced understanding of the factors influencing beer
-          ratings across different regions and time periods.
-        </p>
-        <p>
-          Our findings aim to offer valuable insights for brewers, marketers, and beer enthusiasts, shedding light on
-          the complex interplay between seasonality, consumer behavior, and beer appreciation.
-        </p>
-        <p>
-          Beer is a drink that people consume all over the year and isn't specifically associated with a season.
-          Therefore, especially for the amount of data we have, we wouldn't think that we can see a seasonal impact if we consider all the beers in our data.
-        </p>
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
-          <p style="position: absolute; bottom: 0; left: 5%;"><i>Fig. 1</i></p>
-        </div>
-        <p>
-          The graph speaks for itself. If we average over a specific month, considering the beer ratings for all the beers in our data, we can clearly see a seasonal impact.
-          Doing a Kruskall-Wallis test, we see at least one of these monthly averages differs from each other.
-        </p>
-
-        <p>
-          In this work, we want to investigate more on where this difference comes from. There are two possibilities:
-          <ul>
-            <li><b>Avg Rating:</b> There are beers that get a different rating in some seasonal periods compared to others</li>
-            <li><b># Ratings:</b> There are beers that get more ratings in some seasonal periods than in others</li>
-          </ul>
-          
-          But first we introduce you to the data we use througout the invesigation.
-        </p>
-      </section>
-      <section id="data">
-        <h1>Data</h1>
-        <h2>Beer Rating Platform</h2>
-        <p>
-          Our analysis for seasonality in beer ratings is a task that requires very careful work as we deal with small deviations in data.
-          To be sure to not merge different rating systems, we focus on one rating platform with the most ratings: <b>BeerAdvocate</b>.
-        </p>
-        <p>
-          Here we have to make an assumption, which we will need for the Weather analysis. BeerAdvocate doesn't track the location for each rating, but we have a location for each user. Knowing that users don't always conduct their reviews at their home location, we tentatively assume:    
-        </p>
-        <p>
-          <span class="tab"></span><i><b>Assumption: </b>The users location is the same as the location of the rating.</i>
-        </p>
-        <p>
-          Below you can see the distribution of the ratings of BeerAdvocate spread over the entire world. 
-        </p>
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/nr_ratings_BeerAdvocate.html"></object>
-        </div>
-        <p>
-          As we have so much more ratings for the USA than for the other countries, we focus on the USA. This also helps for the Weather analysis in the last step of our work, the data is more fine-grained.
-
-        </p>
-
-        <h2>Ratings vs Reviews</h2>
-        <p>
-          There are two differnt ratings in BeerAdvocate, which evolved over time. Initially they were called Rating and Review. As we can see in the histogram below, ratings are a rather new invention, while reviews are already older. We conclude that these are two ways how people can record a beer review. Both rating methods have a rating attribute $r \in [1, 5]$, which reflects the quality of a beer.
-          - In the reviews dataset, $r$ is calculated as a weighted mean over different attributes.
-          - In the rating dataset, $r$ is a continuous number (from 2011-2014, $r$ was discrete with steps of 0.25).
-          
-          Until 2011, there were more reviews than ratings. From 2011 to 2017 there are a lot more ratings than reviews. We conclude to work with data from **the reviews dataset**. It's less data but, more importantly, it's more balanced over the years.
-        </p>
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/histNrReviewsVsRatings.html"></object>
-        </div>
-        <!-- <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/histReviewsAndRatingsPerYear.html"></object>
-        </div> -->
-
-        <p>
-          Furthermore, there is almost no data before 2002, therefore we focus on years after 2002.
-        </p>
-        <h2>Timeline</h2>
-
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Nicolas/timeline.html"></object>
-        </div>
-
-        <p>
-          The following shows how our dataset is reduced throughout the process above. While we lose some data, we think it's necessary to get accurate results.
-        </p>
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/funnelSizeReductionDataset.html"></object>
-        </div>
-        <h2>Number of reviews per months</h2>
-        <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/number_of_rows_per_month_year.html"></object>
-        </div>
-      </section>
-      
-      <section id="Seasonality of Beers">
-        <h1>Seasonality of Beers!?</h1>
-        We analize seasonality in beers on the beer-style level. We want to identify beer styles that are more seasonal than others. 
-        <h2>Average Rating</h2>
-        <p>
-          One part where seasonality could occur is in the average rating of each month. More clearly, people could rate beers betters better in one month than they do in another month.
-        </p>
-        <h3>Beer Style Level</h3>
-        <p>
-          For the slightly more than 100 beer classes we computed the grouped mean of the monthly rating and conducted a Kruskall-Wills test to see if one of the means significantly deviates from the other means. With a p-value of 0.99, we couldn't reject the null hypothesis that the grouped mean takes similar values.
-        </p> 
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/groupedBeerStyleAvgRatingLinePlot.html"></object>
-        </div>
-        <p>
-          Therefore, instead of finding the seasonal beer-style in terms of the averge rating, we will search more fine grained. We'll try to find seasonality on the beer level.
-        </p>
-
-        <h3>Beer Level</h3>
-        <p>
-          Again, we computed the grouped mean of the monthly rating, now on beer level instead of beer-style level. This time we can reject the null hypothesis with a p-value of 8.5e-05
-        </p>
-        <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/groupedBeerIdAvgRatingLinePlot.html"></object>
-        </div>
-
-        <p>
-          We can compute the Peak Ratio Index on monthly average rating for every beer. Our winners are the following beers:
-        </p>
-
-        <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/highestPeakRatioRating.html"></object>
-        </div>
-
-        <p>And the least seasonal beers in terms of the Peak Ratio Index:</p>
-        <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/lowestPeakRatioRating.html"></object>
-        </div>
-
-        <p>
-          We set four thresholds t between 0 and 1 and define the top t*100 % beers with highest Peak Ratio as seasonal. We see that the top 10% beers have a seasonal mean rating.
-          <!-- TODO: Maybe conduct a test if the distribution is different. -->
-        </p>
-        <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/differentPeakRatioThresholds.html"></object>
-        </div>
-
-        <p>
-          We can see that the variance reduces, the more seasonal beers we remove from the data.
-        </p>
-        <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/boxGroupedMonthlyMeanNonSeasonal.html"></object>
-        </div>
-
-
-        <p>
-          How does the peak ratio compare to the variance in the data? Is a beer with seasonal rating just a beer with a lot of variance in the monthly means? 
-        </p>
-        <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/peakRatio_vs_monthlyVariance.html"></object>
-        </div>
-
-        <!-- todo: maybe show that they don't correlate -->
-
-
-        <p>
-          Therefore, we conclude that:
-          <ul>
-          <li>The variance over the monthly mean ratings doesn't only come from the seasonality of the beer-ratings but also from other factors as the variance and the Peak Ratio doesn't correlate.</li> 
-          <li>We conducted a set of beers that is differently rated throughout the year and not a set with a lot of variance in the monthly means</li>
-          </ul>
-        </p>
-        
-      </section>
-
-      <section id="wheather">
-        <h1>Wheather</h1>
-        <p>Wheather is an important topic that needs to be talked about.</p>
-        <h2>Average temperature per state</h2>
-        <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/avg_temp_state.html"></object>
-        </div>
-        <h2>Heatmap</h2>
-        <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/heatmap.html"></object>
-        </div>
-
-        <h2>Timelapse of temperature</h2>
-        <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/timelapse_temperature.html"></object>
-        </div>
-
-
-      </section>
-
-      <section id="team">
-        <h1>Our Team</h1>
-        <div class="team-container">
-          <div class="team-member">
-            <img src="assets/img/person.png" alt="Tim Kluser">
-            <h2>Tim Kluser</h2>
-            <p>Team Leader, Repo Organizer</p>
-            <a href="https://github.com/klusertim" target="_blank" class="github-link">
-              <img src="assets/img/github-icon.png" alt="GitHub">
-            </a>
-          </div>
-          <div class="team-member">
-            <img src="assets/img/person.png" alt="Jakob Sebastian Behler">
-            <h2>Jakob Sebastian Behler</h2>
-            <p>Part 1</p>
-            <a href="https://github.com/jakobbehler" target="_blank" class="github-link">
-              <img src="assets/img/github-icon.png" alt="GitHub">
-            </a>
-          </div>
-          <div class="team-member">
-            <img src="assets/img/person.png" alt="Jeanne Noëline Anémone Oeuvray">
-            <h2>Jeanne Noëline Anémone Oeuvray</h2>
-            <p>Part 2</p>
-            <a href="https://github.com/oeuvray" target="_blank" class="github-link">
-              <img src="assets/img/github-icon.png" alt="GitHub">
-            </a>
-          </div>
-          <div class="team-member">
-            <img src="assets/img/person.png" alt="Casimir Maximilian Nüsperling">
-            <h2>Casimir Maximilian Nüsperling</h2>
-            <p>Part 3</p>
-            <a href="https://github.com/cmaximilian" target="_blank" class="github-link">
-              <img src="assets/img/github-icon.png" alt="GitHub">
-            </a>
-          </div>
-          <div class="team-member">
-            <img src="assets/img/person.png" alt="Nicolas Filimonov">
-            <h2>Nicolas Filimonov</h2>
-            <p>Part 3</p>
-            <a href="https://github.com/Rayjine" target="_blank" class="github-link">
-              <img src="assets/img/github-icon.png" alt="GitHub">
-            </a>
-          </div>
-        </div>
-      </section>
-      
-      
-
-    </main>
-
-    <footer>
-      <p>&copy; 2024 LeonardoDataVinci. All rights reserved.</p>
-    </footer>
+  <div class="hero">
+    <div id="tsparticles"></div>
+    <div class="hero-title mx-5">
+      <!-- <h1 class="display-1 fw-bold">Brewed for the Season</h1> -->
+      <h1 class="display-1 fw-bold">Hop into the Season</h1>
+      <p class="lead">🍻 Exploring Seasonal Dynamics in Beer Preferences.</p>
+      <div class="round-div-left"></div>
+      <div class="round-div-right"></div>
+      <!-- <div class="corner" style="top: 1vw; left: 1vw"></div>
+      <div class="corner" style="top: 1vw; right: 1vw"></div>
+      <div class="corner" style="bottom: 25vh; left: 1vw"></div>
+      <div class="corner" style="bottom: 25vh; right: 1vw"></div> -->
+    </div>
   </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xxl-1"></div>
+      <nav id="myScrollspy"
+        class="col-lg-3 col-xl-2 col-xxl-2 navbar navbar-light flex-column align-items-stretch p-3 sticky-lg-top"
+        style="height:100%">
+        <a class="navbar-brand" href="#">Contents</a>
+        <nav class="nav nav-pills flex-column">
+          <a class="nav-link" href="#intro">Introduction</a>
+          <a class="nav-link" href="#the-dataset">The dataset</a>
+          <nav class="nav nav-pills flex-column">
+            <a class="nav-link ms-3 my-1" href="#item-1-1">Item 1-1</a>
+            <a class="nav-link ms-3 my-1" href="#item-1-2">Item 1-2</a>
+          </nav>
+          <a class="nav-link" href="#item-3">Item 3</a>
+          <nav class="nav nav-pills flex-column">
+            <a class="nav-link ms-3 my-1" href="#item-3-1">Item 3-1</a>
+            <a class="nav-link ms-3 my-1" href="#item-3-2">Item 3-2</a>
+          </nav>
+          <a class="nav-link" href="#team">Team</a>
+          <a class="nav-link" href="#credits">Credits</a>
+        </nav>
+      </nav>
+      <div class="col-lg-9 col-xl-8 col-xxl-6" data-bs-spy="scroll" data-bs-target="#myScrollspy" data-bs-offset="0"
+        tabindex="0"><br>
+        <!-- <h2 id="abstract">Abstract</h2> -->
+        <section id="intro">
+          <h2>Introduction</h2>
+          <p> Welcome to <strong>LeonardoDataVinci</strong>, a project dedicated to exploring seasonal fluctuations in
+            beer ratings using data from the BeerAdvocate forum, spanning from 2002 to 2017. Our analysis focuses on
+            understanding how external factors, such as seasonal trends and weather variations, influence beer
+            ratings,
+            aiming to uncover patterns that affect consumer perceptions beyond the intrinsic qualities of the beers
+            themselves. </p>
+          <p> Through comprehensive data analysis, we investigate whether observed seasonal patterns are consistent
+            year-to-year or merely artifacts of aggregated data. Additionally, we examine the impact of seasonal and
+            year-round beers on global rating trends and explore correlations between daily weather conditions and
+            beer
+            ratings at the state level. By integrating supplementary datasets—including climate data, U.S. county
+            climate
+            zones, and census population data—we strive to provide a nuanced understanding of the factors influencing
+            beer
+            ratings across different regions and time periods. </p>
+          <p> Our findings aim to offer valuable insights for brewers, marketers, and beer enthusiasts, shedding light
+            on
+            the complex interplay between seasonality, consumer behavior, and beer appreciation. </p>
+          <p> Beer is a drink that people consume all over the year and isn't specifically associated with a season.
+            Therefore, especially for the amount of data we have, we wouldn't think that we can see a seasonal impact
+            if
+            we consider all the beers in our data. </p>
+          <!-- <div class="visualization-container ratio-3-1">
+            <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
+            <p><i>Fig. 1</i></p>
+          </div> -->
+          <!-- <iframe src="illustrations/Tim/generalAvgRatingLinePlot.html" width="100%" height="600px"
+            frameborder="0"></iframe> -->
+          <p> The graph speaks for itself. If we average over a specific month, considering the beer ratings for all
+            the
+            beers in our data, we can clearly see a seasonal impact. Doing a Kruskall-Wallis test, we see at least one
+            of
+            these monthly averages differs from each other. </p>
+          <p> In this work, we want to investigate more on where this difference comes from. There are two
+            possibilities:
+          <ul>
+            <li><b>Avg Rating:</b> There are beers that get a different rating in some seasonal periods compared to
+              others</li>
+            <li><b># Ratings:</b> There are beers that get more ratings in some seasonal periods than in others</li>
+          </ul> But first we introduce you to the data we use througout the invesigation.
+          </p>
+          <p> Through comprehensive data analysis, we investigate whether observed seasonal patterns are consistent
+            year-to-year or merely artifacts of aggregated data. Additionally, we examine the impact of seasonal and
+            year-round beers on global rating trends and explore correlations between daily weather conditions and
+            beer
+            ratings at the state level. By integrating supplementary datasets—including climate data, U.S. county
+            climate
+            zones, and census population data—we strive to provide a nuanced understanding of the factors influencing
+            beer
+            ratings across different regions and time periods. </p>
+          <p> Our findings aim to offer valuable insights for brewers, marketers, and beer enthusiasts, shedding light
+            on
+            the complex interplay between seasonality, consumer behavior, and beer appreciation. </p>
+          <p> Beer is a drink that people consume all over the year and isn't specifically associated with a season.
+            Therefore, especially for the amount of data we have, we wouldn't think that we can see a seasonal impact
+            if
+            we consider all the beers in our data. </p>
+        </section>
+        <section id="the-dataset">
+          <h2>The dataset</h2>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et
+            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet
+            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat,
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+            sea
+            takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+            sed
+            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+            et
+            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+            ipsum
+            dolor sit amet. </p>
+          <section id="item-1-1">
+            <h3>Item 1-1</h3>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore
+              et
+              dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat,
+              sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+              no
+              sea
+              takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+              elitr,
+              sed
+              diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+              eos
+              et
+              accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+              ipsum
+              dolor sit amet. </p>
+          </section>
+          <section id="item-1-2">
+            <h3>Item 1-2</h3>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore
+              et
+              dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat,
+              sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+              no
+              sea
+              takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+              elitr,
+              sed
+              diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+              eos
+              et
+              accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+              ipsum
+              dolor sit amet. </p>
+          </section>
+        </section>
+        <section id="item-3">
+          <h2>Item 3</h2>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore
+            et
+            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+            Stet
+            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+            erat,
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+            sea
+            takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+            sed
+            diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos
+            et
+            accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+            ipsum
+            dolor sit amet. </p>
+          <section id="item-3-1">
+            <h3>Item 3-1</h3>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore
+              et
+              dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat,
+              sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+              no
+              sea
+              takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+              elitr,
+              sed
+              diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+              eos
+              et
+              accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+              ipsum
+              dolor sit amet. </p>
+          </section>
+          <section id="item-3-2">
+            <h3>Item 3-2</h3>
+            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+              labore
+              et
+              dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
+              Stet
+              clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+              amet,
+              consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
+              erat,
+              sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,
+              no
+              sea
+              takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing
+              elitr,
+              sed
+              diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+              eos
+              et
+              accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+              ipsum
+              dolor sit amet. </p>
+          </section>
+        </section>
+        <section id="team">
+          <h2>Team</h2>
+          &nbsp;
+          <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
+            <div class="col">
+              <div class="card border-0">
+                <img
+                  src="assets/img/casimir1.jpg"
+                  class="card-img-top rounded-circle" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Casimir Nüsperling (SV)</h5>
+                  <p class="card-text">website</p>
+                  <a href="https://github.com/cmaximilian" class="btn btn-light btn-sm"><i class="bi bi-github"></i> |
+                    Repository</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-0">
+                <img src="assets/img/jakob1.jpg" class="card-img-top rounded-circle" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Jakob Behler (SV)</h5>
+                  <p class="card-text">fourier transform, other important stuff</p>
+                  <a href="https://github.com/jakobbehler" class="btn btn-light btn-sm"><i class="bi bi-github"></i> |
+                    Repository</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-0">
+                <img
+                src="assets/img/jeanne1.jpg" class="card-img-top rounded-circle" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Jeanne Oeuvray (SV)</h5>
+                  <p class="card-text">seasonal beer expert</p>
+                  <a href="https://github.com/oeuvray" class="btn btn-light btn-sm"><i class="bi bi-github"></i> |
+                    Repository</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-0">
+                <img
+                src="assets/img/nicolas1.jpg" class="card-img-top rounded-circle" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Nicolas Filimonov (SV)</h5>
+                  <p class="card-text">weather master</p>
+                  <a href="https://github.com/Rayjine" class="btn btn-light btn-sm"><i class="bi bi-github"></i> |
+                    Repository</a>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card border-0">
+                <img
+                  src="assets/img/person.png"
+                  class="card-img-top rounded-circle" alt="...">
+                <div class="card-body text-center">
+                  <h5 class="card-title">Tim Kluser (SC)</h5>
+                  <p class="card-text">team leader, repo organizer</p>
+                  <a href="https://github.com/klusertim" class="btn btn-light btn-sm"><i class="bi bi-github"></i> |
+                    Repository</a>
+                </div>
+              </div>
+            </div>
+          </div>
+          &nbsp;
+        </section>
+        <section id="credits">
+          <h2>Credits</h2>
+          <p>The favicon was generated on the website favicon.io using the following <a
+              href="https://github.com/twitter/twemoji/blob/master/assets/svg/1f37a.svg">beer emoji graphics</a> from <a
+              href="https://github.com/twitter/twemoji">Twemoji</a> under the <a
+              href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a> license.</p>
+        </section>
+        &nbsp;
+      </div>
+      <div class="col-xl-2 col-xxl-3"></div>
 
+    </div>
+  </div>
+  <footer class="py-5 text-center bg-primary text-white">
+    <p>This data story was realized as part of a project for the course <a class="text-white" href="https://edu.epfl.ch/coursebook/fr/applied-data-analysis-CS-401">CS-401 Applied Data Analysis</a> at EPFL.</p>
+    <p><a class="text-white" href="https://github.com/epfl-ada/ada-2024-project-leonardodatavinci">Repository of the project</a></p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script src=" https://cdn.jsdelivr.net/npm/tsparticles@3.7.1/tsparticles.bundle.min.js "></script>
+  <!-- <script src=" https://cdn.jsdelivr.net/npm/@tsparticles/all@3.7.1/tsparticles.all.bundle.min.js "></script> -->
+  <script src="assets/js/particle.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // get ref for figures and tables only
+      let refs = document.querySelectorAll('a[href^="#fig"], a[href^="#table"]');
+      let figures = document.querySelectorAll('figure');
+      figures.forEach((figure, index) => {
+        let caption = figure.querySelector('figcaption');
+        caption.textContent = `Figure ${index + 1}: ${caption.textContent}`;
+        refs.forEach(ref => {
+          if (ref.getAttribute('href').substring(1) == figure.id) {
+            ref.textContent = `${index + 1}`;
+            ref.classList.add('fig-ref');
+          }
+        });
+      });
+      let tables = document.querySelectorAll('table');
+      tables.forEach((table, index) => {
+        let caption = table.querySelector('caption');
+        caption.textContent = `Table ${index + 1}: ${caption.textContent}`;
+        refs.forEach(ref => {
+          if (ref.getAttribute('href').substring(1) == table.id) {
+            ref.textContent = `${index + 1}`;
+          }
+        });
+      });
+    });
+  </script>
+
+  <script>
+    
+    function placeRoundDivs() {
+      // left round div
+      document.getElementsByClassName("round-div-left")[0].style.height = document.getElementsByClassName("hero-title")[0].clientHeight + 'px';
+      document.getElementsByClassName("round-div-left")[0].style.width = document.getElementsByClassName("hero-title")[0].clientHeight + 'px';
+      document.getElementsByClassName("round-div-left")[0].style.top = 
+      document.getElementsByClassName("hero-title")[0].offsetTop + 'px';
+      document.getElementsByClassName("round-div-left")[0].style.left= (document.getElementsByClassName("hero-title")[0].offsetLeft - 0.5*document.getElementsByClassName("hero-title")[0].clientHeight) + 'px';
+      // right rounf div
+      document.getElementsByClassName("round-div-right")[0].style.height = document.getElementsByClassName("hero-title")[0].clientHeight + 'px';
+      document.getElementsByClassName("round-div-right")[0].style.width = document.getElementsByClassName("hero-title")[0].clientHeight + 'px';
+      document.getElementsByClassName("round-div-right")[0].style.top = 
+      document.getElementsByClassName("hero-title")[0].offsetTop + 'px';
+      document.getElementsByClassName("round-div-right")[0].style.left= (document.getElementsByClassName("hero-title")[0].offsetLeft + document.getElementsByClassName("hero-title")[0].clientWidth - 0.5*document.getElementsByClassName("hero-title")[0].clientHeight) + 'px';
+    }
+    document.addEventListener("DOMContentLoaded", placeRoundDivs);
+    window.addEventListener('resize', placeRoundDivs);
+  </script>
 
 </body>
 
