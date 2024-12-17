@@ -88,6 +88,28 @@ canvas {
 
 #myScrollspy {
   height: 100%;
+  text-align: justify;
+}
+
+object {
+  width: 100%;
+  height: 300px;
+}
+
+figcaption > span {
+  margin-right: 0.7rem;
+  color: #db3069;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+a[href^="#fig"] {
+  color: #db3069;
+}
+
+a[href^="#table"] {
+  color: #db3069;
 }
 
 /*!

@@ -201,12 +201,12 @@ let particles_img_config = {
             image: [
               {
                 // src: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/Pixel_art_Wizard_Portrait.svg/1920px-Pixel_art_Wizard_Portrait.svg.png",
-                src: "./assets/img/beer_test4.png",
+                src: "./assets/img/beer_green.png",
                 width: 100,
                 height: 100
               },
               {
-                src: "./assets/img/beer_test5.png",
+                src: "./assets/img/beer_brown.png",
                 width: 100,
                 height: 100
               }
