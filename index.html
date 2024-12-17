@@ -83,7 +83,7 @@
           <h2>Define seasonality</h2>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <figure id="fig-avg-ratings">
-            <iframe src="illustrations/Tim/generalAvgRatingLinePlot.html" frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
+            <iframe data-src="illustrations/Tim/generalAvgRatingLinePlot.html" frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
             <figcaption> <strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
           </figure>
           <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet (Figure <a href="#fig-avg-ratings">X</a>). Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -248,11 +248,17 @@
       document.getElementsByClassName("round-div-right")[0].style.left= (document.getElementsByClassName("hero-title")[0].offsetLeft + document.getElementsByClassName("hero-title")[0].clientWidth - 0.5*size) + 'px';
     }
 
-
+    function loadIFrames() {
+      const iframes = document.querySelectorAll('iframe[data-src]');
+      iframes.forEach(iframe => {
+        iframe.setAttribute('src', iframe.getAttribute('data-src'));
+      });
+    }
 
     document.addEventListener("DOMContentLoaded", labelRefs);
     document.addEventListener("DOMContentLoaded", placeRoundDivs);
     window.addEventListener('resize', placeRoundDivs);
+    document.addEventListener('DOMContentLoaded', loadIFrames);
     
   </script>
 
