@@ -107,7 +107,12 @@
         </section>
         <section id="seasonality">
           <h2>Define seasonality</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+          <figure id="fig-avg-ratings">
+            <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
+            <figcaption> <strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
+          </figure>
+          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet (Figure <a href="#fig-avg-ratings">X</a>). Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           <section id="fourier">
             <h4>Fourier analysis: Can we observe seasonality year-to-year?</h4>
             <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -236,7 +241,7 @@
       let figures = document.querySelectorAll('figure');
       figures.forEach((figure, index) => {
         let caption = figure.querySelector('figcaption');
-        caption.textContent = `Figure ${index + 1}: ${caption.textContent}`;
+        caption.innerHTML = `<span>Figure ${index + 1}</span>${caption.innerHTML}`;
         refs.forEach(ref => {
           if (ref.getAttribute('href').substring(1) == figure.id) {
             ref.textContent = `${index + 1}`;
@@ -247,7 +252,7 @@
       let tables = document.querySelectorAll('table');
       tables.forEach((table, index) => {
         let caption = table.querySelector('caption');
-        caption.textContent = `Table ${index + 1}: ${caption.textContent}`;
+        caption.innerHTML = `Table ${index + 1}: ${caption.innerHTML}`;
         refs.forEach(ref => {
           if (ref.getAttribute('href').substring(1) == table.id) {
             ref.textContent = `${index + 1}`;
