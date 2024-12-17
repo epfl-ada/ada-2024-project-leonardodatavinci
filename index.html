@@ -22,7 +22,7 @@
 <body>
   <div class="hero">
     <div id="tsparticles"></div>
-    <div class="hero-title mx-5">
+    <div class="hero-title text-center mx-5">
       <h1 class="display-1 fw-bold">Hop into the Season</h1>
       <p class="lead">🍻 Exploring Seasonal Dynamics in Beer Preferences.</p>
       <!-- These divs are hidden in the hero and make sure the particles bounce nicely of the title -->
@@ -33,9 +33,7 @@
   <div class="container">
     <div class="row">
       <div class="col-xxl-1"></div>
-      <nav id="myScrollspy"
-        class="col-lg-3 col-xl-2 col-xxl-2 navbar navbar-light flex-column align-items-stretch p-3 sticky-lg-top"
-        style="height:100%">
+      <nav id="myScrollspy" class="col-lg-3 col-xl-2 col-xxl-2 navbar navbar-light flex-column align-items-stretch p-3 sticky-lg-top" style="height:100%">
         <a class="navbar-brand mt-1" href="#">Contents</a>
         <nav class="nav nav-pills flex-column">
           <a class="nav-link active" href="#intro">Abstract</a>
@@ -48,8 +46,7 @@
           <a class="nav-link" href="#credits">Credits</a>
         </nav>
       </nav>
-      <div class="col-lg-9 col-xl-8 col-xxl-6" data-bs-spy="scroll" data-bs-target="#myScrollspy" data-bs-offset="0"
-        tabindex="0"><br>
+      <div class="col-lg-9 col-xl-8 col-xxl-6" data-bs-spy="scroll" data-bs-target="#myScrollspy" data-bs-offset="0" tabindex="0"><br>
         <section id="intro">
           <p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017. First, we establish if we can find any seasonal patterns, if they are consistent year-to-year and we develop metrics to quantify seasonality. Second, we investigate whether certain specific beer types drive the seasonality we observe and by which mechanisms. Does seasonality stem from differing average ratings, differing number of reviews, or both? Third, we investigate factors that could explain the seasonality such as climate or weather.</p>
         </section>
@@ -69,7 +66,7 @@
           <h2>Define seasonality</h2>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <figure id="fig-avg-ratings">
-            <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
+            <iframe src="illustrations/Tim/generalAvgRatingLinePlot.html" frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
             <figcaption> <strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
           </figure>
           <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet (Figure <a href="#fig-avg-ratings">X</a>). Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>

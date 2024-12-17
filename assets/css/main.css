@@ -50,10 +50,6 @@ a[href^="#table"] {
   align-items: center;
 }
 
-.hero-title {
-  text-align: center;
-}
-
 .hero-title > h1, .hero-title > .h1 {
   font-family: "EB Garamond", serif;
   font-size: calc(1.825rem + 4.5vw);
