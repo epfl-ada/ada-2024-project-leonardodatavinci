@@ -13,10 +13,10 @@
   <link rel="manifest" href="assets/img/favicon_io/site.webmanifest">
   <!-- Bootrap CSS styling -->
   <link rel="stylesheet" href="assets/css/main.css">
-  <!-- Fonts -->
+  <!-- Hero font, only loads needed characters-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600&display=swap&text=Hop%into%the%Season" rel="stylesheet">
 </head>
 
 <body>
@@ -182,12 +182,13 @@
     <p>This data story was realized as part of a project for the course <a class="text-white" href="https://edu.epfl.ch/coursebook/fr/applied-data-analysis-CS-401">CS-401 Applied Data Analysis</a> at EPFL.</p>
     <p><a class="text-white" href="https://github.com/epfl-ada/ada-2024-project-leonardodatavinci">Repository of the project</a></p>
   </footer>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src=" https://cdn.jsdelivr.net/npm/tsparticles@3.7.1/tsparticles.bundle.min.js "></script>
-  <script src="assets/js/particle.js"></script>
 
+  <!-- <script src=" https://cdn.jsdelivr.net/npm/tsparticles@3.7.1/tsparticles.bundle.min.js "></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/slim@3.7.1/tsparticles.slim.bundle.min.js" defer></script>
+  <script src="assets/js/particle.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+  crossorigin="anonymous"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // get ref for figures and tables only

@@ -263,10 +263,11 @@ let particles_img_config = {
 // particles_config.options.particles.links.color.value = "#0000ff";
 
 (async () => {
-  await loadFull(tsParticles);
+  await loadSlim(tsParticles);
+  //await loadFull(tsParticles);
   await tsParticles.load(particles_img_config).then((container) => {
     // container.loadTheme("dark");
   });  
-  await tsParticles.refresh();
+  //await tsParticles.refresh();
 })();
 
