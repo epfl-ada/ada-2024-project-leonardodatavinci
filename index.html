@@ -17,44 +17,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap" rel="stylesheet">
-
-  <script>
-    /*document.addEventListener('DOMContentLoaded', function() {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-bs-theme', 'dark');
-      }
-    });*/
-    document.addEventListener('DOMContentLoaded', function() {
-      function applyTheme() {
-        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          document.documentElement.setAttribute('data-bs-theme', 'dark');
-        } else {
-          document.documentElement.setAttribute('data-bs-theme', 'light');
-        }
-      }
-      // Apply theme on initial load
-      applyTheme();
-      // Listen for changes in the prefers-color-scheme media query
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
-    });
-  </script>
 </head>
 
 <body>
   <div class="hero">
     <div id="tsparticles"></div>
     <div class="hero-title mx-5">
-      <!-- <h1 class="display-1 fw-bold">Brewed for the Season</h1> -->
       <h1 class="display-1 fw-bold">Hop into the Season</h1>
       <p class="lead">🍻 Exploring Seasonal Dynamics in Beer Preferences.</p>
-      <div class="round-div-left d-none d-lg-block"></div>
-      <div class="round-div-right d-none d-lg-block"></div>
-      <!-- <div class="bottom-bouncing"></div>
-      <div class="right-bouncing"></div> -->
-      <!-- <div class="corner" style="top: 1vw; left: 1vw"></div>
-      <div class="corner" style="top: 1vw; right: 1vw"></div>
-      <div class="corner" style="bottom: 25vh; left: 1vw"></div>
-      <div class="corner" style="bottom: 25vh; right: 1vw"></div> -->
+      <!-- These divs are hidden in the hero and make sure the particles bounce nicely of the title -->
+      <div class="round-div-left position-absolute rounded-circle d-none d-lg-block"></div>
+      <div class="round-div-right position-absolute rounded-circle d-none d-lg-block"></div>
     </div>
   </div>
   <div class="container">
@@ -67,18 +40,9 @@
         <nav class="nav nav-pills flex-column">
           <a class="nav-link active" href="#intro">Abstract</a>
           <a class="nav-link" href="#the-dataset">The dataset</a>
-          <a class="nav-link" href="#seasonality">Define seasonality</a>
-          <nav class="nav nav-pills flex-column">
-            <a class="nav-link ms-3 my-1" href="#fourier">Fourier analysis</a>
-            <a class="nav-link ms-3 my-1" href="#scores">Seasonality scoring</a>
-          </nav>
-          <a class="nav-link" href="#beerTypes">Analyse beer types</a>
-          <!-- <a class="nav-link" href="#item-2">Beer type seasonality</a> -->
-          <a class="nav-link" href="#meteo">Assess meteo impact</a>
-          <nav class="nav nav-pills flex-column">
-            <a class="nav-link ms-3 my-1" href="#climate">Climate</a>
-            <a class="nav-link ms-3 my-1" href="#weather">Weather</a>
-          </nav>
+          <a class="nav-link" href="#seasonality">Seasonality</a>
+          <a class="nav-link" href="#beerTypes">Beer types</a>
+          <a class="nav-link" href="#meteo">Meteo impact</a>
           <a class="nav-link" href="#conclusion">Conclusion</a>
           <a class="nav-link" href="#team">Team</a>
           <a class="nav-link" href="#credits">Credits</a>
@@ -86,16 +50,8 @@
       </nav>
       <div class="col-lg-9 col-xl-8 col-xxl-6" data-bs-spy="scroll" data-bs-target="#myScrollspy" data-bs-offset="0"
         tabindex="0"><br>
-        <!-- <h2 id="abstract">Abstract</h2> -->
         <section id="intro">
-          <!-- <h2>Introduction</h2> -->
           <p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017. First, we establish if we can find any seasonal patterns, if they are consistent year-to-year and we develop metrics to quantify seasonality. Second, we investigate whether certain specific beer types drive the seasonality we observe and by which mechanisms. Does seasonality stem from differing average ratings, differing number of reviews, or both? Third, we investigate factors that could explain the seasonality such as climate or weather.</p>
-          <!-- <div class="visualization-container ratio-3-1">
-            <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
-            <p><i>Fig. 1</i></p>
-          </div> -->
-          <!-- <iframe src="illustrations/Tim/generalAvgRatingLinePlot.html" width="100%" height="600px"
-            frameborder="0"></iframe> -->
         </section>
         <section id="the-dataset">
           <h2>The dataset</h2>
@@ -147,18 +103,12 @@
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
         </section>
         <section id="team">
-          
           <h2>Team</h2>
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
-            <path id="svg-github" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
-          </svg>
           &nbsp;
           <div class="row row-cols-2 row-cols-sm-2 row-cols-md-3 row-cols-lg-3 g-4">
             <div class="col">
               <div class="card border-0">
-                <img
-                  src="assets/img/casimir.jpg"
-                  class="card-img-top rounded-circle" alt="...">
+                <img src="assets/img/casimir.jpg" class="card-img-top rounded-circle">
                 <div class="card-body text-center">
                   <h5 class="card-title">Casimir Nüsperling (SV)</h5>
                   <p class="card-text">website</p>
@@ -170,7 +120,7 @@
             </div>
             <div class="col">
               <div class="card border-0">
-                <img src="assets/img/jakob.jpg" class="card-img-top rounded-circle" alt="...">
+                <img src="assets/img/jakob.jpg" class="card-img-top rounded-circle">
                 <div class="card-body text-center">
                   <h5 class="card-title">Jakob Behler (SV)</h5>
                   <p class="card-text">fourier transform, other important stuff</p>
@@ -183,7 +133,7 @@
             <div class="col">
               <div class="card border-0">
                 <img
-                src="assets/img/jeanne.jpg" class="card-img-top rounded-circle" alt="...">
+                src="assets/img/jeanne.jpg" class="card-img-top rounded-circle">
                 <div class="card-body text-center">
                   <h5 class="card-title">Jeanne Oeuvray (SV)</h5>
                   <p class="card-text">seasonal beer expert</p>
@@ -196,7 +146,7 @@
             <div class="col">
               <div class="card border-0">
                 <img
-                src="assets/img/nicolas.jpg" class="card-img-top rounded-circle" alt="...">
+                src="assets/img/nicolas.jpg" class="card-img-top rounded-circle">
                 <div class="card-body text-center">
                   <h5 class="card-title">Nicolas Filimonov (SV)</h5>
                   <p class="card-text">weather master</p>
@@ -208,9 +158,7 @@
             </div>
             <div class="col">
               <div class="card border-0">
-                <img
-                  src="assets/img/tim.jpeg"
-                  class="card-img-top rounded-circle" alt="...">
+                <img src="assets/img/tim.jpeg" class="card-img-top rounded-circle">
                 <div class="card-body text-center">
                   <h5 class="card-title">Tim Kluser (SC)</h5>
                   <p class="card-text">team leader, repo organizer</p>
@@ -292,6 +240,22 @@
     }
     document.addEventListener("DOMContentLoaded", placeRoundDivs);
     window.addEventListener('resize', placeRoundDivs);
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      function applyTheme() {
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.documentElement.setAttribute('data-bs-theme', 'dark');
+        } else {
+          document.documentElement.setAttribute('data-bs-theme', 'light');
+        }
+      }
+      // Apply theme on initial load
+      applyTheme();
+      // Listen for changes in the prefers-color-scheme media query
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
+    });
   </script>
 
 </body>

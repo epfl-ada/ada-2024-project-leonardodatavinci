@@ -1,29 +1,4 @@
 @charset "UTF-8";
-canvas {
-  height: 100%;
-  width: 100%;
-  position: static;
-}
-
-#tsparticles {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50vh;
-}
-
-.hero {
-  height: 50vh;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  background: transparent;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 @media (prefers-color-scheme: light) {
   .hero {
     background-color: #f5d54730 !important;
@@ -34,61 +9,10 @@ canvas {
     background-color: #1446A0;
   }
 }
-.hero-title {
-  text-align: center;
-}
-
-.hero-title > h1, .hero-title > .h1 {
-  font-family: "EB Garamond", serif;
-  font-size: calc(1.825rem + 4.5vw);
-  font-weight: 600 !important;
-}
-
-.hero-title > .lead {
-  font-size: calc(1.3rem + 0.6vw);
-}
-
-.round-div-left {
-  opacity: 0.5;
-  position: absolute;
-  border-radius: 50%;
-}
-
-.corner {
-  position: absolute;
-  height: calc(12vw);
-  width: calc(12vw);
-}
-
-.bottom-bouncing {
-  position: absolute;
-  background-color: red;
-  width: 100%;
-  height: 20px;
-  left: 0px;
-  top: calc(75% - 20px);
-  opacity: 0.5;
-}
-
-.right-bouncing {
-  position: absolute;
-  background-color: #2000ff;
-  width: 50px;
-  height: 75%;
-  top: 0px;
-  opacity: 0.5;
-  right: 0px;
-}
-
-.round-div-right {
-  opacity: 0.5;
-  position: absolute;
-  border-radius: 50%;
-}
-
-#myScrollspy {
+canvas {
   height: 100%;
-  text-align: justify;
+  width: 100%;
+  position: static;
 }
 
 object {
@@ -110,6 +34,44 @@ a[href^="#fig"] {
 
 a[href^="#table"] {
   color: #db3069;
+}
+
+#tsparticles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+}
+
+#myScrollspy {
+  height: 100%;
+  text-align: justify;
+}
+
+.hero {
+  height: 50vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-title {
+  text-align: center;
+}
+
+.hero-title > h1, .hero-title > .h1 {
+  font-family: "EB Garamond", serif;
+  font-size: calc(1.825rem + 4.5vw);
+  font-weight: 600 !important;
+}
+
+.hero-title > .lead {
+  font-size: calc(1.3rem + 0.6vw);
 }
 
 /*!
