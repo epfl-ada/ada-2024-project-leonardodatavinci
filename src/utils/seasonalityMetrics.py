@@ -440,3 +440,100 @@ def timeseries_seasonality_metric(df):
     peak_ratio = closest_magnitude / second_max_magnitude
     peak_ratio = np.round(peak_ratio, 4)
     return peak_ratio, avg_amplitude
+
+### FUNCTIONS FOR INTERPOLATION TO FIT STL DATA ###
+
+# iterate over the data
+def iterate_months(start_date, end_date):
+    current_date = start_date.replace(day=1)  # Ensure we start at the first of the month
+    while current_date <= end_date:
+        yield current_date
+        # Increment the current date by one month
+        if current_date.month == 12:
+            current_date = current_date.replace(year=current_date.year + 1, month=1)
+        else:
+            current_date = current_date.replace(month=current_date.month + 1)
+
+# interpolates missing values for beers that don't have a rating for a month
+def interpolate_missing_vals_monthly(df: pd.DataFrame, col_to_interpolate: str) :
+    """ 
+    Takes a dataframe df with:
+    - date column as index: which contains values of the form 1.mm.yyyy, but some months are missing
+    - a column which whose values we want to interpolate
+    And takes a col_to_interpolate:
+    - the column name for the column to interpolate in the dataframe 
+    """
+    # interpolate missing values
+    dateArr = []
+    valArr = []
+
+    for date in iterate_months(df.index.min(), df.index.max()):
+        dateArr.append(date)
+        if date in df.index:
+            valArr.append(df.loc[date, col_to_interpolate])
+        else:
+            valArr.append(np.nan)
+    
+    df = pd.DataFrame(data={col_to_interpolate: valArr, "date": dateArr})
+    df = df.set_index("date")  
+
+    nrValsInterpolated = df[col_to_interpolate].isna().sum()
+
+    #interpolation
+    df[col_to_interpolate] = df[col_to_interpolate].interpolate(method="linear", axis=0)
+
+    return df, nrValsInterpolated
+
+# PLOT WITH CONFIDENCE INTERVAL FUNCTIONS
+def monthly_avg_ci_fig(df: pd.DataFrame, title: str):
+    """ 
+        Takes a dataframe and does the avg rating per season graph with confidence interval
+    """
+    stats_df = df.groupby("month")["rating"].agg(["mean", "count", "std"]).reset_index()
+    months = stats_df["month"].to_numpy()
+    means = stats_df["mean"].to_numpy()
+    ci_high = np.array([m + 1.96*s/np.sqrt(c) for _, m, c, s in stats_df.values])
+    ci_low = np.array([m - 1.96*s/np.sqrt(c) for _, m, c, s in stats_df.values])
+
+    # print(ci_high)
+    print(f'Variance over the means: {np.var(means)}')
+    fig = px.line(x=months, y=means,
+                title=title,
+                labels={'x': 'Month', 'y': 'Avg Rating'},
+                )
+    fig.add_scatter(
+            x=np.concat((months, months[::-1])), # x, then x reversed
+            y=np.concat((ci_high, ci_low[::-1])), # upper, then lower reversed
+            fill='toself',
+            fillcolor='rgba(0,100,80,0.2)',
+            line=dict(color='rgba(255,255,255,0)'),
+            hoverinfo="skip",
+            showlegend=False
+        )
+    return fig
+
+def plot_with_ci(stats_df:pd.DataFrame, title: str) -> go.Figure:
+    """ 
+    it takes a dataframe with three colums: month, mean and count and returns a plotly figure with confidence interval
+    """
+    months = stats_df["month"].to_numpy()
+    means = stats_df["mean"].to_numpy()
+    ci_high = np.array([m + 1.96*s/np.sqrt(c) for _, m, c, s in stats_df.values])
+    ci_low = np.array([m - 1.96*s/np.sqrt(c) for _, m, c, s in stats_df.values])
+
+    # print(ci_high)
+    print(f'Variance over the means: {np.var(means)}')
+    fig = px.line(x=months, y=means,
+                title=title,
+                labels={'x': 'Month', 'y': 'Avg Rating'},
+                )
+    fig.add_scatter(
+            x=np.concat((months, months[::-1])), # x, then x reversed
+            y=np.concat((ci_high, ci_low[::-1])), # upper, then lower reversed
+            fill='toself',
+            fillcolor='rgba(0,100,80,0.2)',
+            line=dict(color='rgba(255,255,255,0)'),
+            hoverinfo="skip",
+            showlegend=False
+        )
+    return fig
