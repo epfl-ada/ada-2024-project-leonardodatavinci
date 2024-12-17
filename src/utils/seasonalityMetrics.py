@@ -165,7 +165,6 @@ def plot_STL(data):
 
     return fig
 
-
 def calculate_avg_yearly_amplitude(df):
     """
     Calculates amplitude of every year in an oscillating signal then takes the average. 
@@ -208,7 +207,6 @@ def report_STL_amplitude_seasonality_score(seasonal, print_report = True):
     
     return np.round(avg_yearly_amplitude, 4)
 
-
 # Fourier Transform functions based on STL data -----------------------------------------------------------------------------------
 
 def FFT_dataframe(df, cutoff_freq=0.5):
@@ -234,7 +232,6 @@ def FFT_dataframe(df, cutoff_freq=0.5):
     df_freq_filtered = df_freq[df_freq['Frequency (cycles per month)'] <= cutoff_freq]
 
     return df_freq
-
 
 def fourier_analysis(ratings, cutoff_freq=0.5):
     """
@@ -267,7 +264,6 @@ def FFT_magnitude_of_closest_freq_to_target_freq(df_FFT, target_frequency):
 
     return closest_magnitude, closest_freq
 
-    
 def find_second_FFT_peak(df_FFT, freq_to_exlude, window_size):
     """
     to find the biggest peak that is not a given peak (here not the peak of 12-month period). This is the freq_to_exclude.
@@ -329,7 +325,6 @@ def report_fourier_analysis(ratings, cutoff_freq=0.15):
     print(f"This means the most significant period is: {max_period:.6f} months.")
     return max_freq, max_magnitude, closest_magnitude
 
-
 def plot_frequency_spectrum(ratings, cutoff_freq=0.15):
     """
     Perform Fourier analysis on the input ratings time series and plot the frequency spectrum.
@@ -346,30 +341,18 @@ def plot_frequency_spectrum(ratings, cutoff_freq=0.15):
     
 
 
-    # Plot using Plotly Express with log scale for Magnitude
-    fig = px.line(df_freq_filtered, x='Frequency (cycles per month)', y='Magnitude', 
-                  title="Frequency Spectrum of Beer Ratings Time Series",
-                  labels={'Frequency (cycles per month)': 'Frequency', 'Magnitude': 'Magnitude'})
-    
-    # Set y-axis to log scale
-    fig.update_layout(yaxis_type="log")
-    
-    # Show the plot
-    fig.show()
-
-    return fig
 
 
 # FULL PIPELINE ---------------------------------------------------------------------------------------------------------------
 
   
-def full_seasonality_report(df):
+def seasonality_report_plot(df, title = "Seasonality Report"):
+      
       """
       combines all STL and Fourier Transform functions to one analysis pipeline.
-      1) preps the raw ratings data
-      2) splitting timeseries into seasonal and non-seasonal components
-      3) gives a seasonality amplitude score based on only the seasonal component
-      4) returns frequency specrum of the seasonal signal, to verify 12-month periodicity
+
+      1) splitting timeseries into seasonal and non-seasonal components
+      2) returns frequency specrum of the seasonal signal, to verify 12-month periodicity
 
       input: 
       -  df containing 'rating', 'month', and 'year' columns.
@@ -377,19 +360,43 @@ def full_seasonality_report(df):
       -  none
 
       """
-   
-      # Perform STL decomposition
+      print(df.shape)
       stl = STL(df)
       result = stl.fit()
       seasonal = result.seasonal
-
-      fig_stl = plot_STL(df)
-      report_STL_amplitude_seasonality_score(seasonal, print_report = True)
+      # Apply Fourier Transform
+      # Apply Fourier Transform
+      df_freq_filtered = fourier_analysis(seasonal, cutoff_freq=0.5)
       
-      fig_fft = plot_frequency_spectrum(seasonal, cutoff_freq=0.5)
-      report_fourier_analysis(seasonal, cutoff_freq=0.15)
+      frequencies = df_freq_filtered['Frequency (cycles per month)']
+      magnitudes = df_freq_filtered['Magnitude']
+      fig = make_subplots(
+        rows=3, cols=1, shared_xaxes=False, vertical_spacing=0.15,
+        subplot_titles=("Original Series", "Seasonal", "Frequency Spectrum")
+      )
+ 
+      # Add the original series
+      fig.add_trace(go.Scatter(x=df.index, y=df[df.columns[0]], name='Original'), row=1, col=1)    
+      # Add the seasonal component
+      fig.add_trace(go.Scatter(x=df.index, y=result.seasonal, name='Seasonal'), row=2, col=1)    
+      # Add the frequency spectrum
+      fig.add_trace(go.Scatter(x=frequencies, y=magnitudes, name='Frequency Spectrum (log)', mode='lines'), row=3, col=1)
 
-      return fig_stl, fig_fft
+      # Update layout
+      fig.update_layout(height=800, title=title, showlegend=False)
+      fig.update_yaxes(title_text='Value', row=1, col=1)
+      fig.update_yaxes(title_text='Magnitude', row=2, col=1)
+      fig.update_yaxes(title_text='Magnitude', row=3, col=1)
+
+      fig.update_xaxes(title_text="Months", row=1, col=1)
+      fig.update_xaxes(title_text="Months", row=2, col=1)
+      fig.update_xaxes(title_text="Frequency (Hz)", row=3, col=1)
+      fig.update_yaxes(type="log", row=3, col=1)
+        
+      
+      #fig.show()    
+
+      return fig
 
 def timeseries_seasonality_metric(df):
     """
