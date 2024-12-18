@@ -16,15 +16,6 @@
   <link rel="preload" href="assets/img/beer_green.png" as="image">
   <link rel="preload" href="assets/img/beer_brown.png" as="image">
   <script>
-    /*function applyTheme() {
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-bs-theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-bs-theme', 'light');
-      }
-    }
-    document.addEventListener('DOMContentLoaded', applyTheme);
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);*/
     (function() {
       function setTheme() {
         const theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -124,7 +115,7 @@
               <div class="card border-0">
                 <img src="assets/img/casimir.jpg" class="card-img-top rounded-circle" loading="lazy" alt="face casimir nusperling">
                 <div class="card-body text-center">
-                  <h5 class="card-title">Casimir Nüsperling (SV)</h5>
+                  <h3 class="h5 card-title">Casimir Nüsperling (SV)</h3>
                   <p class="card-text">website</p>
                   <a href="https://github.com/cmaximilian" class="btn btn-light btn-sm">
                     <img src="assets/img/github.svg" alt="github icon" loading="lazy"> | Repository
@@ -136,7 +127,7 @@
               <div class="card border-0">
                 <img src="assets/img/jakob.jpg" class="card-img-top rounded-circle" loading="lazy" alt="face jakob behler">
                 <div class="card-body text-center">
-                  <h5 class="card-title">Jakob Behler (SV)</h5>
+                  <h3 class="h5 card-title">Jakob Behler (SV)</h3>
                   <p class="card-text">fourier transform, other important stuff</p>
                   <a href="https://github.com/jakobbehler" class="btn btn-light btn-sm">
                     <img src="assets/img/github.svg" alt="github icon" loading="lazy"> | Repository
@@ -149,7 +140,7 @@
                 <img
                 src="assets/img/jeanne.jpg" class="card-img-top rounded-circle" loading="lazy" alt="face jeanne oeuvray">
                 <div class="card-body text-center">
-                  <h5 class="card-title">Jeanne Oeuvray (SV)</h5>
+                  <h3 class="h5 card-title">Jeanne Oeuvray (SV)</h3>
                   <p class="card-text">seasonal beer expert</p>
                   <a href="https://github.com/oeuvray" class="btn btn-light btn-sm">
                     <img src="assets/img/github.svg" alt="github icon" loading="lazy"> | Repository
@@ -161,7 +152,7 @@
               <div class="card border-0">
                 <img src="assets/img/nicolas.jpg" class="card-img-top rounded-circle" loading="lazy" alt="face nicolas filimonov">
                 <div class="card-body text-center">
-                  <h5 class="card-title">Nicolas Filimonov (SV)</h5>
+                  <h3 class="h5 card-title">Nicolas Filimonov (SV)</h3>
                   <p class="card-text">weather master</p>
                   <a href="https://github.com/Rayjine" class="btn btn-light btn-sm">
                     <img src="assets/img/github.svg" alt="github icon" loading="lazy"> | Repository
@@ -173,7 +164,7 @@
               <div class="card border-0">
                 <img src="assets/img/tim.jpeg" class="card-img-top rounded-circle" loading="lazy" alt="face time kluser">
                 <div class="card-body text-center">
-                  <h5 class="card-title">Tim Kluser (SC)</h5>
+                  <h3 class="h5 card-title">Tim Kluser (SC)</h3>
                   <p class="card-text">team leader, repo organizer</p>
                   <a href="https://github.com/klusertim" class="btn btn-light btn-sm">
                     <img src="assets/img/github.svg" alt="github icon" loading="lazy"> | Repository
@@ -258,7 +249,7 @@
     document.addEventListener("DOMContentLoaded", labelRefs);
     document.addEventListener("DOMContentLoaded", placeRoundDivs);
     window.addEventListener('resize', placeRoundDivs);
-    document.addEventListener('DOMContentLoaded', loadIFrames);
+    document.addEventListener('load', loadIFrames);
     
   </script>
 
