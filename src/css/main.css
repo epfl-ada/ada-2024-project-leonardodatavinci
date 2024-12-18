@@ -26,6 +26,10 @@ a[href^="#table"] {
   color: #db3069;
 }
 
+.fig-ref {
+  color: #db3069 !important;
+}
+
 #tsparticles {
   position: absolute;
   top: 0;

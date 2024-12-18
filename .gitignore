@@ -10,7 +10,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -183,3 +182,4 @@ data/RateBeer/users.csv
 data/beerAdvocateReviewsUSA.csv
 src/data/
 data/
+node_modules

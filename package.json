@@ -1,0 +1,19 @@
+{
+  "name": "leaonardodatavinci",
+  "version": "1.0.0",
+  "description": "This project investigates seasonal fluctuations in beer ratings using the reviews on the forum “BeerAdvocate” from 2002 until 2017. We can observe that, averaged over all years, ratings vary by season.",
+  "scripts": {
+    "build": "node build.js",
+    "minify-js": "uglifyjs src/js/particles.js -o dist/js/particles.min.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "critical": "^4.0.1",
+    "cssnano": "^7.0.6",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.49",
+    "purgecss": "^7.0.2",
+    "uglify-js": "^3.19.3"
+  }
+}

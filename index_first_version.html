@@ -8,7 +8,7 @@
   <title>ADA 2024 Project - LeonardoDataVinci</title>
 
   <!-- Stylesheet -->
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="src/css/styles.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     .tab {
@@ -66,7 +66,7 @@
           Therefore, especially for the amount of data we have, we wouldn't think that we can see a seasonal impact if we consider all the beers in our data.
         </p>
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/generalAvgRatingLinePlot.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/generalAvgRatingLinePlot.html"></object>
           <p style="position: absolute; bottom: 0; left: 5%;"><i>Fig. 1</i></p>
         </div>
         <p>
@@ -101,7 +101,7 @@
           Below you can see the distribution of the ratings of BeerAdvocate spread over the entire world. 
         </p>
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/nr_ratings_BeerAdvocate.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/nr_ratings_BeerAdvocate.html"></object>
         </div>
         <p>
           As we have so much more ratings for the USA than for the other countries, we focus on the USA. This also helps for the Weather analysis in the last step of our work, the data is more fine-grained.
@@ -117,10 +117,10 @@
           Until 2011, there were more reviews than ratings. From 2011 to 2017 there are a lot more ratings than reviews. We conclude to work with data from **the reviews dataset**. It's less data but, more importantly, it's more balanced over the years.
         </p>
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/histNrReviewsVsRatings.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/histNrReviewsVsRatings.html"></object>
         </div>
         <!-- <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/histReviewsAndRatingsPerYear.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/histReviewsAndRatingsPerYear.html"></object>
         </div> -->
 
         <p>
@@ -129,18 +129,18 @@
         <h2>Timeline</h2>
 
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Nicolas/timeline.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/nicolas/timeline.html"></object>
         </div>
 
         <p>
           The following shows how our dataset is reduced throughout the process above. While we lose some data, we think it's necessary to get accurate results.
         </p>
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/funnelSizeReductionDataset.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/funnelSizeReductionDataset.html"></object>
         </div>
         <h2>Number of reviews per months</h2>
         <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/number_of_rows_per_month_year.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/nicolas/number_of_rows_per_month_year.html"></object>
         </div>
       </section>
       
@@ -156,7 +156,7 @@
           For the slightly more than 100 beer classes we computed the grouped mean of the monthly rating and conducted a Kruskall-Wills test to see if one of the means significantly deviates from the other means. With a p-value of 0.99, we couldn't reject the null hypothesis that the grouped mean takes similar values.
         </p> 
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/groupedBeerStyleAvgRatingLinePlot.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/groupedBeerStyleAvgRatingLinePlot.html"></object>
         </div>
         <p>
           Therefore, instead of finding the seasonal beer-style in terms of the averge rating, we will search more fine grained. We'll try to find seasonality on the beer level.
@@ -167,7 +167,7 @@
           Again, we computed the grouped mean of the monthly rating, now on beer level instead of beer-style level. This time we can reject the null hypothesis with a p-value of 8.5e-05
         </p>
         <div class="visualization-container ratio-3-1">
-          <object type="text/html" data="illustrations/Tim/groupedBeerIdAvgRatingLinePlot.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/groupedBeerIdAvgRatingLinePlot.html"></object>
         </div>
 
         <p>
@@ -175,12 +175,12 @@
         </p>
 
         <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/highestPeakRatioRating.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/highestPeakRatioRating.html"></object>
         </div>
 
         <p>And the least seasonal beers in terms of the Peak Ratio Index:</p>
         <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/lowestPeakRatioRating.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/lowestPeakRatioRating.html"></object>
         </div>
 
         <p>
@@ -188,14 +188,14 @@
           <!-- TODO: Maybe conduct a test if the distribution is different. -->
         </p>
         <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/differentPeakRatioThresholds.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/differentPeakRatioThresholds.html"></object>
         </div>
 
         <p>
           We can see that the variance reduces, the more seasonal beers we remove from the data.
         </p>
         <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/boxGroupedMonthlyMeanNonSeasonal.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/boxGroupedMonthlyMeanNonSeasonal.html"></object>
         </div>
 
 
@@ -203,7 +203,7 @@
           How does the peak ratio compare to the variance in the data? Is a beer with seasonal rating just a beer with a lot of variance in the monthly means? 
         </p>
         <div class="visualization-container ratio-1-10">
-          <object type="text/html" data="illustrations/Tim/peakRatio_vs_monthlyVariance.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/tim/peakRatio_vs_monthlyVariance.html"></object>
         </div>
 
         <!-- todo: maybe show that they don't correlate -->
@@ -224,16 +224,16 @@
         <p>Wheather is an important topic that needs to be talked about.</p>
         <h2>Average temperature per state</h2>
         <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/avg_temp_state.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/nicolas/avg_temp_state.html"></object>
         </div>
         <h2>Heatmap</h2>
         <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/heatmap.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/nicolas/heatmap.html"></object>
         </div>
 
         <h2>Timelapse of temperature</h2>
         <div class="visualization-container">
-          <object type="text/html" data="illustrations/Nicolas/timelapse_temperature.html"></object>
+          <object type="text/html" data="src/plotly-html-graphs/nicolas/timelapse_temperature.html"></object>
         </div>
 
 
