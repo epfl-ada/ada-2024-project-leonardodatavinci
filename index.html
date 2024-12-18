@@ -58,18 +58,40 @@
         </section>
         <section id="the-dataset">
           <h2>The dataset</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <section id="plattform">
-            <h3 class="h4">Rating plattform</h3>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
-          </section>
-          <section id="reviewsVsRatings"> 
-            <h3 class="h4">Reviews vs ratings</h3>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.</p>
+          <p>The data used for this project was extracted from the beer rating website BeerAdvocate, where users can publicly rate beers. We focused on data from BeerAdvocate only to ensure metrics stay as consistent as possible. The dataset contains information about users, ratings, and breweries from 1998 until 2018.</p>
+          <p>
+            All ratings contain certain "minimal data". For the scope of this project four rating attributes were of particular interest to us: 
+            </p><ul>
+              <li>Rating score: a computed score ranging from 1 to 5, with 5 indicating the highest quality.</li>
+              <li>Timestamp: the exact date and time the rating was uploaded to BeerAdvocate.</li>
+              <li>User location: the US state or country specified by the user when creating an account for BeerAdvocate.</li>
+              <li>Beer style: a categorical attribute grouping beers into styles such as American IPA or Belgian Strong Dark Ale.</li>
+            </ul>
+            Ratings with supplementary information are called reviews; they additionally include textual descriptions of the beer and numeric scores for appearance, aroma, palate, taste and overall impression.
+          <p></p>
+          <p>
+            For the analysis, we applied the following criteria to refine the dataset:
+            </p><ul>
+              <li>Time-range: only ratings from 2002 to 2017 were included. Before 2002 too little data was available. Data for 2018 covered the first few months only, making it unsuited for seasonal analysis.</li>
+              <li>Rating method: reviews only. BeerAdvocate changed its rating system a few times. Reviews were the original rating method. In 2011 a different rating method without additional information such as textual descriptions was allowed. We chose to use reviews only. It is less data, but more importantly, it's more balanced over the years.</li>
+              <li>Location: United States only. Firstly the vast majority of the user base is from the US. Secondly focusing on this region enables more meaningful climate and weather analysis. We assume that the user's location when rating a beer is the same as the location (state) specified when creating the BeerAdvocate account.</li>
+            </ul>
+          <p></p>
+          <section id="terminology">
+            <h3 class="h4">Terminology</h3>
+            <p>
+              MAKE SURE TERMINOLOGY IS CONSISTENT. DEFINE TERMINOLOGY.
+              </p><ul>
+                <li>Average Rating: The mean score of all ratings (ranging from 1 to 5) submitted for a selected subset of beers within a specific month.</li>
+                <li>Number of Ratings / Popularity: The total count of ratings submitted for a selected subset of beers within a specific month.</li>
+              </ul>
+              IS AVG RATINGS ALWAYS SELECTED OVER A SUBSET? WHY INCLUDE TWO TERMS (N OF RATINGS AND POPULARITY) FOR THE SAME THING?
+            <p></p>
           </section>
         </section>
         <section id="seasonality">
-          <h2>Define seasonality</h2>
+          <h2>Seasonality</h2>
+          <h3 class="h4">Why we started this project</h3>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <figure id="fig-avg-ratings">
             <iframe data-src="src/plotly-html-graphs/tim/generalAvgRatingLinePlot.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
@@ -77,12 +99,29 @@
           </figure>
           <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet (Figure <a href="#fig-avg-ratings" class="fig-ref">1</a>). Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           <section id="fourier">
-            <h3 class="h4">Fourier analysis: Can we observe seasonality year-to-year?</h3>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <h3 class="h4">Can we observe seasonality year-to-year?</h3>
+            <p>To verify if the average trend across years is driven by a recurring annual pattern, we first apply STL decomposition to extract the monthly rating average's seasonal component, separating it from the trend and noise. Then, we use the Fourier transform to confirm that the dominant period is 12 months.</p>
+            <figure id="fig-fourier">
+              <iframe data-src="src/plotly-html-graphs/jakob/frequency_spectrum.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
+              <figcaption><span>Figure 2</span><strong>Fourier transform of the seasonal component of the average ratings.</strong> The dominant period is 12 months.</figcaption>
+            </figure>
+            <p>The Fourier transform of the signal shows a dominant frequency of 0.085, corresponding to a period of 11.75 months. Since the discrete Fourier transform does not evaluate 0.083 (the exact 12-month period), 0.085 is the closest match. The significance of this peak is quantified using the peak-ratio, comparing the 12-month peak's magnitude to the next largest peak. Here, the 12-month peak is over three times larger, indicating strong evidence for annual seasonality.</p>
           </section>
           <section id="scores">
-            <h3 class="h4">Seasonality scoring</h3>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+            <h3 class="h4">Definition of a score to quantify seasonality</h3>
+            <p>
+              Two metrics assess seasonality in a time series: <i>mean amplitude</i> and <i>peak ratio</i>.
+              </p><ul>
+                <li>Mean amplitude: measures the average strength of the seasonal signal by calculating the amplitude for each period and averaging them.</li>
+                <li>Peak ratio: verifies whether the signal is significantly 12-month periodic. It is the ratio of the largest peak (excluding the 12-month peak) to the 12-month peak. A high ratio indicates the 12-month period dominates.</li>
+              </ul>
+            <p></p>
+            <figure>
+              <div class="text-center">
+                <img src="assets/img/metric_explanation_1.png" alt="Two schematic line plots visualizing what the peak ratio and mean amplitude." loading="lazy" width="425" style="width: min(100%, 425px);">
+              </div>
+              <figcaption><span>Figure 3</span><strong>Schematic plots for peak ratio and mean amplitude.</strong></figcaption>
+            </figure>
           </section>
         </section>
         <section id="beerTypes">
