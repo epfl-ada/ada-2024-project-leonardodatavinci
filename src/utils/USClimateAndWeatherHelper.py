@@ -55,10 +55,15 @@ def get_most_populated_climate_zone(climate_df):
 
 def extract_data_from_excel(file_path: str) -> pd.DataFrame:
     """
-    Load an Excel file and extract its data.
-
-    Parameters:
-    file_path (str): Path to the Excel file to load.
+    Load data from an Excel file and reshape it to a long format.
+    
+    This function loads data from an Excel file and reshapes it to a long format, 
+    where each row represents a specific value for a specific year and month.
+    
+    The function assumes the first sheet in the Excel file contains the data.
+    
+    Args:
+    file_path (str): The path to the Excel file to load.
 
     Returns:
     pd.DataFrame: A DataFrame with the data from the Excel file.
