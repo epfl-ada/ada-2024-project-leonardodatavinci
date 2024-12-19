@@ -55,42 +55,8 @@
         <section id="intro">
           <p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017. First, we establish if we can find any seasonal patterns, if they are consistent year-to-year and we develop metrics to quantify seasonality. Second, we investigate whether certain specific beer types drive the seasonality we observe and by which mechanisms. Does seasonality stem from differing average ratings, differing number of reviews, or both? Third, we investigate factors that could explain the seasonality such as climate or weather.</p>
         </section>
-        <section id="the-dataset">
-          <h2>The dataset</h2>
-          <p>The data used for this project was extracted from the beer rating website BeerAdvocate, where users can publicly rate beers. We focused on data from BeerAdvocate only to ensure metrics stay as consistent as possible. The dataset contains information about users, ratings, and breweries from 1998 until 2018.</p>
-          <p>
-            All ratings contain certain "minimal data". For the scope of this project four rating attributes were of particular interest to us: 
-            <ul>
-              <li>Rating score: a computed score ranging from 1 to 5, with 5 indicating the highest quality.</li>
-              <li>Timestamp: the exact date and time the rating was uploaded to BeerAdvocate.</li>
-              <li>User location: the US state or country specified by the user when creating an account for BeerAdvocate.</li>
-              <li>Beer style: a categorical attribute grouping beers into styles such as American IPA or Belgian Strong Dark Ale.</li>
-            </ul>
-            Ratings with supplementary information are called reviews; they additionally include textual descriptions of the beer and numeric scores for appearance, aroma, palate, taste and overall impression.
-          </p>
-          <p>
-            For the analysis, we applied the following criteria to refine the dataset:
-            <ul>
-              <li>Time-range: only ratings from 2002 to 2017 were included. Before 2002 too little data was available. Data for 2018 covered the first few months only, making it unsuited for seasonal analysis.</li>
-              <li>Rating method: reviews only. BeerAdvocate changed its rating system a few times. Reviews were the original rating method. In 2011 a different rating method without additional information such as textual descriptions was allowed. We chose to use reviews only. It is less data, but more importantly, it's more balanced over the years.</li>
-              <li>Location: United States only. Firstly the vast majority of the user base is from the US. Secondly focusing on this region enables more meaningful climate and weather analysis. We assume that the user's location when rating a beer is the same as the location (state) specified when creating the BeerAdvocate account.</li>
-            </ul>
-          </p>
-
-          <section id="terminology">
-            <h3 class="h4">Terminology</h3>
-            <p>
-              MAKE SURE TERMINOLOGY IS CONSISTENT. DEFINE TERMINOLOGY.
-              <ul>
-                <li>Average Rating: The mean score of all ratings (ranging from 1 to 5) submitted for a selected subset of beers within a specific month.</li>
-                <li>Number of Ratings / Popularity: The total count of ratings submitted for a selected subset of beers within a specific month.</li>
-              </ul>
-              IS AVG RATINGS ALWAYS SELECTED OVER A SUBSET? WHY INCLUDE TWO TERMS (N OF RATINGS AND POPULARITY) FOR THE SAME THING?
-            </p>
-          </section>
-        </section>
         <section id="seasonality">
-          <h2>Seasonality</h2>
+          <h2>Let's talk seasonality</h2>
           <h3 class="h4">Why we started this project</h3>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <figure id="fig-avg-ratings">
@@ -226,10 +192,31 @@
           <p>Beer icons were generated using <a href="https://cdn.openai.com/papers/dall-e-3.pdf">Dall-E 3</a>. The favicon was generated on the website <a href="https://favicon.io/">favicon.io</a>.</p>
           <p>Hero animation uses <a href="https://github.com/tsparticles/tsparticles">tsParticles</a> by Matteo Bruni. CSS styling uses Bootstrap v5.</p>
         </section>
+        <section id="the-dataset">
+          <h2>The dataset</h2>
+          <p>The data used for this project was extracted from the beer rating website BeerAdvocate, where users can publicly rate beers. We focused on data from BeerAdvocate only to ensure metrics stay as consistent as possible. The dataset contains information about users, ratings, and breweries from 1998 until 2018.</p>
+          <p>
+            All ratings contain certain "minimal data". For the scope of this project four rating attributes were of particular interest to us: 
+            <ul>
+              <li>Rating score: a computed score ranging from 1 to 5, with 5 indicating the highest quality.</li>
+              <li>Timestamp: the exact date and time the rating was uploaded to BeerAdvocate.</li>
+              <li>User location: the US state or country specified by the user when creating an account for BeerAdvocate.</li>
+              <li>Beer style: a categorical attribute grouping beers into styles such as American IPA or Belgian Strong Dark Ale.</li>
+            </ul>
+            Ratings with supplementary information are called reviews; they additionally include textual descriptions of the beer and numeric scores for appearance, aroma, palate, taste and overall impression.
+          </p>
+          <p>
+            For the analysis, we applied the following criteria to refine the dataset:
+            <ul>
+              <li>Time-range: only ratings from 2002 to 2017 were included. Before 2002 too little data was available. Data for 2018 covered the first few months only, making it unsuited for seasonal analysis.</li>
+              <li>Rating method: reviews only. BeerAdvocate changed its rating system a few times. Reviews were the original rating method. In 2011 a different rating method without additional information such as textual descriptions was allowed. We chose to use reviews only. It is less data, but more importantly, it's more balanced over the years.</li>
+              <li>Location: United States only. Firstly the vast majority of the user base is from the US. Secondly focusing on this region enables more meaningful climate and weather analysis. We assume that the user's location when rating a beer is the same as the location (state) specified when creating the BeerAdvocate account.</li>
+            </ul>
+          </p>
+        </section>
         &nbsp;
       </div>
       <div class="col-xl-2 col-xxl-3"></div>
-
     </div>
   </div>
   <footer class="py-5 text-center bg-primary text-white">
