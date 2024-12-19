@@ -54,6 +54,20 @@ fs.writeFileSync('index.html', dom.serialize());
 //     }
 //   });
 
+// Iterate through all iframes and update data-src attribute
+const iframes = document.querySelectorAll('iframe[data-src]');
+iframes.forEach(iframe => {
+  const dataSrc = iframe.getAttribute('data-src');
+  const newSrc = dataSrc.replace('src/', 'dist/');
+  iframe.setAttribute('data-src', newSrc);
+
+  // Copy the file from src to dist directory
+  const srcPath = dataSrc;
+  const distPath = newSrc;
+  fs.copyFileSync(srcPath, distPath);
+});
+
+
 // Purge unused CSS
 const purgeCSSResults = new PurgeCSS().purge({
   content: ['index.html'],
