@@ -40,6 +40,21 @@ function labelRefs() {
 // Execute the labelRefs function
 labelRefs();
 
+// Iterate through all iframes and update data-src attribute
+const iframes = document.querySelectorAll('iframe[data-src]');
+iframes.forEach(iframe => {
+  const dataSrc = iframe.getAttribute('data-src');
+  const newSrc = dataSrc.replace('src/', 'dist/');
+  
+  iframe.setAttribute('data-src', newSrc);
+
+
+  // Copy the file from src to dist directory
+  const srcPath = dataSrc;
+  const distPath = newSrc;
+  fs.copyFileSync(srcPath, distPath);
+});
+
 // Save the modified HTML back to the file
 fs.writeFileSync('index.html', dom.serialize());
 
@@ -53,20 +68,6 @@ fs.writeFileSync('index.html', dom.serialize());
 //       fs.writeFileSync('assets/css/reduced.min.css.map', result.map.toString());
 //     }
 //   });
-
-// Iterate through all iframes and update data-src attribute
-const iframes = document.querySelectorAll('iframe[data-src]');
-iframes.forEach(iframe => {
-  const dataSrc = iframe.getAttribute('data-src');
-  const newSrc = dataSrc.replace('src/', 'dist/');
-  iframe.setAttribute('data-src', newSrc);
-
-  // Copy the file from src to dist directory
-  const srcPath = dataSrc;
-  const distPath = newSrc;
-  fs.copyFileSync(srcPath, distPath);
-});
-
 
 // Purge unused CSS
 const purgeCSSResults = new PurgeCSS().purge({
@@ -86,12 +87,11 @@ purgeCSSResults.then(result => {
       if (result.map) {
         fs.writeFileSync('dist/css/style.min.css.map', result.map.toString());
       }
-
       // Inline critical CSS
       critical.generate({
         inline: true,
         base: '.',
-        src: 'index.html',
+        src: 'index.html',        
         css: ['dist/css/style.min.css'],
         target: {
           html: 'index.html',
