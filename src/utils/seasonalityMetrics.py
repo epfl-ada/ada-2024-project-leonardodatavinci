@@ -4,7 +4,7 @@ import plotly.express as px
 from statsmodels.tsa.seasonal import STL
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
+from scipy.stats import sem, t
 
 # PREPROCESSING FUNCTIONS ---------------------------------------------------------------------------------------------
 def calculate_monthly_means(df, year_highpass=None):
@@ -379,6 +379,54 @@ def STL_plot(df, unit = "Average Ratings", title = "STL Decomposition"):
 
       return fig
 
+def plot_average_over_years(df):
+
+    # Calculate mean ratings and 95% confidence intervals
+    grouped = df.groupby("month")["rating"]
+    mean_ratings = grouped.mean()
+    ci = grouped.apply(lambda x: t.interval(0.95, len(x)-1, loc=x.mean(), scale=sem(x)) if len(x) > 1 else (x.mean(), x.mean()))
+
+    # Convert to DataFrame
+    average_ratings = pd.DataFrame({
+        "month": mean_ratings.index,
+        "rating": mean_ratings.values,
+        "ci_lower": [c[0] for c in ci],
+        "ci_upper": [c[1] for c in ci]
+    })
+
+    # Create the shaded confidence interval plot
+    fig = go.Figure()
+
+    # Add the shaded confidence interval
+    fig.add_trace(go.Scatter(
+        x=average_ratings["month"].tolist() + average_ratings["month"][::-1].tolist(),
+        y=average_ratings["ci_upper"].tolist() + average_ratings["ci_lower"][::-1].tolist(),
+        fill='toself',
+        fillcolor='rgba(0,100,250,0.2)',  # Light blue shade
+        line=dict(color='rgba(255,255,255,0)'),
+        showlegend=False,
+        hoverinfo="skip"
+    ))
+
+    # Add the mean line
+    fig.add_trace(go.Scatter(
+        x=average_ratings["month"],
+        y=average_ratings["rating"],
+        mode='lines',
+        line=dict(color='blue', width=2),
+        name='Average Rating',
+        showlegend=False
+    ))
+
+    # Update layout
+    fig.update_layout(
+        xaxis_title="Month",
+        yaxis_title="Average Rating",
+        width=600,
+        margin=dict(l=50, r=25, t=20, b=50),
+        template="plotly_white"
+    )
+    return fig
 
 
 
