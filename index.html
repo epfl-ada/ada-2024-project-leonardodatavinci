@@ -94,7 +94,7 @@
           <h3 class="h4">Why we started this project</h3>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
           <figure id="fig-avg-ratings">
-            <iframe data-src="src/plotly-html-graphs/tim/generalAvgRatingLinePlot.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
+            <iframe data-src="dist/plotly-html-graphs/tim/generalAvgRatingLinePlot.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
             <figcaption><span>Figure 1</span><strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
           </figure>
           <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet (Figure <a href="#fig-avg-ratings" class="fig-ref">1</a>). Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
@@ -102,7 +102,7 @@
             <h3 class="h4">Can we observe seasonality year-to-year?</h3>
             <p>To verify if the average trend across years is driven by a recurring annual pattern, we first apply STL decomposition to extract the monthly rating average's seasonal component, separating it from the trend and noise. Then, we use the Fourier transform to confirm that the dominant period is 12 months.</p>
             <figure id="fig-fourier">
-              <iframe data-src="src/plotly-html-graphs/jakob/frequency_spectrum.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
+              <iframe data-src="dist/plotly-html-graphs/jakob/frequency_spectrum.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
               <figcaption><span>Figure 2</span><strong>Fourier transform of the seasonal component of the average ratings.</strong> The dominant period is 12 months.</figcaption>
             </figure>
             <p>The Fourier transform of the signal shows a dominant frequency of 0.085, corresponding to a period of 11.75 months. Since the discrete Fourier transform does not evaluate 0.083 (the exact 12-month period), 0.085 is the closest match. The significance of this peak is quantified using the peak-ratio, comparing the 12-month peak's magnitude to the next largest peak. Here, the 12-month peak is over three times larger, indicating strong evidence for annual seasonality.</p>

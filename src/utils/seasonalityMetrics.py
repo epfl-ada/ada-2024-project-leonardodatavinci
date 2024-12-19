@@ -346,7 +346,7 @@ def plot_frequency_spectrum(ratings, cutoff_freq=0.15):
 # FULL PIPELINE ---------------------------------------------------------------------------------------------------------------
 
   
-def seasonality_report_plot(df, title = "Seasonality Report"):
+def seasonality_report_plot(df, unit = "Average Ratings", title = "Seasonality Report", top_margin = 20):
       
       """
       combines all STL and Fourier Transform functions to one analysis pipeline.
@@ -383,17 +383,18 @@ def seasonality_report_plot(df, title = "Seasonality Report"):
       fig.add_trace(go.Scatter(x=frequencies, y=magnitudes, name='Frequency Spectrum (log)', mode='lines'), row=3, col=1)
 
       # Update layout
-      fig.update_layout(height=800, title=title, showlegend=False)
-      fig.update_yaxes(title_text='Value', row=1, col=1)
-      fig.update_yaxes(title_text='Magnitude', row=2, col=1)
+      fig.update_layout(height=800, title = title, width=600, showlegend=False)
+      fig.update_yaxes(title_text=unit, row=1, col=1)
+      fig.update_yaxes(title_text=unit, row=2, col=1)
       fig.update_yaxes(title_text='Magnitude', row=3, col=1)
 
       fig.update_xaxes(title_text="Months", row=1, col=1)
       fig.update_xaxes(title_text="Months", row=2, col=1)
       fig.update_xaxes(title_text="Frequency (Hz)", row=3, col=1)
       fig.update_yaxes(type="log", row=3, col=1)
-        
-      
+    
+      fig.update_layout(margin=dict(t=top_margin))
+    
       #fig.show()    
 
       return fig
@@ -447,6 +448,48 @@ def timeseries_seasonality_metric(df):
     peak_ratio = closest_magnitude / second_max_magnitude
     peak_ratio = np.round(peak_ratio, 4)
     return peak_ratio, avg_amplitude
+
+def signal_to_noise_ratio(df):
+    """
+    Calculates the Signal-to-Noise Ratio (SNR) for the 12-month periodic peak in a time series.
+
+    Parameters:
+    df (pd.DataFrame): A dataframe where the index is a datetime object representing months (e.g., '1-12-2013') 
+                       and the first column contains the values of interest (e.g., gene expression, temperature, etc.).
+
+    Returns:
+    float: The SNR in decibels (dB), quantifying the prominence of the 12-month peak relative to noise.
+    """
+    # Extract seasonal component using STL decomposition
+    stl = STL(df)
+    result = stl.fit()
+    seasonal = result.seasonal
+
+    # Compute the Fourier Transform of the seasonal component
+    df_Fourier = FFT_dataframe(seasonal, cutoff_freq=0.5)
+
+    # Identify the magnitude and frequency of the primary peak (12-month period)
+    target_freq = 1 / 12  # Frequency corresponding to a 12-month period
+    closest_magnitude, closest_freq = FFT_magnitude_of_closest_freq_to_target_freq(df_Fourier, target_freq)
+
+    # Define a window around the target frequency to exclude from noise
+    window_size = 0.01
+    df_freq_excluding_adjacent = df_Fourier[
+        ~df_Fourier['Frequency (cycles per month)'].between(
+            closest_freq - window_size, closest_freq + window_size
+        )
+    ]
+
+    # Calculate the mean amplitude of the noise (remaining frequencies)
+    noise_mean = np.mean(df_freq_excluding_adjacent['Magnitude'])
+
+    # Compute the SNR and convert to decibels (dB)
+    snr = closest_magnitude / noise_mean if noise_mean != 0 else np.inf
+    snr_dB = 20 * np.log10(snr)
+    return np.round(snr_dB, 4)
+
+
+
 
 ### FUNCTIONS FOR INTERPOLATION TO FIT STL DATA ###
 
