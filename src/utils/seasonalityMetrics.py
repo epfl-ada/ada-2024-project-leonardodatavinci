@@ -343,6 +343,45 @@ def plot_frequency_spectrum(ratings, cutoff_freq=0.15):
 
 
 
+def STL_plot(df, unit = "Average Ratings", title = "STL Decomposition"):
+      
+      """
+      plots the STL results of a timeseries
+      """
+
+      stl = STL(df)
+      result = stl.fit()
+
+      fig = make_subplots(
+        rows=4, cols=1, shared_xaxes=False, vertical_spacing=0.15,
+        subplot_titles=("Original Series", "Trend", "Seasonal", "Residual"))
+ 
+    
+      fig.add_trace(go.Scatter(x=df.index, y=df[df.columns[0]], name='Original'), row=1, col=1)    
+
+      fig.add_trace(go.Scatter(x=df.index, y=result.trend, name='Trend'), row=2, col=1)    
+
+      fig.add_trace(go.Scatter(x=df.index, y=result.seasonal, name='Seasonal', mode='lines'), row=3, col=1)
+    
+      fig.add_trace(go.Scatter(x=df.index, y=result.resid, name='Residual', mode='lines'), row=4, col=1)
+
+      # Update layout
+      fig.update_layout(height=800, width=500,title = title, showlegend=False)
+      fig.update_yaxes(title_text=unit, row=1, col=1)
+      fig.update_yaxes(title_text=unit, row=2, col=1)
+      fig.update_yaxes(title_text=unit, row=3, col=1)
+      fig.update_yaxes(title_text=unit, row=4, col=1)
+     
+      fig.update_xaxes(title_text="Months", row=1, col=1)
+      fig.update_xaxes(title_text="Months", row=2, col=1)
+      fig.update_xaxes(title_text="Months", row=3, col=1)
+      fig.update_xaxes(title_text="Months", row=4, col=1)
+
+      return fig
+
+
+
+
 # FULL PIPELINE ---------------------------------------------------------------------------------------------------------------
 
   
