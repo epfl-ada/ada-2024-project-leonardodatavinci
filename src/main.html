@@ -56,26 +56,55 @@
           <p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017. First, we establish if we can find any seasonal patterns, if they are consistent year-to-year and we develop metrics to quantify seasonality. Second, we investigate whether certain specific beer types drive the seasonality we observe and by which mechanisms. Does seasonality stem from differing average ratings, differing number of reviews, or both? Third, we investigate factors that could explain the seasonality such as climate or weather.</p>
         </section>
         <section id="the-dataset">
-          <h2>The dataset</h2>
-          <p>The data used for this project was extracted from the beer rating website BeerAdvocate, where users can publicly rate beers. We focused on data from BeerAdvocate only to ensure metrics stay as consistent as possible. The dataset contains information about users, ratings, and breweries from 1998 until 2018.</p>
-          <p>
-            All ratings contain certain "minimal data". For the scope of this project four rating attributes were of particular interest to us: 
-            <ul>
-              <li>Rating score: a computed score ranging from 1 to 5, with 5 indicating the highest quality.</li>
-              <li>Timestamp: the exact date and time the rating was uploaded to BeerAdvocate.</li>
-              <li>User location: the US state or country specified by the user when creating an account for BeerAdvocate.</li>
-              <li>Beer style: a categorical attribute grouping beers into styles such as American IPA or Belgian Strong Dark Ale.</li>
-            </ul>
-            Ratings with supplementary information are called reviews; they additionally include textual descriptions of the beer and numeric scores for appearance, aroma, palate, taste and overall impression.
-          </p>
-          <p>
-            For the analysis, we applied the following criteria to refine the dataset:
-            <ul>
-              <li>Time-range: only ratings from 2002 to 2017 were included. Before 2002 too little data was available. Data for 2018 covered the first few months only, making it unsuited for seasonal analysis.</li>
-              <li>Rating method: reviews only. BeerAdvocate changed its rating system a few times. Reviews were the original rating method. In 2011 a different rating method without additional information such as textual descriptions was allowed. We chose to use reviews only. It is less data, but more importantly, it's more balanced over the years.</li>
-              <li>Location: United States only. Firstly the vast majority of the user base is from the US. Secondly focusing on this region enables more meaningful climate and weather analysis. We assume that the user's location when rating a beer is the same as the location (state) specified when creating the BeerAdvocate account.</li>
-            </ul>
-          </p>
+          <h2>The datasets</h2>
+          <section id="beer-dataset">
+            <h3>Beer dataset</h3>
+            <p>The data used for this project was extracted from the beer rating website BeerAdvocate, where users can publicly rate beers. We focused on data from BeerAdvocate only to ensure metrics stay as consistent as possible. The dataset contains information about users, ratings, and breweries from 1998 until 2018.</p>
+            <p>
+              All ratings contain certain "minimal data". For the scope of this project four rating attributes were of particular interest to us: 
+              <ul>
+                <li>Rating score: a computed score ranging from 1 to 5, with 5 indicating the highest quality.</li>
+                <li>Timestamp: the exact date and time the rating was uploaded to BeerAdvocate.</li>
+                <li>User location: the US state or country specified by the user when creating an account for BeerAdvocate.</li>
+                <li>Beer style: a categorical attribute grouping beers into styles such as American IPA or Belgian Strong Dark Ale.</li>
+              </ul>
+              Ratings with supplementary information are called reviews; they additionally include textual descriptions of the beer and numeric scores for appearance, aroma, palate, taste and overall impression.
+            </p>
+            <p>
+              For the analysis, we applied the following criteria to refine the dataset:
+              <ul>
+                <li>Time-range: only ratings from 2002 to 2017 were included. Before 2002 too little data was available. Data for 2018 covered the first few months only, making it unsuited for seasonal analysis.</li>
+                <li>Rating method: reviews only. BeerAdvocate changed its rating system a few times. Reviews were the original rating method. In 2011 a different rating method without additional information such as textual descriptions was allowed. We chose to use reviews only. It is less data, but more importantly, it's more balanced over the years.</li>
+                <li>Location: United States only. Firstly the vast majority of the user base is from the US. Secondly focusing on this region enables more meaningful climate and weather analysis. We assume that the user's location when rating a beer is the same as the location (state) specified when creating the BeerAdvocate account.</li>
+              </ul>
+            </p>
+          </section>
+
+          <section id="climate-dataset">
+            <h3>Climate dataset</h3>
+            <p>
+              To analyze the potential influence of weather on beer ratings, we incorporated climate data from two main sources:
+              <ul>
+                <li><strong>World Bank Climate Data:</strong> This dataset provides monthly average temperature and precipitation data for each U.S. state. It was obtained from the Climate Change Knowledge Portal, offering a comprehensive view of climate patterns across the country during our study period.</li>
+                <li><strong>County Climate Zones:</strong> We used a classification of U.S. counties into climate zones, sourced from the U.S. Department of Energy. This data allows us to analyze regional weather patterns and their potential influence on beer ratings at a more granular level.</li>
+              </ul>
+              For our analysis, we focused on the following key attributes:
+              <ul>
+                <li>Monthly average temperature by state</li>
+                <li>Monthly average precipitation by state</li>
+                <li>Climate zone classification for each county</li>
+              </ul>
+              To ensure consistency with our beer rating data, we processed and aligned the climate data to cover the same time period (2002-2017) and geographic area (United States) as our beer dataset. This alignment allows us to explore potential correlations between climate factors and beer preferences or ratings across different regions and seasons.
+            </p>
+            <figure id="fig-climate-timelapse">
+              <h4>Climate Data Visualization</h4>
+              <div class="visualization-container ratio-16-9">
+                <object type="text/html" data="src/plotly-html-graphs/nicolas/combined_timelapse.html"></object>
+              </div>
+              <figcaption><span>Figure X:</span> <strong>Combined Timelapse of Climate Data.</strong> This visualization shows the changes in temperature and precipitation across the United States over time, and also shows the climate zones.</figcaption>
+            </figure>
+          </section>
+
           <section id="terminology">
             <h3 class="h4">Terminology</h3>
             <p>
