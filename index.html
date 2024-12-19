@@ -77,6 +77,7 @@
               <li>Location: United States only. Firstly the vast majority of the user base is from the US. Secondly focusing on this region enables more meaningful climate and weather analysis. We assume that the user's location when rating a beer is the same as the location (state) specified when creating the BeerAdvocate account.</li>
             </ul>
           <p></p>
+
           <section id="terminology">
             <h3 class="h4">Terminology</h3>
             <p>
@@ -128,17 +129,27 @@
           <h2>Analyse beer types</h2>
           <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
         </section>
-        <section id="meteo">
-          <h2>Assess meteo impact</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-          <section id="climate">
-            <h3 class="h4">Climate</h3>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
-          </section>
-          <section id="weather">
-            <h3 class="h4">Weather</h3>
-            <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna.</p>
-          </section>
+
+        <section id="climate-dataset">
+          <h2>Climate dataset</h2>
+          <p>
+            To analyze the potential influence of weather on beer ratings, we incorporated climate data from two main sources:
+            </p><ul>
+              <li><strong>World Bank Climate Data:</strong> This dataset provides monthly average temperature and precipitation data for each U.S. state. It was obtained from the Climate Change Knowledge Portal, offering a comprehensive view of climate patterns across the country during our study period.</li>
+              <li><strong>County Climate Zones:</strong> We used a classification of U.S. counties into climate zones, sourced from the U.S. Department of Energy. This data allows us to analyze regional weather patterns and their potential influence on beer ratings at a more granular level.</li>
+            </ul>
+            For our analysis, we focused on the following key attributes:
+            <ul>
+              <li>Monthly average temperature by state</li>
+              <li>Monthly average precipitation by state</li>
+              <li>Climate zone classification for each state</li>
+            </ul>
+            To ensure consistency with our beer rating data, we processed and aligned the climate data to cover the same time period (2002-2017) and geographic area (United States) as our beer dataset. This alignment allows us to explore potential correlations between climate factors and beer preferences or ratings across different regions and seasons. In Figure <a href="#fig-climate-timelapse" class="fig-ref">4</a> we can visualze the two dataset on the U.S. map. The average Precipitation and Temperature per month for each state is displayed in a timelapse, and the states are divided into climate zones.
+          <p></p>
+          <figure id="fig-climate-timelapse">
+              <iframe data-src="dist/plotly-html-graphs/nicolas/combined_timelapse.html" title="Combined Timelapse of Climate Data." frameborder="0" loading="lazy" width="100%" height="500px"></iframe>
+            <figcaption><span>Figure 4</span> This visualization shows the changes in temperature and precipitation across the United States over time, and also shows the climate zones.</figcaption>
+          </figure>
         </section>
         <section id="conclusion">
           <h2>Conclusion</h2>
