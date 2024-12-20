@@ -58,28 +58,42 @@
         <section id="seasonality">
           <h2>Let's talk seasonality</h2>
           <h3 class="h4">Why we started this project</h3>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+          <p>The following plot displays the average ratings for all beers across every month from multiple years, based on over two million ratings. 
+            This plot, referred to as the "Main Average Rating Plot," appears to show fluctuations in beer ratings throughout the year.</p>
           <figure id="fig-avg-ratings">
-            <iframe data-src="src/plotly-html-graphs/tim/generalAvgRatingLinePlot.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
+            <iframe data-src="src/plotly-html-graphs/jakob/MainSeasonalNarrow.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
             <figcaption><span>Figure 1</span><strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
           </figure>
-          <p>Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet (Figure <a href="#fig-avg-ratings" class="fig-ref">1</a>). Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <p>But why could this be the case? Why would beer ratings fluctuate like this?</p>
+          <p>
+            In this project, our goal is to investigate the underlying reasons for this apparent seasonal behavior in beer ratings.
+            Specifically, we seek to answer three key questions:
+            <ul>
+              <li>Is this pattern driven by consistent year-to-year effects, or are the fluctuations merely the result of outliers or a few exceptionally strong years distorting the average?</li>
+              <li>Is there a particular subset of beers responsible for these seasonal variations?</li>
+              <li>Could factors like climate or weather influence these rating trends?</li>
+            </ul>
+            Through careful analysis, we aim to uncover the reasons behind the observed seasonal behavior in beer ratings and provide a deeper understanding of the trends reflected in the Main Average Rating Plot.
+          </p>
           <section id="fourier">
-            <h3 class="h4">Can we observe seasonality year-to-year?</h3>
-            <p>To verify if the average trend across years is driven by a recurring annual pattern, we first apply STL decomposition to extract the monthly rating average's seasonal component, separating it from the trend and noise. Then, we use the Fourier transform to confirm that the dominant period is 12 months.</p>
+            <h3 class="h4">Verifying Year-to-Year Seasonality: Are the Patterns Consistent?</h3>
+            <p>To determine whether the observed seasonality across years is due to a consistent annual pattern rather than outliers or singular dominant years skewing the mean.</p>
+            <p>First, we preprocess the data using STL decomposition. STL (Seasonal and Trend decomposition using Loess) separates the seasonal component from the underlying trend and residual (noise) in the monthly rating averages. We use STL decomposition to extract the seasonal component by removing the trend and noise, thus making the signal clearer for further analysis. STL is particularly effective because it is resilient to outliers, handles missing data, and reduces noise [(Arneric, 2021)](https://doi.org/10.17535/crorr.2021.0006).</p>
+            <p>After extracting the seasonal component with STL, we apply the Fourier transform to identify dominant frequencies. If the dominant period is 12 months, this confirms that the average rating pattern is yearly seasonal.</p>
             <figure id="fig-fourier">
-              <iframe data-src="src/plotly-html-graphs/jakob/frequency_spectrum.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
-              <figcaption><span>Figure 2</span><strong>Fourier transform of the seasonal component of the average ratings.</strong> The dominant period is 12 months.</figcaption>
+              <iframe data-src="src/plotly-html-graphs/jakob/seasonality_full.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="820"></iframe>
+              <figcaption><span>Figure 2</span><strong>Seasonality Report - Average Ratings of All Beers.</strong> The dominant period is 12 months.</figcaption>
             </figure>
-            <p>The Fourier transform of the signal shows a dominant frequency of 0.085, corresponding to a period of 11.75 months. Since the discrete Fourier transform does not evaluate 0.083 (the exact 12-month period), 0.085 is the closest match. The significance of this peak is quantified using the peak-ratio, comparing the 12-month peak's magnitude to the next largest peak. Here, the 12-month peak is over three times larger, indicating strong evidence for annual seasonality.</p>
+            <p>We calculate the Signal-to-Noise Ratio (SNR) to determine the strength of the observed yearly pattern relative to random noise, providing a quantitative measure of signal reliability. SNR is particularly useful because it has well-defined thresholds that help distinguish meaningful patterns from noise. According to a NumXL article on data analysis, an SNR between 10 and 15 dB typically indicates a strong, reliable signal.</p>
+            <p>While any SNR > 0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) [guidelines](https://support.numxl.com/hc/en-us/articles/360050017731-Calculating-Signal-to-Noise-Ratio-Using-DFT) for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
           </section>
           <section id="scores">
-            <h3 class="h4">Definition of a score to quantify seasonality</h3>
+            <h3 class="h4">Definition of metrics to quantify seasonality</h3>
             <p>
-              Two metrics assess seasonality in a time series: <i>mean amplitude</i> and <i>peak ratio</i>.
+              To better understand the observed trends and identify whether a specific subset of beers is driving the seasonality, we introduce two metrics: <i>mean amplitude</i> and <i>peak ratio</i>. These metrics are designed to quantify and compare the strength and significance of seasonality across different beer subsets.
               <ul>
-                <li>Mean amplitude: measures the average strength of the seasonal signal by calculating the amplitude for each period and averaging them.</li>
-                <li>Peak ratio: verifies whether the signal is significantly 12-month periodic. It is the ratio of the largest peak (excluding the 12-month peak) to the 12-month peak. A high ratio indicates the 12-month period dominates.</li>
+                <li>Mean amplitude:  This metric measures the overall strength of the seasonal signal across the entire period. By calculating the amplitude of the seasonal component for each period and taking the average, we can compare the intensity of seasonality between subsets. This helps highlight how strongly a subset's ratings fluctuate seasonally.</li>
+                <li>Peak ratio: This metric ensures the signal is primarily driven by a 12-month periodicity rather than random noise or other dominant frequencies. By calculating the ratio of the 12-month peak to the second-largest peak, we can assess the significance of the 12-month period. A large ratio indicates that the 12-month signal stands out as the dominant periodicity, confirming meaningful seasonality.</li>
               </ul>
             </p>
             <figure>

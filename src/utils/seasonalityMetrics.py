@@ -4,7 +4,7 @@ import plotly.express as px
 from statsmodels.tsa.seasonal import STL
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
+from scipy.stats import sem, t
 
 # PREPROCESSING FUNCTIONS ---------------------------------------------------------------------------------------------
 def calculate_monthly_means(df, year_highpass=None):
@@ -379,6 +379,54 @@ def STL_plot(df, unit = "Average Ratings", title = "STL Decomposition"):
 
       return fig
 
+def plot_average_over_years(df):
+
+    # Calculate mean ratings and 95% confidence intervals
+    grouped = df.groupby("month")["rating"]
+    mean_ratings = grouped.mean()
+    ci = grouped.apply(lambda x: t.interval(0.95, len(x)-1, loc=x.mean(), scale=sem(x)) if len(x) > 1 else (x.mean(), x.mean()))
+
+    # Convert to DataFrame
+    average_ratings = pd.DataFrame({
+        "month": mean_ratings.index,
+        "rating": mean_ratings.values,
+        "ci_lower": [c[0] for c in ci],
+        "ci_upper": [c[1] for c in ci]
+    })
+
+    # Create the shaded confidence interval plot
+    fig = go.Figure()
+
+    # Add the shaded confidence interval
+    fig.add_trace(go.Scatter(
+        x=average_ratings["month"].tolist() + average_ratings["month"][::-1].tolist(),
+        y=average_ratings["ci_upper"].tolist() + average_ratings["ci_lower"][::-1].tolist(),
+        fill='toself',
+        fillcolor='rgba(0,100,250,0.2)',  # Light blue shade
+        line=dict(color='rgba(255,255,255,0)'),
+        showlegend=False,
+        hoverinfo="skip"
+    ))
+
+    # Add the mean line
+    fig.add_trace(go.Scatter(
+        x=average_ratings["month"],
+        y=average_ratings["rating"],
+        mode='lines',
+        line=dict(color='blue', width=2),
+        name='Average Rating',
+        showlegend=False
+    ))
+
+    # Update layout
+    fig.update_layout(
+        xaxis_title="Month",
+        yaxis_title="Average Rating",
+        width=600,
+        margin=dict(l=50, r=25, t=20, b=50),
+        template="plotly_white"
+    )
+    return fig
 
 
 
@@ -544,7 +592,32 @@ def iterate_months(start_date, end_date):
             current_date = current_date.replace(month=current_date.month + 1)
 
 # interpolates missing values for beers that don't have a rating for a month
-def interpolate_missing_vals_monthly(df: pd.DataFrame, col_to_interpolate: str) :
+def zero_missing_vals_monthly_nr(df: pd.DataFrame, col_to_interpolate: str) :
+    """ 
+    Takes a dataframe df with:
+    - date column as index: which contains values of the form 1.mm.yyyy, but some months are missing
+    - a column which whose values we want
+    And takes a col_to_interpolate:
+    - the column name for the column to interpolate in the dataframe 
+    """
+    # interpolate missing values
+    dateArr = []
+    valArr = []
+
+    for date in iterate_months(df.index.min(), df.index.max()):
+        dateArr.append(date)
+        if date in df.index:
+            valArr.append(df.loc[date, col_to_interpolate])
+        else:
+            valArr.append(0)
+    
+    df = pd.DataFrame(data={col_to_interpolate: valArr, "date": dateArr})
+    df = df.set_index("date")  
+
+    return df
+
+# interpolates missing values for beers that don't have a rating for a month
+def interpolate_missing_vals_monthly_avg(df: pd.DataFrame, col_to_interpolate: str) :
     """ 
     Takes a dataframe df with:
     - date column as index: which contains values of the form 1.mm.yyyy, but some months are missing
@@ -626,3 +699,28 @@ def plot_with_ci(stats_df:pd.DataFrame, title: str) -> go.Figure:
             showlegend=False
         )
     return fig
+
+def monthly_avg_ci_traces(df: pd.DataFrame, title: str):
+    stats_df = df.groupby("month")["rating"].agg(["mean", "count", "std"]).reset_index()
+    months = stats_df["month"].to_numpy()
+    means = stats_df["mean"].to_numpy()
+    ci_high = np.array([m + 1.96*s/np.sqrt(c) for _, m, c, s in stats_df.values])
+    ci_low = np.array([m - 1.96*s/np.sqrt(c) for _, m, c, s in stats_df.values])
+
+    # print(ci_high)
+    print(f'Variance over the means: {np.var(means)}')
+    line = go.Scatter(x=months, y=means,
+                # title=title,
+                name=title,
+                mode="lines"
+                )
+    ci = go.Scatter(
+            x=np.concat((months, months[::-1])), # x, then x reversed
+            y=np.concat((ci_high, ci_low[::-1])), # upper, then lower reversed
+            fill='toself',
+            fillcolor='rgba(0,100,80,0.2)',
+            line=dict(color='rgba(255,255,255,0)'),
+            hoverinfo="skip",
+            showlegend=False
+        )
+    return line, ci
