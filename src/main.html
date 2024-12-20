@@ -112,71 +112,71 @@
         <section id="meteo">
           <h2>Weather Influence on Beer Ratings</h2>
           <p>After establishing the existence of seasonal patterns in beer ratings, we investigated whether weather conditions could be driving these patterns. We analyzed the relationship between beer ratings and three key weather variables: temperature, precipitation, and climate zones.</p>
+        
           <p>To analyze the potential influence of weather on beer ratings, we incorporated climate data from two main sources:
             <ul>
               <li><strong>World Bank Climate Data:</strong> This dataset provides monthly average temperature and precipitation data for each U.S. state. It was obtained from the Climate Change Knowledge Portal, offering a comprehensive view of climate patterns across the country during our study period.</li>
               <li><strong>County Climate Zones:</strong> We used a classification of U.S. counties into climate zones, sourced from the U.S. Department of Energy. This data allows us to analyze regional weather patterns and their potential influence on beer ratings at a more granular level.</li>
             </ul>
-            For our analysis, we focused on the following key attributes:
-            <ul>
-              <li>Monthly average temperature by state</li>
-              <li>Monthly average precipitation by state</li>
-              <li>Climate zone classification for each state</li>
-            </ul>
-            To ensure consistency with our beer rating data, we processed and aligned the climate data to cover the same time period (2002-2017) and geographic area (United States) as our beer dataset. This alignment allows us to explore potential correlations between climate factors and beer preferences or ratings across different regions and seasons. In Figure <a href="#fig-climate-timelapse" class="fig-ref">1</a> we can visualze the two dataset on the U.S. map. The average Precipitation and Temperature per month for each state is displayed in a timelapse, and the states are divided into climate zones.
           </p>
+        
           <figure id="fig-climate-timelapse">
-              <iframe data-src="src/plotly-html-graphs/nicolas/combined_timelapse.html" title="Combined Timelapse of Climate Data." frameborder="0" loading="lazy" width="100%" height="500px"></iframe>
+            <iframe data-src="src/plotly-html-graphs/nicolas/combined_timelapse.html" title="Combined Timelapse of Climate Data." frameborder="0" loading="lazy" width="100%" height="500px"></iframe>
             <figcaption><span>Figure 1</span> This visualization shows the changes in temperature and precipitation across the United States over time, and also shows the climate zones.</figcaption>
           </figure>
-          <h3 class="h4">Multiple Analysis Approaches</h3>
-          <p>To thoroughly investigate potential weather effects on beer ratings, we employed several statistical methods:</p>
+        
+          <h3 class="h4">Granularity in Analysis</h3>
+          <p>Our investigation revealed that the granularity of analysis significantly impacts our ability to detect weather effects on beer ratings. We conducted analyses at three levels:</p>
           <ul>
-            <li><strong>Linear Correlation Analysis:</strong> To detect direct relationships between weather variables and ratings</li>
-            <li><strong>Mutual Information Analysis:</strong> To capture potential non-linear relationships</li>
-            <li><strong>Clustering Analysis:</strong> To identify natural groupings in the data based on weather conditions</li>
+            <li><strong>State-level analysis:</strong> Showed weak correlations initially</li>
+            <li><strong>State-month level analysis:</strong> Revealed stronger patterns</li>
+            <li><strong>State-month-year level analysis:</strong> Provided the most detailed and significant results</li>
           </ul>
-
+        
           <h3 class="h4">Key Findings</h3>
-          <p>Our analysis revealed several interesting insights about the relationship between weather and beer ratings:</p>
           
-          <h4 class="h5">1. Linear Relationships</h4>
-          <p>The correlation analysis showed surprisingly weak linear relationships between weather variables and beer ratings:</p>
+          <h4 class="h5">1. Weather Effects</h4>
+          <p>At the state-month-year level, our analysis revealed statistically significant relationships:</p>
           <ul>
-            <li>Temperature showed a weak correlation (r = -0.15) with ratings</li>
-            <li>Precipitation demonstrated a slightly positive but weak correlation (r = 0.19)</li>
-            <li>IECC Climate Zones had minimal correlation (r = 0.09) with ratings</li>
+            <li>Temperature: significant negative correlation (r = -0.056, p < 0.001, R² = 0.0032)</li>
+            <li>Precipitation: weak positive correlation (r = 0.017, p = 0.111, R² = 0.00029)</li>
+            <li>IECC Climate Zones: significant positive correlation (r = 0.056, p < 0.001, R² = 0.0031)</li>
           </ul>
-
+        
           <figure id="fig-correlation-heatmap">
-            <iframe data-src="src/plotly-html-graphs/nicolas/state_level_correlation_subset_heatmap.html" title="Correlation heatmap of weather variables and ratings" frameborder="0" loading="lazy" width="100%" height="600px"></iframe>
-            <figcaption><span>Figure 4</span><strong>Correlation Heatmap.</strong> Visual representation of correlations between weather variables and different rating components.</figcaption>
+            <iframe data-src="src/plotly-html-graphs/nicolas/weather_and_state_level_correlation_subset_heatmap.html" title="Correlation heatmap of weather variables and ratings" frameborder="0" loading="lazy" width="100%" height="400px"></iframe>
+            <figcaption><span>Figure 2</span><strong>Correlation Analysis.</strong> Visual representation of correlations between weather variables and different rating components, with hover text showing statistical significance.</figcaption>
           </figure>
-
-          <h4 class="h5">2. Non-Linear Relationships</h4>
-          <p>Using Mutual Information analysis, we found moderate information content between weather variables and ratings:</p>
+        
+          <h4 class="h5">2. Subjective Components</h4>
+          <p>Our analysis revealed remarkably strong relationships between ratings and subjective measures:</p>
           <ul>
-            <li>Precipitation: MI = 1.06 (Normalized MI = 0.46)</li>
-            <li>Temperature: MI = 0.86 (Normalized MI = 0.37)</li>
-            <li>IECC Climate Zones: MI = 0.41 (Normalized MI = 0.22)</li>
+            <li>Taste: strongest predictor (r = 0.971, R² = 0.943)</li>
+            <li>Overall impression: very strong (r = 0.915, R² = 0.837)</li>
+            <li>Aroma: very strong (r = 0.909, R² = 0.827)</li>
+            <li>Palate: very strong (r = 0.899, R² = 0.807)</li>
+            <li>Appearance: strong (r = 0.772, R² = 0.597)</li>
           </ul>
-
+        
           <h3 class="h4">Interpretation</h3>
           <p>Several key conclusions emerge from our analysis:</p>
           <ol>
-            <li>Weather conditions have a detectable but relatively weak influence on beer ratings</li>
-            <li>The relationship between weather and ratings is more complex than simple linear correlations</li>
+            <li>Weather effects on beer ratings are detectable and statistically significant when analyzed at appropriate temporal scales</li>
+            <li>While significant, weather conditions explain only a tiny fraction of rating variance (all weather factors combined explain less than 1%)</li>
+            <li>Subjective measures are overwhelmingly more important, with taste alone explaining 94.3% of rating variance</li>
           </ol>
-
+        
           <h3 class="h4">Limitations</h3>
           <p>Our analysis has several important limitations to consider:</p>
           <ul>
             <li>State-level weather aggregates might mask local variations</li>
-            <li>Seasonal effects could be averaged out in the annual data</li>
-            <li>Since we don't know for sure whether the person reviewing the beer was actually in the state where he is register, this could be a confounding factor</li>
+            <li>The location of the reviewer at the time of rating might differ from their registered state</li>
+            <li>Different beer styles might respond differently to weather conditions</li>
+            <li>The relationship between weather and ratings might vary by season or region in ways our analysis couldn't capture</li>
           </ul>
-
-          <p>Overall, while weather conditions do appear to have some influence on beer ratings, this effect is subtle and complex. The data suggests that intrinsic qualities of the beer itself remain the primary determinants of ratings, with weather playing a secondary role in how beers are perceived and rated.</p>
+        
+          <p>Overall, our analysis shows that while weather conditions have a statistically significant influence on beer ratings, this effect is extremely subtle compared to the dominant role of the beer's intrinsic qualities. The temporal granularity of analysis is crucial for detecting these subtle weather effects, suggesting that the relationship between weather and beer appreciation is more complex than previously understood.</p>
+        </section>
 
         </section>
         <section id="conclusion">
