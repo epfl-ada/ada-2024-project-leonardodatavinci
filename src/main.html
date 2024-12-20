@@ -53,13 +53,14 @@
       </nav>
       <div class="col-lg-9 col-xl-8 col-xxl-6" data-bs-spy="scroll" data-bs-target="#myScrollspy" data-bs-offset="0" tabindex="0"><br>
         <section id="intro">
-          <p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017. First, we establish if we can find any seasonal patterns, if they are consistent year-to-year and we develop metrics to quantify seasonality. Second, we investigate whether certain specific beer types drive the seasonality we observe and by which mechanisms. Does seasonality stem from differing average ratings, differing number of reviews, or both? Third, we investigate factors that could explain the seasonality such as climate or weather.</p>
+<p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017.</p>
+</p>We begin by identifying seasonal patterns, checking their consistency across years, and quantifying them. Next, we analyze if specific beer types drive these patterns, whether through differences in ratings, review counts, or both. Finally, we explore external factors like climate or weather that may explain the observed trends.</p>
         </section>
         <section id="seasonality">
           <h2>Let's talk seasonality</h2>
           <h3 class="h4">Why we started this project</h3>
-          <p>The following plot displays the average ratings for all beers across every month from multiple years, based on over two million ratings. 
-            This plot, referred to as the "Main Average Rating Plot," appears to show fluctuations in beer ratings throughout the year.</p>
+          <p>Figure <a href="#fig-avg-ratings" class="fig-ref">X</a> displays the average ratings for all beers across every month from multiple years, based on over two million ratings. 
+             appears to show fluctuations in beer ratings throughout the year.</p>
           <figure id="fig-avg-ratings">
             <iframe data-src="src/plotly-html-graphs/jakob/MainSeasonalNarrow.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
             <figcaption><span>Figure 1</span><strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
@@ -69,34 +70,39 @@
             In this project, our goal is to investigate the underlying reasons for this apparent seasonal behavior in beer ratings.
             Specifically, we seek to answer three key questions:
             <ul>
-              <li>Is this pattern driven by consistent year-to-year effects, or are the fluctuations merely the result of outliers or a few exceptionally strong years distorting the average?</li>
-              <li>Is there a particular subset of beers responsible for these seasonal variations?</li>
-              <li>Could factors like climate or weather influence these rating trends?</li>
+              <li><strong>Seasonality</strong>: Is this pattern driven by consistent year-to-year effects, or are the fluctuations merely the result of outliers or a few exceptionally strong years distorting the average?</li>
+              <li><strong>Beer Types</strong>: Are specific types of beers driving these seasonal variations, perhaps through seasonal spikes in average ratings or number of ratings?</li>
+              <li><strong>Meteo</strong>: Could factors like climate or weather influence these rating trends?</li>
             </ul>
-            Through careful analysis, we aim to uncover the reasons behind the observed seasonal behavior in beer ratings and provide a deeper understanding of the trends reflected in the Main Average Rating Plot.
+            Through careful analysis, we aim to uncover the reasons behind the observed seasonal behavior in beer ratings in Figure <a href="#fig-avg-ratings" class="fig-ref">X</a> and provide a deeper understanding of the trends reflected in the Main Average Rating Plot.
           </p>
           <section id="fourier">
             <h3 class="h4">Verifying Year-to-Year Seasonality: Are the Patterns Consistent?</h3>
             <p>To determine whether the observed seasonality across years is due to a consistent annual pattern rather than outliers or singular dominant years skewing the mean.</p>
-            <p>First, we preprocess the data using STL decomposition. STL (Seasonal and Trend decomposition using Loess) separates the seasonal component from the underlying trend and residual (noise) in the monthly rating averages. We use STL decomposition to extract the seasonal component by removing the trend and noise, thus making the signal clearer for further analysis. STL is particularly effective because it is resilient to outliers, handles missing data, and reduces noise [(Arneric, 2021)](https://doi.org/10.17535/crorr.2021.0006).</p>
+            <p>First, we preprocess the data using STL decomposition. STL (Seasonal and Trend decomposition using Loess) separates the seasonal component from the underlying trend and residual (noise) in the monthly rating averages. We use STL decomposition to extract the seasonal component by removing the trend and noise, 
+              thus making the signal clearer for further analysis. STL is particularly effective because it is resilient to outliers, handles missing data, and reduces noise <a href="https://doi.org/10.17535/crorr.2021.0006" target="_blank">(Arneric, 2021)</a>.</p>
             <p>After extracting the seasonal component with STL, we apply the Fourier transform to identify dominant frequencies. If the dominant period is 12 months, this confirms that the average rating pattern is yearly seasonal.</p>
             <figure id="fig-fourier">
               <iframe data-src="src/plotly-html-graphs/jakob/seasonality_full.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="820"></iframe>
               <figcaption><span>Figure 2</span><strong>Seasonality Report - Average Ratings of All Beers.</strong> The dominant period is 12 months.</figcaption>
             </figure>
-            <p>We calculate the Signal-to-Noise Ratio (SNR) to determine the strength of the observed yearly pattern relative to random noise, providing a quantitative measure of signal reliability. SNR is particularly useful because it has well-defined thresholds that help distinguish meaningful patterns from noise. According to a NumXL article on data analysis, an SNR between 10 and 15 dB typically indicates a strong, reliable signal.</p>
-            <p>While any SNR > 0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) [guidelines](https://support.numxl.com/hc/en-us/articles/360050017731-Calculating-Signal-to-Noise-Ratio-Using-DFT) for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
+            <p>Figure <a href="#fig-fourier" class="fig-ref">X</a> presents the seasonality analysis pipeline. The first plot shows the original average ratings time series for all beers, aggregated monthly from 2002 to 2017, where the seasonality is obscured by the overall trend.
+              The second plot displays the seasonal signal extracted using STL decomposition, making the 12-month seasonality visually apparent. The third plot shows the frequency domain analysis, with a distinct peak at 0.083 cycles per month, corresponding to a 12-month period.
+              The following section provides the numerical evaluation to verify the significance of this 12-month signal.</p>
+            <p>We calculate the Signal-to-Noise Ratio (SNR) to determine the strength of the observed yearly pattern relative to random noise, providing a quantitative measure of signal reliability. SNR is particularly useful because it has well-defined thresholds that help distinguish meaningful patterns from noise. According to a <a href="https://support.numxl.com/hc/en-us/articles/360050017731-Calculating-Signal-to-Noise-Ratio-Using-DFT" target="_blank">NumXL article</a>
+              on data analysis, an SNR between 10 and 15 dB typically indicates a strong, reliable signal.</p>
+            <p>While any SNR > 0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) guidelines for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
           </section>
           <section id="scores">
             <h3 class="h4">Definition of metrics to quantify seasonality</h3>
             <p>
-              To better understand the observed trends and identify whether a specific subset of beers is driving the seasonality, we introduce two metrics: <i>mean amplitude</i> and <i>peak ratio</i>. These metrics are designed to quantify and compare the strength and significance of seasonality across different beer subsets.
+              To better understand the observed trends and identify whether a specific subset of beers is driving the seasonality, we introduce two metrics: <i>mean amplitude</i> and <i>peak ratio</i>, which are visualized in Figure <a href="#fig-metrics" class="fig-ref">X</a>. These metrics are designed to quantify and compare the strength and significance of seasonality across different beer subsets.
               <ul>
-                <li>Mean amplitude:  This metric measures the overall strength of the seasonal signal across the entire period. By calculating the amplitude of the seasonal component for each period and taking the average, we can compare the intensity of seasonality between subsets. This helps highlight how strongly a subset's ratings fluctuate seasonally.</li>
-                <li>Peak ratio: This metric ensures the signal is primarily driven by a 12-month periodicity rather than random noise or other dominant frequencies. By calculating the ratio of the 12-month peak to the second-largest peak, we can assess the significance of the 12-month period. A large ratio indicates that the 12-month signal stands out as the dominant periodicity, confirming meaningful seasonality.</li>
+                <li><strong>Mean amplitude:</strong>  This metric measures the overall strength of the seasonal signal across the entire period. By calculating the amplitude of the seasonal component for each period and taking the average, we can compare the intensity of seasonality between subsets. This helps highlight how strongly a subset's ratings fluctuate seasonally.</li>
+                <li><strong>Peak Ratio:</strong> This metric ensures the signal is primarily driven by a 12-month periodicity rather than random noise or other dominant frequencies. By calculating the ratio of the 12-month peak to the second-largest peak, we can assess the significance of the 12-month period. A large ratio indicates that the 12-month signal stands out as the dominant periodicity, confirming meaningful seasonality.</li>
               </ul>
             </p>
-            <figure>
+            <figure id="fig-metrics">
               <div class="text-center">
                 <img src="assets/img/metric_explanation_1.png" alt="Two schematic line plots visualizing what the peak ratio and mean amplitude." loading="lazy" width="425" style="width: min(100%, 425px);">
               </div>
