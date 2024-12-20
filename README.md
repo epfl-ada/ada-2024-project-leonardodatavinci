@@ -20,7 +20,8 @@ The results can be found on our [website](https://epfl-ada.github.io/ada-2024-pr
 
 To enrich our analysis and provide deeper insights, we have incorporated supplementary datasets beyond the primary beer ratings data:
 
-- **World Bank Climate Data**: Monthly average temperature and precipitation data by state, sourced from the [Climate Change Knowledge Portal](https://climateknowledgeportal.worldbank.org/download-data).
+- **World Bank Climate Data**: Monthly average temperature and precipitation data by state, sourced from the [Climate Change Knowledge Portal](https://climateknowledgeportal.worldbank.org/download-data). 
+- **Global Historical Climatology Network daily Data (GHCNd)**: Daily average temperature data for all weather stations in each state, sourced from the [Global Historical Climatology Network](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily)).
 - **County Climate Zones**: Classification of U.S. counties into climate zones to analyze regional weather patterns and their influence on beer ratings. Data sourced from the [US Department of Energy](https://www.energy.gov/sites/prod/files/2015/10/f27/ba_climate_region_guide_7.3.pdf).
 - **US Census Population Data**: County-level population data used to weight climate zone analysis for accurate state-level metrics. Data obtained from the [U.S. Census Bureau](https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html).
 - **Formatted Climate Zones Table**: A processed version of county climate zone data, sourced from [this GitHub Gist](https://gist.github.com/philngo/d3e251040569dba67942#file-climate_zones-csv).
