@@ -79,7 +79,7 @@
           <p></p>
           <section id="fourier">
             <h3 class="h4">Verifying Year-to-Year Seasonality: Are the Patterns Consistent?</h3>
-            <p>To determine whether the observed seasonality across years is due to a consistent annual pattern rather than outliers or singular dominant years skewing the mean.</p>
+            <p>To determine whether the observed seasonality across years is due to a consistent annual pattern, we analyze the frequency spectrum of the entire rating timeseries.</p>
             <p>First, we preprocess the data using STL decomposition. STL (Seasonal and Trend decomposition using Loess) separates the seasonal component from the underlying trend and residual (noise) in the monthly rating averages. We use STL decomposition to extract the seasonal component by removing the trend and noise, 
               thus making the signal clearer for further analysis. STL is particularly effective because it is resilient to outliers, handles missing data, and reduces noise <a href="https://doi.org/10.17535/crorr.2021.0006" target="_blank">(Arneric, 2021)</a>.</p>
             <p>After extracting the seasonal component with STL, we apply the Fourier transform to identify dominant frequencies. If the dominant period is 12 months, this confirms that the average rating pattern is yearly seasonal.</p>
