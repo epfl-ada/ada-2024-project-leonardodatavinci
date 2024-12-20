@@ -149,14 +149,15 @@
               <p>The most seasonal beers are those that show high seasonality both in their ratings and in the number of reviews they receive. This means that these beers have a significant impact on the average rating during specific periods, with varying ratings across seasons. To capture this, we combined the two metrics—seasonality in ratings and in the number of reviews—by adding them together, giving both metrics equal weight.</p>
               <p><strong>Tadaaaaaaaaaa!!</strong></p>
               <p>(INSERT PODIUM HERE)</p>
+              <p>Here is the podium of the most seasonal beers! We thank them very much for their contribution to the seasonality of ratings, but we will now get rid of them!</p>
+              
+              <p>For the grand finale will now visualize the average ratings across months after removing the identified seasonal beers (Figure <a href="#fig-seas-vs-nonseas-full-seasonality" class="fig-ref">7</a>). The thresholds are set at 5% for average ratings and 10% for the number of ratings, as review volume generally has a greater impact on overall seasonality than fluctuations in average ratings. This approach prioritizes beers with higher review counts, as they offer more reliable indicators of seasonality.</p>
+
               <figure id="fig-seas-vs-nonseas-full-seasonality">
                 <iframe data-src="dist/plotly-html-graphs/tim/seasonalVsNonSeasonalCustomThresholds.html" title="Title" frameborder="0" loading="lazy" width="100%" height="620"></iframe>
                 <figcaption><span>Figure 7</span><strong>Seasonal vs. Non-Seasonal Beers</strong> - on all ratings</figcaption>
               </figure>
-              <p>In Figure <a href="#fig-seas-vs-nonseas-full-seasonality" class="fig-ref">7</a>, we clearly observe a specific subset of beers driving the overall seasonality trend initially identified in Figure <a href="#fig-avg-ratings" class="fig-ref">1</a>.</p> 
-            <h3 class="h4">The Podium for the Most Seasonal Beers</h3>
-              <p>The most seasonal beers are those with high seasonality in both their ratings and the number of ratings. These beers influence the average rating only during specific periods and with varying ratings. We identified them by combining the two seasonality metrics defined in into a single score.</p>
-           
+              <p>As shown, the ratings of the seasonal subset of beers fluctuate significantly throughout the year. Removing these beers results in a more consistent rating pattern for the remaining beers, confirming that we have successfully identified the subset responsible for the observed seasonality!</p>
         </section>
 
         <section id="meteo">
@@ -199,7 +200,7 @@
         </section>
         <section id="conclusion">
           <h2>Conclusion</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <p>We observed seasonal patterns in beer ratings and explored their underlying causes. We confirmed that these patterns follow a yearly cycle and identified a subset of beers driving the trend. Weather was found to have an impact on these patterns, providing a clear explanation for the observed seasonality in ratings.</p>
         </section>
         <section id="team">
           <h2>Team</h2>
