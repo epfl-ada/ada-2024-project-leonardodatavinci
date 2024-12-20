@@ -32,23 +32,6 @@ We focus our work on the reviews on the forum “BeerAdvocate” from 2002 until
 - We specify only the US because there is enough data and only the northern hemisphere! And state-specific, so nice granularity!
 - BeerAdvocate, because more data and focus on US
 
-### 0. Intro: Show That There Is Something Going On!
-
-**Question:**  
-Why is it worth investigating  seasonal fluctuations in beer ratings?
-
-**Method:**  
-
-As we have a timestamp for each review and rating, we can sort them by seasons and years and show that there are significant seasonal fluctuations in the data by applying a statistical test.  
-
-To measure seasonality in beer ratings, we introduced the Seasonality Score, calculated as the difference between the mean summer (June-August) and mean winter (December-February) ratings. This score helps quantify seasonal fluctuations in beer ratings.
-
-We will refine this metric by calculating the seasonality score for each U.S. state, combining it with weather data to explore how climate influences beer ratings regionally.
-
-We also plan to experiment with different time spans, as averaging over three months might smooth out important seasonal variations that could be more noticeable with other groupings.
-
-To validate seasonality, we’ll use statistical tests (e.g., Kruskal-Wallis and t-test) on the main seasonality plot, comparing seasonal fluctuations across months and years for different beer types.
-	
 ### 1. Year-to-Year Seasonal Patterns
 
 **Question:**  
