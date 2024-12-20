@@ -77,7 +77,6 @@ Correlate ratings with average state temperatures & precipitation. Use weighted 
 3. Correlation Analysis:
     - Temperature and Ratings: Calculate the correlation between average monthly temperatures and beer ratings for each state.
     - Precipitation and Ratings: Assess the relationship between monthly precipitation levels and beer ratings.
-    - Climate Zone and Ratings: Assess the relationship between grouped states per climate zone and beer ratings.
     - Regional Comparisons: Compare states to identify regional patterns in weather-related beer rating fluctuations.
 
 
@@ -95,7 +94,7 @@ Correlate ratings with average state temperatures & precipitation. Use weighted 
 
 | Team Member | Responsibilities                                   |
 |-------------|----------------------------------------------------------------|
-| Casimir     | Website & Meteo Analysis     			               |
+| Casimir     | Website, Coordination & Assistance     			               |
 | Jakob       | Seasonality Analysis & Metric definition                       |
 | Jeanne      | Seasonal vs. Unseasonal Beers                                  |
 | Nicolas     | Meteo Analysis                                                 |
@@ -109,84 +108,6 @@ The team creates the data story and visualizations in a collaborative manner.
 
 We are working with a beer review data set [[1](https://drive.google.com/drive/folders/1Wz6D2FM25ydFw_-41I9uTwG9uNsN4TCF)].
 
-## 🏗️ Project Structure
-```
-├── assets/
-│   ├── css/
-│   │   ├── styles.css
-│   ├── img/
-│   │   ├── favicon.png
-│   ├── js/
-│   │   ├── scale.fix.js
-├── data/
-│   ├── BeerAdvocate/
-│   │   ├── beers.csv
-│   │   ├── breweries.csv
-│   │   ├── ratings.txt
-│   │   ├── reviews.txt
-│   │   └── users.csv
-│   ├── climatezones/
-│   │   ├── Map_KG-Global/
-│   │   │   ├── KG_1986-2010.grd
-│   │   │   ├── KG_1986-2010.txt
-│   │   ├── ne_10m_admin_0_countries/
-│   │   │   ├── ne_10m_admin_0_countries.shp
-│   │   ├── climate_zones.csv
-│   │   ├── countyPopulation.xlsx
-│   │   ├── Koeppen-Geiger-ASCII.txt
-│   │   ├── stateAbbreviations.csv
-│   │   └── weather_stations_world.txt
-│   ├── matched_beer_data/
-│   │   ├── beers.csv
-│   │   ├── breweries.csv
-│   │   ├── ratings.csv
-│   │   ├── ratings_ba.txt
-│   │   └── ratings_rb.txt
-│   │   ├── ratings_with_text_ba.txt
-│   │   ├── ratings_with_text_rb.txt
-│   │   ├── users.csv
-│   │   └── users_approx.csv
-│   └── RateBeer/
-│   │   ├── beers.csv
-│   │   ├── breweries.csv
-│   │   ├── ratings.txt
-│   │   ├── reviews.txt
-│   │   └── users.csv
-│   └── weather-data/
-│       ├── cru-x0.5_timeseries_tas_timeseries_monthly_1901-2022_mean_historical_cru_ts4.07_mean.xlsx
-│       ├── cru-x0.5_timeseries_pr_timeseries_monthly_1901-2022_mean_historical_cru_ts4.07_mean.xlsx
-│       ├── us-precipitations.csv
-│       └── us-temperatures.csv
-├── illustrations/
-│   └── Nicolas/
-│       ├── avg_temp_state.html
-│       ├── climate_map.html
-│       ├── heatmap.html
-│       ├── number_of_rows_per_month_year.html
-│       ├── temperature.html
-│       ├── timelapse_temperature.html
-│       ├── timeline.html
-│       └── weather_stations.html
-├── papers/
-│   ├── icdm2012.pdf
-|   └── Lederrey-West_WWW-18.pdf
-├── src/
-│   └── utils/
-│       ├── locationHelper.py
-│       ├── preProcessingHelper.py
-│       ├── USClimateAndWeatherHelper.py
-│       ├── fourierAnalysis.py
-│       └── fourierHelper.py
-├── tests/
-│   └── PreProcessing.ipynb
-├── .gitignore 
-├── README.md
-├── _config.yml
-├── LICENSE
-├── index.html
-├── Gemfile
-└── environment.yaml
-```
 
 - `data`
     Here the raw and the processed data are stored
@@ -232,7 +153,6 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
     ```bash
     python run.py
     ```
-
 
 ## 📚 Libraries Used
 - Data Manipulation:
