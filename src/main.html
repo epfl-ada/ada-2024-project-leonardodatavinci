@@ -43,7 +43,7 @@
         <nav class="nav nav-pills flex-column">
           <a class="nav-link active" href="#intro">Abstract</a>
           <a class="nav-link" href="#seasonality">Seasonality</a>
-          <a class="nav-link" href="#beerTypes">Beer types</a>
+          <a class="nav-link" href="#beerTypes">Seasonal beers</a>
           <a class="nav-link" href="#meteo">Meteo impact</a>
           <a class="nav-link" href="#conclusion">Conclusion</a>
           <a class="nav-link" href="#team">Team</a>
@@ -71,7 +71,7 @@
             Specifically, we seek to answer three key questions:
             <ul>
               <li><strong>Seasonality</strong>: Is this pattern driven by consistent year-to-year effects, or are the fluctuations merely the result of outliers or a few exceptionally strong years distorting the average?</li>
-              <li><strong>Beer Types</strong>: Are specific types of beers driving these seasonal variations, perhaps through seasonal spikes in average ratings or number of ratings?</li>
+              <li><strong>Seasonal beers</strong>: Are specific types of beers driving these seasonal variations, perhaps through seasonal spikes in average ratings or number of ratings?</li>
               <li><strong>Meteo</strong>: Could factors like climate or weather influence these rating trends?</li>
             </ul>
             Through careful analysis, we aim to uncover the reasons behind the observed seasonal behavior in beer ratings in Figure <a href="#fig-avg-ratings" class="fig-ref">X</a> and provide a deeper understanding of the trends reflected in the Main Average Rating Plot.
@@ -93,6 +93,10 @@
               on data analysis, an SNR between 10 and 15 dB typically indicates a strong, reliable signal.</p>
             <p>While any SNR > 0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) guidelines for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
           </section>
+        </section>
+        <section id="beerTypes">
+          <h2>Analyse beer types</h2>
+          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
           <section id="scores">
             <h3 class="h4">Definition of metrics to quantify seasonality</h3>
             <p>
@@ -110,10 +114,6 @@
             </figure>
           </section>
         </section>
-        <section id="beerTypes">
-          <h2>Analyse beer types</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-        </section>
 
         <section id="meteo">
           <h2>Weather Influence on Beer Ratings</h2>
@@ -126,13 +126,13 @@
             </ul>
           </p>
         
-          <figure id="fig-climate-timelapse">
-            <iframe data-src="src/plotly-html-graphs/casimir/correlation_plot.html" title="Map of the United States shwowing for each state correlation values between average ratings and temperature." frameborder="0" loading="lazy" width="100%" height="500px"></iframe>
-            <figcaption><strong>Correlation between average ratings and median daily temperature for each US state.</strong></figcaption>
-          </figure>
           <figure id="fig-correlation-heatmap">
             <iframe data-src="src/plotly-html-graphs/nicolas/weather_and_state_level_correlation_subset_heatmap.html" title="Correlation heatmap of weather variables and ratings" frameborder="0" loading="lazy" width="100%" height="400px"></iframe>
-            <figcaption><span>Figure 2</span><strong>Correlation Analysis.</strong> Visual representation of correlations between weather variables and different rating components, with hover text showing statistical significance.</figcaption>
+            <figcaption><span>Figure 2</span><strong>Correlation matrix.</strong> Visual representation of correlations between weather variables and different rating components, with hover text showing statistical significance.</figcaption>
+          </figure>
+          <figure id="fig-climate-timelapse">
+            <iframe data-src="src/plotly-html-graphs/casimir/correlation_plot.html" title="Map of the United States shwowing for each state correlation values between average ratings and temperature." frameborder="0" loading="lazy" width="100%" height="350px"></iframe>
+            <figcaption><strong>Correlation map.</strong> Pearson correlation between daily average ratings and median temperature for each US state.</figcaption>
           </figure>
           <h3 class="h4">Interpretation</h3>
           <p>Several key conclusions emerge from our analysis:</p>
