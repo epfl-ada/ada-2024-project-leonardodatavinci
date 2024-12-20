@@ -165,45 +165,26 @@
 
         <section id="meteo">
           <h2>Weather Influence on Beer Ratings</h2>
-          <p>After examining the seasonality of beer ratings, we noticed that both the number of ratings and the average rating vary seasonally across different beer styles. This observation led us to ask: why does this happen? Since the composition of the beer itself remains constant throughout the year, these seasonal patterns must be influenced by external factors. We then considered: what external factors change seasonally? One obvious candidate is weather, which varies by season and is influenced by the climate zone. This prompted us to investigate whether there is a correlation between average beer ratings and weather or climate zone data.</p>
-          <p>
-            To explore this, we collected weather and climate data from various sources. However, since each beer rating is associated with only a single state, we needed to meaningfully summarize weather and climate information for each state:
-            <ul>
-              <li><strong>Climate: </strong>For each state, we identified a single representative climate zone based on the climate zones where most of the state’s population resides. Climate zone data was from the International Energy Conservation Code, population data from the United States Census Bureau.</li>
-              <li><strong>Weather: </strong>We experimented with both monthly and daily weather data. As monthly data we considered precomputed average temperature and precipitation data for each state between 2002 and 2017 using World Bank Climate Data. As daily weather we used the meadian median daily maximum temperature per state from 2012 to 2017 as a metric. Daily data was sourced from the Global Historical Climatology Network dataset provided by the National Centers for Environmental Information.</li>
-            </ul>
-          </p>
-        
+          <p>After examining the seasonality of beer ratings, we noticed that both the number of ratings and the average rating vary seasonally across different beer styles. This observation led us to ask: why does this happen? Since the composition of the beer itself remains constant throughout the year, these seasonal patterns must be influenced by external factors. We then considered: what external factors change seasonally? One obvious candidate is weather, which varies by season. This prompted us to investigate whether there is a correlation between average beer ratings and weather.</p>
+          <p>To explore this, we collected weather data from various sources. However, since each beer rating is associated with only a single state, we needed to meaningfully summarize weather information for each state.</p>
+          <p>We experimented with both both long term weather averages and daily weather data. As long term weather data we considered precomputed average temperature and precipitation data for each state between 2002 and 2017 using World Bank Climate Data. As daily weather we used the median daily maximum temperature per state from 2012 to 2017 as a metric. Daily data was sourced from the Global Historical Climatology Network dataset provided by the National Centers for Environmental Information.</p>
           <figure id="fig-correlation-heatmap">
             <iframe data-src="src/plotly-html-graphs/nicolas/weather_and_state_level_correlation_subset_heatmap.html" title="Correlation heatmap of weather variables and ratings" frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
-            <figcaption><strong>State climate is correlated to ratings.</strong> Temperature, precipitation and ratings were averaged over all years for each of the 50 US states. Then Pearson correlation was computed between these variables and different rating components for the 50 states. Hover over the matrix to see additional information on statistical significance.</figcaption>
+            <figcaption><strong>Correlation Matrix Between Average State Climate and Average Beer Ratings over 12 Years.</strong> Temperature and precipitation were averaged for each state across the last 12 years. A Pearson correlation analysis was performed on the resulting dataset of 50 rows (one per state) to examine the relationship between climate variables and average ratings.</figcaption>
           </figure>
+          <p>First we investigated how longer-term weather averages (aka climate) is correlated with ratings. Therefore, we first computed simple correlations between precipitation and ratings, as well as temperature and ratings. On BeerAdvocate, ratings are derived from five scored categories. We investigated whether weather was linked to any specific category. For instance, we hypothesized that temperature might influence aroma more than others, but this wasn’t the case—appearance showed the strongest correlation instead. Interestingly, state climate and ratings are correlated, with temperature showing a significant negative correlation of -0.32 (Figure <a href="#fig-correlation-heatmap" class="fig-ref">3</a>). Colder climate makes people rate beer better. Precipitation seems to have almost no effect.</p>
           <figure id="fig-climate-timelapse">
             <iframe data-src="src/plotly-html-graphs/casimir/correlation_plot.html" title="Map of the United States shwowing for each state correlation values between average ratings and temperature." frameborder="0" loading="lazy" width="100%" height="350px"></iframe>
-            <figcaption><strong>Ratings tend to have low negative correlation with daily temperature.</strong> Pearson correlation between daily average ratings and median temperature for US states. Only statistically significant states are shown (p&gt;0.05). Hover over the map to get more information about p-values and the number of ratings N.</figcaption>
+            <figcaption><strong>Ratings tend to have low negative correlation with daily temperature</strong> Pearson correlation between daily average ratings and median temperature for US states. Only statistically significant states are shown (p&gt;0.05). Hover over the map to get more information about p-values and the number of ratings N.</figcaption>
           </figure>
-          <h3 class="h4">Interpretation</h3>
-          <p>Several key conclusions emerge from our analysis:</p>
-          <ol>
-            <li>Weather effects on beer ratings are detectable and statistically significant when analyzed at appropriate temporal scales</li>
-            <li>While significant, weather conditions explain only a tiny fraction of rating variance (all weather factors combined explain less than 1%)</li>
-            <li>Subjective measures are overwhelmingly more important, with taste alone explaining 94.3% of rating variance</li>
-          </ol>
+          <p>When the daily data was correlated, we observed that smaller and more populous states tend to show more significant correlations. Smaller states generally have more uniform weather, making the median weather data more representative of the entire population. Although the correlation values are small, there is a clear trend: almost all correlations are negative across states.</p>
         
-          <h3 class="h4">Limitations</h3>
-          <p>Our analysis has several important limitations to consider:</p>
-          <ul>
-            <li>State-level weather aggregates might mask local variations</li>
-            <li>The location of the reviewer at the time of rating might differ from their registered state</li>
-            <li>Different beer styles might respond differently to weather conditions</li>
-            <li>The relationship between weather and ratings might vary by season or region in ways our analysis couldn't capture</li>
-          </ul>
-        
-          <p>Overall, our analysis shows that while weather conditions have a statistically significant influence on beer ratings, this effect is extremely subtle compared to the dominant role of the beer's intrinsic qualities. The temporal granularity of analysis is crucial for detecting these subtle weather effects, suggesting that the relationship between weather and beer appreciation is more complex than previously understood.</p>
+          <p>We analyzed both long-term average weather data and granular daily weather data to examine their relationship with beer ratings. The long-term mean showed a stronger correlation, while the granular daily data had a weaker correlation. However, both analyses revealed a consistent negative relationship, with colder temperatures linked to higher beer ratings, contributing to the observed seasonal patterns. This helps explain Figure <a href="#fig-avg-ratings" class="fig-ref">X</a>, which shows higher average ratings in the winter.
+          </p>
         </section>
         <section id="conclusion">
           <h2>Conclusion</h2>
-          <p>In our project we observed seasonal patterns in beer ratings and explored their underlying causes. We confirmed that these patterns follow a yearly cycle and identified a subset of beers driving the trend. Weather was found to have an impact on these patterns, providing a clear explanation for the observed seasonality in ratings.</p>
+          <p>We observed what appears as seasonal patterns in beer ratings and explored possible causes or explanations. We confirmed that these patterns follow a yearly cycle and identified a subset of beers with high seasonality. Weather was found to have an impact on these patterns, showing that cold weather makes people rate beers better.</p>
         </section>
         <section id="team">
           <h2>Team</h2>
