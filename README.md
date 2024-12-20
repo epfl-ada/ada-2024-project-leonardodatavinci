@@ -2,19 +2,17 @@
 
 ## 🔴 Abstract
 
-This project investigates seasonal fluctuations in beer ratings using the reviews on the forum “BeerAdvocate” from 2002 until 2017. We can observe that, averaged over all years, ratings vary by season.
+This project examines seasonal fluctuations in beer ratings using reviews from the “BeerAdvocate” forum, spanning 2002 to 2017. The analysis reveals that average ratings vary by season, suggesting influences beyond the intrinsic qualities of the beer itself.
 
-This is interesting, because ideally beer ratings would solely reflect the beer's intrinsic qualities and remain unaffected by external factors. 
+This observation is significant because, ideally, beer ratings should reflect only the beer's inherent characteristics, unaffected by external factors. Our objective is to identify which subsets of beers contribute to the observed seasonality in average ratings and to explore potential external influences, such as meteorological factors.
 
-Our goal is to identify some of those external factors. For example, seasonal trends may exist where certain beer styles are more popular in summer than in winter, or temperature variations could affect how a beer is perceived and rated.
-
-Our analysis is divided into two steps. First, we explore the observed seasonal patterns, developing metrics to quantify seasonality and determine whether these patterns represent true, recurring annual phenomena or are simply artifacts of averaging ratings over multiple years. In the second part, we investigate the reasons behind these seasonal changes in ratings. Specifically, we examine if seasonal variations are driven by changes in the types of beer consumed or shifts in how people rate. Additionally, we investigate if daily weather on the state level can be correlated to a change in ratings.
+Our analysis is divided into three steps. First, we explore the observed seasonal patterns, developing metrics to quantify seasonality and determine whether these patterns represent true, recurring annual phenomena. In the second part, we investigate the reasons behind these seasonal changes in ratings, by comparing beer types that are seasonal in average ratings vs seasonal in number of ratings. Additionally, we investigate if daily weather on the state level can be correlated to a change in ratings.
 
 ## ❓ Research Questions
 
-- Does the observed seasonal pattern in beer ratings reflect a true year-to-year recurrence, or is it an artifact of averaging ratings across many years?
-- How do seasonal and year-round beers influence global beer rating trends, and to what extent do seasonal beers account for the observed seasonal differences in beer ratings compared to year-round beers?
-- Can we establish correlations between daily weather and ratings?
+- **Seasonality**: Is this pattern driven by consistent year-to-year effects, or are the fluctuations merely the result of outliers or a few exceptionally strong years distorting the average?
+- **Beer Types**: Are specific types of beers driving these seasonal variations? Perhaps through seasonal spikes in average ratings or number of ratings?
+- **Meteo:** Could factors like climate or weather influence these rating trends?
 
 ## 📂 Additional Datasets
 
