@@ -85,7 +85,6 @@
             <p>After extracting the seasonal component with STL, we apply the Fourier transform to identify dominant frequencies. If the dominant period is 12 months, this confirms that the average rating pattern is yearly seasonal.</p>
             <figure id="fig-fourier">
               <iframe data-src="dist/plotly-html-graphs/jakob/seasonality_full.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="820"></iframe>
-              
               <figcaption><span>Figure 2</span><strong>Seasonality Report - Average Ratings of All Beers.</strong> The dominant period is 12 months.</figcaption>
             </figure>
             <p>Figure <a href="#fig-fourier" class="fig-ref">2</a> presents the seasonality analysis pipeline. The first plot shows the original average ratings time series for all beers, aggregated monthly from 2002 to 2017, where the seasonality is obscured by the overall trend.
@@ -96,9 +95,10 @@
             <p>While any SNR&gt;0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) guidelines for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
           </section>
         </section>
+  
         <section id="beerTypes">
-          <h2>Analyse beer types</h2>
-          <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+          <h2>Pinpointing the Source: Finding Seasonal Beers</h2>
+          
           <section id="scores">
             <h3 class="h4">Definition of metrics to quantify seasonality</h3>
             <p>
@@ -116,10 +116,9 @@
               <figcaption><span>Figure 3</span><strong>Schematic plots for peak ratio and mean amplitude.</strong></figcaption>
             </figure>
           </section>
-        </section>
+  
 
-        <section id="beerTypes">
-          <h2>Pinpointing the Source: Finding Seasonal Beers</h2>
+       
               <p>We explored what might explain the seasonality in beer ratings by reflecting on our own beer consumption habits. Some of us prefer lighter beers in warm weather and heavier ones in colder months, while others maintain consistent preferences year-round. This led us to investigate whether reviewers follow similar patterns: Do they review the same types of beers year-round, or do their preferences and ratings shift with the seasons?</p>
                     
               <p>To identify the most seasonal beers, we first defined beers that receive different ratings during specific seasons and those with varying numbers of reviews across periods. We combined these insights to classify the most seasonal beers. To ensure reliable data, we excluded beers with fewer than 500 reviews from 2002 to 2017, as their limited data wouldn't adequately reflect seasonal trends.</p>
@@ -166,13 +165,13 @@
             </ul>
           <p></p>
         
-          <figure id="fig-climate-timelapse">
-            <iframe data-src="dist/plotly-html-graphs/nicolas/combined_timelapse.html" title="Combined Timelapse of Climate Data." frameborder="0" loading="lazy" width="100%" height="500px"></iframe>
-            <figcaption><span>Figure 8</span> This visualization shows the changes in temperature and precipitation across the United States over time, and also shows the climate zones.</figcaption>
-          </figure>
           <figure id="fig-correlation-heatmap">
             <iframe data-src="dist/plotly-html-graphs/nicolas/weather_and_state_level_correlation_subset_heatmap.html" title="Correlation heatmap of weather variables and ratings" frameborder="0" loading="lazy" width="100%" height="400px"></iframe>
-            <figcaption><span>Figure 9</span><strong>Correlation Analysis.</strong> Visual representation of correlations between weather variables and different rating components, with hover text showing statistical significance.</figcaption>
+            <figcaption><span>Figure 8</span><strong>Correlation matrix.</strong> Pearson correlations between weather variables and different rating components . Hover over the matrix to see additional information on statistical significance.</figcaption>
+          </figure>
+          <figure id="fig-climate-timelapse">
+            <iframe data-src="dist/plotly-html-graphs/casimir/correlation_plot.html" title="Map of the United States shwowing for each state correlation values between average ratings and temperature." frameborder="0" loading="lazy" width="100%" height="350px"></iframe>
+            <figcaption><span>Figure 9</span><strong>Correlation map.</strong> Pearson correlation between daily average ratings and median temperature for US states. Only statistically significant states are shown (p&gt;0.05). Hover over the map to get more information about p-values and the number of ratings N.</figcaption>
           </figure>
           <h3 class="h4">Interpretation</h3>
           <p>Several key conclusions emerge from our analysis:</p>
