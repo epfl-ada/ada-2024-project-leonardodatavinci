@@ -6,7 +6,9 @@ This project examines seasonal fluctuations in beer ratings using reviews from t
 
 This observation is significant because, ideally, beer ratings should reflect only the beer's inherent characteristics, unaffected by external factors. Our objective is to identify which subsets of beers contribute to the observed seasonality in average ratings and to explore potential external influences, such as meteorological factors.
 
-Our analysis is divided into three steps. First, we explore the observed seasonal patterns, developing metrics to quantify seasonality and determine whether these patterns represent true, recurring annual phenomena. In the second part, we investigate the reasons behind these seasonal changes in ratings, by comparing beer types that are seasonal in average ratings vs seasonal in number of ratings. Additionally, we investigate if daily weather on the state level can be correlated to a change in ratings.
+Our analysis is divided into three steps. First, we explore the observed seasonal patterns, developing metrics to quantify seasonality and determine whether these patterns represent true, recurring annual phenomena. In the second part, we investigate the reasons behind these seasonal changes in ratings, by finding beer types that are seasonal in average ratings & seasonal in number of ratings. Additionally, we investigate if daily weather on the state level can be correlated to a change in ratings.
+
+The results can be found on our [website](https://epfl-ada.github.io/ada-2024-project-leonardodatavinci/).
 
 ## ❓ Research Questions
 
@@ -18,7 +20,8 @@ Our analysis is divided into three steps. First, we explore the observed seasona
 
 To enrich our analysis and provide deeper insights, we have incorporated supplementary datasets beyond the primary beer ratings data:
 
-- **World Bank Climate Data**: Monthly average temperature and precipitation data by state, sourced from the [Climate Change Knowledge Portal](https://climateknowledgeportal.worldbank.org/download-data).
+- **World Bank Climate Data**: Monthly average temperature and precipitation data by state, sourced from the [Climate Change Knowledge Portal](https://climateknowledgeportal.worldbank.org/download-data). 
+- **Global Historical Climatology Network daily Data (GHCNd)**: Daily average temperature data for all weather stations in each state, sourced from the [Global Historical Climatology Network](https://www.ncei.noaa.gov/products/land-based-station/global-historical-climatology-network-daily)).
 - **County Climate Zones**: Classification of U.S. counties into climate zones to analyze regional weather patterns and their influence on beer ratings. Data sourced from the [US Department of Energy](https://www.energy.gov/sites/prod/files/2015/10/f27/ba_climate_region_guide_7.3.pdf).
 - **US Census Population Data**: County-level population data used to weight climate zone analysis for accurate state-level metrics. Data obtained from the [U.S. Census Bureau](https://www.census.gov/data/tables/time-series/demo/popest/2020s-counties-total.html).
 - **Formatted Climate Zones Table**: A processed version of county climate zone data, sourced from [this GitHub Gist](https://gist.github.com/philngo/d3e251040569dba67942#file-climate_zones-csv).
@@ -29,48 +32,30 @@ We focus our work on the reviews on the forum “BeerAdvocate” from 2002 until
 - We specify only the US because there is enough data and only the northern hemisphere! And state-specific, so nice granularity!
 - BeerAdvocate, because more data and focus on US
 
-### 0. Intro: Show That There Is Something Going On!
-
-**Question:**  
-Why is it worth investigating  seasonal fluctuations in beer ratings?
-
-**Method:**  
-
-As we have a timestamp for each review and rating, we can sort them by seasons and years and show that there are significant seasonal fluctuations in the data by applying a statistical test.  
-
-To measure seasonality in beer ratings, we introduced the Seasonality Score, calculated as the difference between the mean summer (June-August) and mean winter (December-February) ratings. This score helps quantify seasonal fluctuations in beer ratings.
-
-We will refine this metric by calculating the seasonality score for each U.S. state, combining it with weather data to explore how climate influences beer ratings regionally.
-
-We also plan to experiment with different time spans, as averaging over three months might smooth out important seasonal variations that could be more noticeable with other groupings.
-
-To validate seasonality, we’ll use statistical tests (e.g., Kruskal-Wallis and t-test) on the main seasonality plot, comparing seasonal fluctuations across months and years for different beer types.
-	
 ### 1. Year-to-Year Seasonal Patterns
 
 **Question:**  
 Does the observed seasonal pattern in beer ratings reflect a true year-to-year recurrence, or is it an artifact of averaging ratings across many years?
 
 **Method:**  
-To identify seasonality, we apply Fourier Analysis and examine the frequency spectrum for significant patterns. First, we calculate the monthly average rating across all beers, creating a time series of average monthly ratings over the entire period the app has been in operation. We then apply the Fast Fourier Transform (FFT) to this time series to analyze its frequency spectrum. To confirm seasonality, we look for a significant peak at a frequency of 0.083 cycles per month, corresponding to a 12-month period. 
-In subsequent analyses, we perform the same procedure on the first derivative of the signal, allowing us to focus purely on the rates of change. Additionally, we analyze individual states and beer types
-To get even clearer knowledge, STL (Seasonal and Trend decomposition) can be used to decompose the time series into trend, seasonal, and residual components, allowing us to isolate and verify the 12-month seasonal pattern in the ratings data.
+To identify seasonality, we apply Fourier Analysis and examine the frequency spectrum for significant patterns. 
+First, we preprocess the data using STL decomposition. STL (Seasonal and Trend decomposition using Loess) separates the seasonal component from the underlying trend and residual (noise) in the monthly rating averages.
+After extracting the seasonal component with STL, we apply the Fourier transform to identify dominant frequencies. If the dominant period is 12 months (frequency of 0.083 cycles per month), this confirms that the average rating pattern is yearly seasonal.
 
+### 2. Identify Seasonal and Unseasonal Beers - Number of Ratings vs. Average Rating*
 
-
-### 2. Seasonal vs. Year-Round Beers
-
-**Question:**   How do seasonal and year-round beers influence global beer rating trends, and to what extent do seasonal beers account for the observed seasonal differences in beer ratings compared to year-round beers?  
+**Question:**  Are specific types of beers driving these seasonal variations? Perhaps through seasonal spikes in average ratings or number of ratings?
 
 **Method:**
-- **Identify Seasonal and Unseasonal Popular Beers**  
-Identify seasonal popular beers (frequently rated only at certain periods) and unseasonal popular beers (always maintain the same proportion of popularity). Assess the differences across months using statistical tests.
 
-- **Check for Fluctuations in Ratings**  
-For both seasonal and unseasonal beer styles, check how their ratings fluctuate across months. Compute statistical tests to see if the fluctuation of these beer styles is significantly different across seasons.
+We aim to identify beers with significant seasonality by examining two key scenarios: the number of ratings received each month and the average rating across seasons.
+Metrics for identification include Fourier transform peaks to capture periodic patterns and Seasonal-Trend decomposition using Loess (STL) to separate seasonal components from trends.
+To ensure data reliability, only beers with at least 500 reviews between 2002 and 2017 are considered. This threshold minimizes noise from beers with insufficient data to reflect seasonal trends.
 
-- **Identify and Analyze Impactful Beers**  
-Define a subset of beers as "impactful," i.e., beers with high popularity during certain periods and high deviation from the average rating. Remove these impactful beers from the data and plot the average ratings to see if there is significantly less seasonal fluctuation after their removal.
+First, we determine the beers with the highest seasonal impact based on the number of monthly ratings. Seasonal beers are identified and removed to observe whether overall seasonality decreases.
+Next, we apply similar logic to beers with seasonal fluctuations in their average ratings.
+
+The final analysis combines the seasonality in number of ratings and average rating to pinpoint the beers with the highest overall seasonality.
 
 ### 3.  Weather Influence By State
 
@@ -80,19 +65,19 @@ Does state weather impact beer ratings and its seasonality?
 **Method:**  
 Correlate ratings with average state temperatures & precipitation. Use weighted mean of weather station data based on US county populations.
 
-
-**Methodology:**  
-1. Data Acquisition:
-    - Weather Data: Download monthly average temperature and precipitation data for each U.S. state from the Climate Change Knowledge Portal.
+**Method:**
+1. Data Acquisition
+    - Monthly Weather Data: Download monthly average temperature and precipitation data for each U.S. state from the Climate Change Knowledge Portal.
     - Beer Ratings: Compile beer ratings with corresponding timestamps and state information.
+    - County Population: Download from US Census
+    - Climate Zones: Extract from US Department of Energy
 2. Data Processing:
     - Temporal Alignment: Align beer ratings with corresponding monthly weather data based on the review dates.
     - State Aggregation: Aggregate beer ratings and weather data at the state level to facilitate comparative analysis.
 3. Correlation Analysis:
     - Temperature and Ratings: Calculate the correlation between average monthly temperatures and beer ratings for each state.
     - Precipitation and Ratings: Assess the relationship between monthly precipitation levels and beer ratings.
-    - Seasonal Pattern Analysis:
-    - Trend Identification: Analyze how seasonal weather variations influence beer ratings across different states.
+    - Climate Zone and Ratings: Assess the relationship between grouped states per climate zone and beer ratings.
     - Regional Comparisons: Compare states to identify regional patterns in weather-related beer rating fluctuations.
 
 
@@ -109,14 +94,14 @@ Correlate ratings with average state temperatures & precipitation. Use weighted 
 ## 🤝 Team Organization
 
 | Team Member | Responsibilities                                   |
-|-------------|----------------------------------------------------|
-| Casimir     | Part 3                                             |
-| Jakob       | Part 1                                             |
-| Jeanne      | Part 2                                             |
-| Nicolas     | Part 3                                             |
-| Tim         | Part 0, Team Leader, Repo Organizer                |
+|-------------|----------------------------------------------------------------|
+| Casimir     | Website & Meteo Analysis     			               |
+| Jakob       | Seasonality Analysis & Metric definition                       |
+| Jeanne      | Seasonal vs. Unseasonal Beers                                  |
+| Nicolas     | Meteo Analysis                                                 |
+| Tim         | Seasonal vs. Unseasonal Beers, Team Leader, Repo Organizer     |
 
-The team will create the data story and visualizations in a collaborative manner.
+The team creates the data story and visualizations in a collaborative manner.
 
 
 
@@ -258,8 +243,9 @@ We are working with a beer review data set [[1](https://drive.google.com/drive/f
     - [Plotly](https://plotly.com/)
     - [Seaborn](https://seaborn.pydata.org/)
     - [Folium](https://python-visualization.github.io/folium/)
-- Machine Learning:
+- Statistical Models:
     - [Scikit-learn](https://scikit-learn.org/stable/)
+    - [Statsmodels](https://www.statsmodels.org/stable/index.html)
 - Productivity:
     - [IPython](https://ipython.org/)
     - [Jupyter](https://jupyter.org/)
