@@ -74,7 +74,7 @@
               <li><strong>Seasonal beers</strong>: Are specific types of beers driving these seasonal variations, perhaps through seasonal spikes in average ratings or number of ratings?</li>
               <li><strong>Meteo</strong>: Could factors like climate or weather influence these rating trends?</li>
             </ul>
-            Through careful analysis, we aim to uncover the reasons behind the observed seasonal behavior in beer ratings in Figure <a href="#fig-avg-ratings" class="fig-ref">X</a> and provide a deeper understanding of the trends reflected in the Main Average Rating Plot.
+            Through careful analysis, we will explore the seasonality of beers and what appears as seasonal behavior in beer ratings (Figure <a href="#fig-avg-ratings" class="fig-ref">X</a>).
           </p>
           <section id="fourier">
             <h3 class="h4">Verifying Year-to-Year Seasonality: Are the Patterns Consistent?</h3>
@@ -156,7 +156,7 @@
                 <iframe data-src="dist/plotly-html-graphs/tim/seasonalVsNonSeasonalCustomThresholds.html" title="Title" frameborder="0" loading="lazy" width="100%" height="620"></iframe>
                 <figcaption><span>Figure 7</span><strong>Seasonal vs. Non-Seasonal Beers</strong> - on all ratings</figcaption>
               </figure>
-              <p>As shown, the ratings of the seasonal subset of beers fluctuate significantly throughout the year. Removing these beers results in a more consistent rating pattern for the remaining beers, confirming that we have successfully identified the subset responsible for the observed seasonality!</p>
+              <p>The seasonal subset shows significant variability, with pronounced differences between its lowest point in June and its peak in January. This selection, based on seasonality metrics applied on individual beers, does not necessarily align with the original seasonal trends observed. In contrast to the seasonal subset, the unseasonal one exhibits far less variation, reinforcing the distinction between the two groups. Ultimately, we successfully isolated the beers with high seasonality.</p>
         </section>
 
         <section id="meteo">
