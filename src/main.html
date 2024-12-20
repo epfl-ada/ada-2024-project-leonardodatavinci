@@ -53,8 +53,8 @@
       </nav>
       <div class="col-lg-9 col-xl-8 col-xxl-6" data-bs-spy="scroll" data-bs-target="#myScrollspy" data-bs-offset="0" tabindex="0"><br>
         <section id="intro">
-<p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017.</p>
-</p>We begin by identifying seasonal patterns, checking their consistency across years, and quantifying them. Next, we analyze if specific beer types drive these patterns, whether through differences in ratings, review counts, or both. Finally, we explore external factors like climate or weather that may explain the observed trends.</p>
+          <p class="fst-italic"> Beer is universal, or is it? Beer is consumed all around the world and after water and tea the third most popular beverage. In popular culture, beer is typically not associated with one particular season, unlike hot chocolate or iced tea. But how year-round of a beverage is beer really? Can we observe seasonal patterns in consumption and preferences? This project explores seasonal fluctuations in beer preferences, by analyzing beer reviews posted on the BeerAdvocate forum, spanning from 2002 to 2017.</p>
+          <p>We begin by identifying seasonal patterns, checking their consistency across years, and quantifying them. Next, we analyze if specific beer types drive these patterns, whether through differences in ratings, review counts, or both. Finally, we explore external factors like climate or weather that may explain the observed trends.</p>
         </section>
         <section id="seasonality">
           <h2>Let's talk seasonality</h2>
@@ -63,7 +63,7 @@
              appears to show fluctuations in beer ratings throughout the year.</p>
           <figure id="fig-avg-ratings">
             <iframe data-src="src/plotly-html-graphs/jakob/MainSeasonalNarrow.html" title="Line plot of averaged ratings per month." frameborder="0" loading="lazy" width="100%" height="300px"></iframe>
-            <figcaption><span>Figure 1</span><strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
+            <figcaption><strong>Average ratings per month.</strong> 95% confidence interval with 2'239'823 data points.</figcaption>
           </figure>
           <p>But why could this be the case? Why would beer ratings fluctuate like this?</p>
           <p>
@@ -84,14 +84,14 @@
             <p>After extracting the seasonal component with STL, we apply the Fourier transform to identify dominant frequencies. If the dominant period is 12 months, this confirms that the average rating pattern is yearly seasonal.</p>
             <figure id="fig-fourier">
               <iframe data-src="src/plotly-html-graphs/jakob/seasonality_full.html" title="Fourier transform of the seasonal component of the average ratings." frameborder="0" loading="lazy" width="100%" height="820"></iframe>
-              <figcaption><span>Figure 2</span><strong>Seasonality Report - Average Ratings of All Beers.</strong> The dominant period is 12 months.</figcaption>
+              <figcaption><strong>Seasonality Report - Average Ratings of All Beers.</strong> The dominant period is 12 months.</figcaption>
             </figure>
             <p>Figure <a href="#fig-fourier" class="fig-ref">X</a> presents the seasonality analysis pipeline. The first plot shows the original average ratings time series for all beers, aggregated monthly from 2002 to 2017, where the seasonality is obscured by the overall trend.
               The second plot displays the seasonal signal extracted using STL decomposition, making the 12-month seasonality visually apparent. The third plot shows the frequency domain analysis, with a distinct peak at 0.083 cycles per month, corresponding to a 12-month period.
               The following section provides the numerical evaluation to verify the significance of this 12-month signal.</p>
             <p>We calculate the Signal-to-Noise Ratio (SNR) to determine the strength of the observed yearly pattern relative to random noise, providing a quantitative measure of signal reliability. SNR is particularly useful because it has well-defined thresholds that help distinguish meaningful patterns from noise. According to a <a href="https://support.numxl.com/hc/en-us/articles/360050017731-Calculating-Signal-to-Noise-Ratio-Using-DFT" target="_blank">NumXL article</a>
               on data analysis, an SNR between 10 and 15 dB typically indicates a strong, reliable signal.</p>
-            <p>While any SNR > 0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) guidelines for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
+            <p>While any SNR&gt0 dB shows that the signal is stronger than the noise floor, we adopt a cutoff of 10 dB to confirm seasonality, following NumXL's (2020) guidelines for calculating SNR using the Discrete Fourier Transform (DFT). The calculated SNR of 21.3 dB for the signal indicates that the 12-month peak is highly significant, strongly suggesting that the average ratings are influenced by consistent year-to-year effects.</p>
           </section>
         </section>
         <section id="beerTypes">
@@ -128,11 +128,11 @@
         
           <figure id="fig-correlation-heatmap">
             <iframe data-src="src/plotly-html-graphs/nicolas/weather_and_state_level_correlation_subset_heatmap.html" title="Correlation heatmap of weather variables and ratings" frameborder="0" loading="lazy" width="100%" height="400px"></iframe>
-            <figcaption><span>Figure 2</span><strong>Correlation matrix.</strong> Visual representation of correlations between weather variables and different rating components, with hover text showing statistical significance.</figcaption>
+            <figcaption><strong>Correlation matrix.</strong> Pearson correlations between weather variables and different rating components . Hover over the matrix to see additional information on statistical significance.</figcaption>
           </figure>
           <figure id="fig-climate-timelapse">
             <iframe data-src="src/plotly-html-graphs/casimir/correlation_plot.html" title="Map of the United States shwowing for each state correlation values between average ratings and temperature." frameborder="0" loading="lazy" width="100%" height="350px"></iframe>
-            <figcaption><strong>Correlation map.</strong> Pearson correlation between daily average ratings and median temperature for each US state.</figcaption>
+            <figcaption><strong>Correlation map.</strong> Pearson correlation between daily average ratings and median temperature for US states. Only statistically significant states are shown (p&gt;0.05). Hover over the map to get more information about p-values and the number of ratings N.</figcaption>
           </figure>
           <h3 class="h4">Interpretation</h3>
           <p>Several key conclusions emerge from our analysis:</p>
@@ -152,8 +152,6 @@
           </ul>
         
           <p>Overall, our analysis shows that while weather conditions have a statistically significant influence on beer ratings, this effect is extremely subtle compared to the dominant role of the beer's intrinsic qualities. The temporal granularity of analysis is crucial for detecting these subtle weather effects, suggesting that the relationship between weather and beer appreciation is more complex than previously understood.</p>
-        </section>
-
         </section>
         <section id="conclusion">
           <h2>Conclusion</h2>
