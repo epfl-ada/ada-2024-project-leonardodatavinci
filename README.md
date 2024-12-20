@@ -8,6 +8,8 @@ This observation is significant because, ideally, beer ratings should reflect on
 
 Our analysis is divided into three steps. First, we explore the observed seasonal patterns, developing metrics to quantify seasonality and determine whether these patterns represent true, recurring annual phenomena. In the second part, we investigate the reasons behind these seasonal changes in ratings, by finding beer types that are seasonal in average ratings & seasonal in number of ratings. Additionally, we investigate if daily weather on the state level can be correlated to a change in ratings.
 
+The results can be found on our [website](https://epfl-ada.github.io/ada-2024-project-leonardodatavinci/).
+
 ## ❓ Research Questions
 
 - **Seasonality**: Is this pattern driven by consistent year-to-year effects, or are the fluctuations merely the result of outliers or a few exceptionally strong years distorting the average?
